@@ -1,0 +1,490 @@
+<!DOCTYPE html><html class="dark" lang="en" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>CivicHero AI | Community Leaderboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<!-- Theme Configuration -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-container": "#122131",
+                    "secondary-fixed": "#e9ddff",
+                    "tertiary-fixed-dim": "#bec6e0",
+                    "on-primary": "#00363e",
+                    "secondary": "#d0bcff",
+                    "surface": "#051424",
+                    "surface-container-lowest": "#010f1f",
+                    "surface-container-low": "#0d1c2d",
+                    "on-tertiary": "#283044",
+                    "inverse-primary": "#006877",
+                    "on-surface-variant": "#bbc9cd",
+                    "on-secondary-fixed-variant": "#5516be",
+                    "on-primary-container": "#005763",
+                    "on-tertiary-container": "#474e64",
+                    "on-error-container": "#ffdad6",
+                    "on-secondary-fixed": "#23005c",
+                    "surface-variant": "#273647",
+                    "primary-fixed": "#a2eeff",
+                    "secondary-container": "#571bc1",
+                    "secondary-fixed-dim": "#d0bcff",
+                    "error-container": "#93000a",
+                    "on-secondary-container": "#c4abff",
+                    "surface-tint": "#2fd9f4",
+                    "primary": "#8aebff",
+                    "inverse-surface": "#d4e4fa",
+                    "on-primary-fixed": "#001f25",
+                    "surface-container-highest": "#273647",
+                    "outline": "#859397",
+                    "error": "#ffb4ab",
+                    "on-background": "#d4e4fa",
+                    "on-tertiary-fixed": "#131b2e",
+                    "tertiary-container": "#b9c0da",
+                    "tertiary-fixed": "#dae2fd",
+                    "background": "#051424",
+                    "outline-variant": "#3c494c",
+                    "tertiary": "#d5dcf6",
+                    "on-tertiary-fixed-variant": "#3f465c",
+                    "surface-container-high": "#1c2b3c",
+                    "on-surface": "#d4e4fa",
+                    "inverse-on-surface": "#233143",
+                    "on-secondary": "#3c0091",
+                    "primary-container": "#22d3ee",
+                    "surface-bright": "#2c3a4c",
+                    "on-error": "#690005",
+                    "on-primary-fixed-variant": "#004e5a",
+                    "primary-fixed-dim": "#2fd9f4",
+                    "surface-dim": "#051424"
+            },
+            "borderRadius": {
+                    "DEFAULT": "1rem",
+                    "lg": "2rem",
+                    "xl": "3rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "container-padding-desktop": "48px",
+                    "base": "4px",
+                    "container-padding-mobile": "20px",
+                    "grid-gutter": "24px",
+                    "stack-gap": "24px",
+                    "glass-padding": "24px"
+            },
+            "fontFamily": {
+                    "label-sm": ["Inter"],
+                    "label-md": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "display-lg": ["Sora"],
+                    "body-md": ["Inter"],
+                    "display-lg-mobile": ["Sora"],
+                    "headline-md": ["Sora"],
+                    "headline-sm": ["Sora"]
+            },
+            "fontSize": {
+                    "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "500"}],
+                    "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "display-lg-mobile": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            background-color: #051424;
+            color: #d4e4fa;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
+        
+        .glass-panel {
+            background: rgba(18, 33, 49, 0.4);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .active-glow {
+            box-shadow: 0 0 20px rgba(138, 235, 255, 0.2);
+            border: 1px solid rgba(138, 235, 255, 0.4);
+        }
+
+        .rank-gold {
+            background: linear-gradient(135deg, #FFD700 0%, #B8860B 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.5));
+        }
+
+        .rank-silver {
+            background: linear-gradient(135deg, #C0C0C0 0%, #808080 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 0 8px rgba(192, 192, 192, 0.5));
+        }
+
+        .rank-bronze {
+            background: linear-gradient(135deg, #CD7F32 0%, #8B4513 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 0 8px rgba(205, 127, 50, 0.5));
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+
+        .glow-dot {
+            animation: pulse-glow 2s infinite ease-in-out;
+        }
+
+        .perspective-card {
+            perspective: 1000px;
+        }
+
+        .achievement-badge {
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .achievement-badge:hover {
+            transform: translateY(-8px) scale(1.1) rotate(5deg);
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+<!-- TopNavBar -->
+<nav class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-container-padding-desktop max-w-[1440px] left-1/2 -translate-x-1/2 bg-surface/60 backdrop-blur-xl border-b border-white/10 shadow-2xl h-20">
+<div class="flex items-center gap-8">
+<span class="font-display-lg text-display-lg bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent"><span style="font-size: 32px; font-weight: 400; letter-spacing: normal;" class="">CivicLens AI</span></span>
+<div class="hidden md:flex gap-6">
+<a class="font-label-md text-label-md text-primary border-b-2 border-primary py-2 px-1" href="community.html">community</a>
+<a class="font-label-md text-label-md text-on-surface-variant hover:bg-white/5 transition-all duration-300 py-2 px-4 rounded-lg" href="community_map.html">Map View</a>
+<a class="font-label-md text-label-md text-on-surface-variant hover:bg-white/5 transition-all duration-300 py-2 px-4 rounded-lg" href="index.html">Dashboard</a>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 hover:bg-white/5 rounded-full transition-all active:scale-95 duration-200">
+<span class="material-symbols-outlined text-primary">smart_toy</span>
+</button>
+<button class="p-2 hover:bg-white/5 rounded-full transition-all active:scale-95 duration-200">
+<span class="material-symbols-outlined text-primary">workspace_premium</span>
+</button>
+<div class="h-10 w-10 rounded-full border-2 border-primary/30 p-0.5 overflow-hidden">
+<img class="w-full h-full object-cover rounded-full" data-alt="A futuristic circular avatar profile picture of a tech-savvy user, set against a glowing neon circuitry background with soft cyan and violet lighting. The style is hyper-realistic digital art, reflecting high-quality smart city futurism." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBtyiNgoFmnvBCWhtq8Y4zOHMBBqYaiRCRjlwUN9F81uFRKxz0zyZhgpJxfvm2VVzlT1B2RHvaAmeh5ljrEzeL9GAJwz96a4CUsgpmQtTqLpSYDhuG-nPYZF_3e91Cip70PqpMZFXo1HoeKm26lDNQcvDhJVgv0QOvoTugRWHWHKgfXR7Pi6Y907hLEOv8A7-PT1A4N5591ApmAx5oT-bY3UzOu-irugWa8AtXjFHxWubenpAHENEZn7zYWYJRZsT-1ekmNK28kv-0">
+</div>
+</div>
+</nav>
+<div class="flex pt-20">
+<!-- SideNavBar -->
+<aside class="hidden lg:flex flex-col h-screen w-64 fixed left-0 bg-surface-container/80 backdrop-blur-2xl border-r border-white/10 shadow-[20px_0_40px_rgba(0,0,0,0.4)]">
+<div class="p-8 flex flex-col gap-2">
+<span class="font-headline-sm text-headline-sm text-primary">CivicHero AI</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">City Governance</span>
+</div>
+<nav class="flex-1 px-4 flex flex-col gap-2">
+<a class="flex items-center gap-4 px-4 py-3 rounded-xl transition-all duration-300 ease-in-out text-on-surface-variant hover:bg-surface-variant/50" href="index.html">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-label-md text-label-md">Dashboard</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 rounded-xl transition-all duration-300 ease-in-out text-on-surface-variant hover:bg-surface-variant/50" href="community_map.html">
+<span class="material-symbols-outlined">map</span>
+<span class="font-label-md text-label-md">Map View</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 rounded-xl transition-all duration-300 ease-in-out bg-gradient-to-r from-primary/20 to-secondary/20 text-primary border-r-4 border-primary" href="community.html">
+<span class="material-symbols-outlined">group</span>
+<span class="font-label-md text-label-md">Community</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 rounded-xl transition-all duration-300 ease-in-out text-on-surface-variant hover:bg-surface-variant/50" href="analytics.html">
+<span class="material-symbols-outlined">analytics</span>
+<span class="font-label-md text-label-md">Analytics</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 rounded-xl transition-all duration-300 ease-in-out text-on-surface-variant hover:bg-surface-variant/50" href="history.html">
+<span class="material-symbols-outlined">history</span>
+<span class="font-label-md text-label-md">History</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 rounded-xl transition-all duration-300 ease-in-out text-on-surface-variant hover:bg-surface-variant/50" href="ai_assistant.html">
+<span class="material-symbols-outlined">smart_toy</span>
+<span class="font-label-md text-label-md">Assistant</span>
+</a></nav>
+<div class="p-4 mt-auto mb-20 flex flex-col gap-4">
+<button class="w-full py-3 bg-gradient-to-r from-primary to-secondary text-on-primary rounded-full font-label-md text-label-md shadow-lg shadow-primary/20 hover:scale-[1.02] transition-transform">
+                    Report Issue
+                </button>
+<div class="flex flex-col gap-1">
+<a class="flex items-center gap-4 px-4 py-2 text-on-surface-variant font-label-md text-label-md hover:text-on-surface" href="analytics.html">
+<span class="material-symbols-outlined">settings</span> Settings
+                    </a>
+<a class="flex items-center gap-4 px-4 py-2 text-on-surface-variant font-label-md text-label-md hover:text-on-surface" href="community_map.html">
+<span class="material-symbols-outlined">help</span> Support
+                    </a>
+</div>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="flex-1 ml-0 lg:ml-64 p-container-padding-mobile lg:p-container-padding-desktop">
+<!-- Header Section -->
+<section class="mb-12 relative">
+<div class="absolute -top-24 -left-24 w-96 h-96 bg-primary/10 blur-[100px] rounded-full"></div>
+<div class="relative z-10">
+<h1 class="font-display-lg text-display-lg-mobile lg:text-display-lg text-on-surface mb-2">Hero Leaderboard</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl">Recognizing the citizens who drive our smart city forward through action, reporting, and sustainable living.</p>
+</div>
+</section>
+<!-- Top 3 Podium (Asymmetric Bento) -->
+<section class="grid grid-cols-1 md:grid-cols-3 gap-grid-gutter mb-stack-gap">
+<!-- Silver #2 -->
+<div class="order-2 md:order-1 glass-panel p-glass-padding rounded-lg flex flex-col items-center text-center mt-8 relative overflow-hidden group hover:active-glow transition-all">
+<div class="absolute inset-0 bg-gradient-to-b from-white/5 to-transparent"></div>
+<div class="relative z-10">
+<div class="w-24 h-24 mx-auto mb-4 rounded-full border-4 border-silver/30 relative">
+<img class="w-full h-full object-cover rounded-full" data-alt="A portrait of a young professional woman with glasses, smiling confidently, in a high-tech modern office setting with glass walls and city lights in the background. The style is sleek and professional, with a cool blue and silver color palette." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAWD8lXk-dSE4jPaeEQRdkRALNALDUW9AIs137QyNvl_UTtZg9XU4Mmjcpzf1jb8s0lpu6S0qWOCrk2xR2yTQVU4oGRO6YnA2sV_GFZarO3MGoO8Zv6kHKw7EwiQ5KPGKZCT8iu9aaoF36R03cL4IWWcqHsrc7xZpvs1FJ3H8VUbreoQlZD68qlp6uYASf4stF-il0HeZgGp14Serk2NzJejCUq8nDE3gkoSQN2YwTnRcLvkbc-pCfeU0OALQK5Yd5VY6PQKpImQcw">
+<div class="absolute -bottom-2 -right-2 bg-slate-400 w-10 h-10 rounded-full flex items-center justify-center text-xl font-bold text-white shadow-lg">2</div>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Elena Vance</h3>
+<span class="font-label-sm text-label-sm text-secondary uppercase tracking-widest">Eco Warrior</span>
+<div class="mt-4 grid grid-cols-2 gap-4">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Hero Points</span>
+<span class="font-headline-sm text-headline-sm text-primary">12,450</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Impact</span>
+<span class="font-headline-sm text-headline-sm text-secondary">94%</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Gold #1 -->
+<div class="order-1 md:order-2 glass-panel p-glass-padding rounded-lg flex flex-col items-center text-center relative overflow-hidden border-primary/40 active-glow shadow-[0_0_50px_rgba(138,235,255,0.1)] scale-105 z-20 group hover:scale-[1.07] transition-all">
+
+<div class="relative z-10">
+<span class="material-symbols-outlined rank-gold text-5xl mb-4" style="font-variation-settings: 'FILL' 1;">workspace_premium</span>
+<div class="w-32 h-32 mx-auto mb-6 rounded-full border-4 border-primary p-1 relative">
+<img class="w-full h-full object-cover rounded-full" data-alt="A charismatic urban gardener wearing a tech-integrated vest, standing in a vertical green garden with neon accent lighting. The image is vibrant and energetic, blending nature with high-tech urban design in a cinematic digital painting style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAiGdMLENAJ0kG9E2CmF07y915GHu6leXjUZm36nbSzfEdWcfjyPdYauD_sAEaXOOUdkzQpSyyopOKaydvb8gUuKmk32Z4JZllVUwju9cne4NAwWRSl-aUSz9V9WSoiTnePliq8J0omAYzBMx8u43AOeKmCM_F8Ip-SDT6AKhbEO_GR4-nrMJFJGvI-uTOFx_Qt6kNTReR32bzIN4HH9l2b67HkhBLfmQTjYKXMJR9rrCdThlV3jtDOOpvYEOPtQNQwhanBybpL2Hk">
+<div class="absolute -bottom-3 -right-3 bg-gradient-to-br from-yellow-400 to-amber-600 w-14 h-14 rounded-full flex items-center justify-center text-2xl font-bold text-white shadow-xl">1</div>
+</div>
+<h3 class="font-display-lg-mobile text-display-lg-mobile text-on-surface">Marcus Thorne</h3>
+<span class="font-label-md text-label-md text-primary uppercase tracking-widest">Master Architect</span>
+<div class="mt-6 flex justify-center gap-12">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Hero Points</span>
+<span class="font-headline-md text-headline-md text-primary">18,920</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Impact Score</span>
+<span class="font-headline-md text-headline-md text-secondary">98.2</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Bronze #3 -->
+<div class="order-3 glass-panel p-glass-padding rounded-lg flex flex-col items-center text-center mt-12 relative overflow-hidden group hover:active-glow transition-all">
+<div class="relative z-10">
+<div class="w-24 h-24 mx-auto mb-4 rounded-full border-4 border-amber-900/30 relative">
+<img class="w-full h-full object-cover rounded-full" data-alt="A portrait of an older man with a friendly, wise expression, wearing a high-visibility civic safety vest that has small integrated digital screens. He is standing on a clean, modern city street at dusk with glowing streetlights. Digital oil painting style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD5fFKO-xaJiM82sz82g8-y-7PEescxmr0vGidSF63dhg2A5hG1jchqf3rzz4ndER6frmXJjT5ifMGxnluzileG6ZD4uGbspa0Xs438yY8y3dm0c1Fir7FVz5SHTGqtQiduESX5Eo0ZGpgyS2mpYdll8wt_pLw1OMRS8HWCzuiMreLhTDAeQ7wy4oDU20CowgBfDbzengvK-foIAYSs-CYQXFlLU1hzD3BZyfmwkjQeBOYkjDZaO0U7QqC68-0MtYEqN0DXB0aEggc">
+<div class="absolute -bottom-2 -right-2 bg-orange-700 w-10 h-10 rounded-full flex items-center justify-center text-xl font-bold text-white shadow-lg">3</div>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Arthur Chen</h3>
+<span class="font-label-sm text-label-sm text-secondary-container uppercase tracking-widest">Pothole Patrol</span>
+<div class="mt-4 grid grid-cols-2 gap-4">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Hero Points</span>
+<span class="font-headline-sm text-headline-sm text-primary">11,200</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Impact</span>
+<span class="font-headline-sm text-headline-sm text-secondary">89%</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Main Leaderboard List -->
+<section class="mt-16">
+<div class="flex justify-between items-end mb-8">
+<h2 class="font-headline-md text-headline-md text-on-surface">Community Rankings</h2>
+<div class="flex gap-2">
+<button class="px-4 py-2 glass-panel rounded-full text-label-sm text-on-surface-variant hover:text-primary">Weekly</button>
+<button class="px-4 py-2 bg-primary/20 border border-primary/30 rounded-full text-label-sm text-primary">Monthly</button>
+<button class="px-4 py-2 glass-panel rounded-full text-label-sm text-on-surface-variant hover:text-primary">All Time</button>
+</div>
+</div>
+<div class="space-y-4">
+<!-- Rank Item 4 -->
+<div class="glass-panel p-6 rounded-lg flex items-center gap-6 hover:translate-x-2 transition-transform cursor-pointer">
+<span class="font-display-lg text-headline-md w-12 text-on-surface-variant">04</span>
+<div class="w-16 h-16 rounded-full overflow-hidden border border-white/10 shrink-0">
+<img class="w-full h-full object-cover" data-alt="Close-up avatar of a person with colorful hair and artistic makeup, looking directly at the camera with a playful smile. Bright studio lighting with colorful gels in violet and cyan. High-end modern portrait." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCsrGPURFL1ZnEYD4sKIMMdsbsdRYqscrWZVoDXiH4ml497lrNbzEYg7Fg9zwDqLjKZ8HGH3j5wgnqfp_4ruKV7lVZWogq7DGOFObx_Q_C0AnGbz9fOzFWdgtCe1RXOwQn1zErlIBS1ixlqWHOc62EiHcjN0Cd_Vd1PkTyckzV0GjZypEflMhIyVej91B8Y-r-VQ4VfeDT6FOCVSmI9BWMLjqVbXKpyJHYWo9RH8jAZWxUoey43Gu2vlIdo_16BhiuNATR6cN13I0s">
+</div>
+<div class="flex-1">
+<div class="flex items-center gap-2">
+<h4 class="font-headline-sm text-headline-sm text-on-surface">Sarah J.</h4>
+<div class="bg-primary/10 border border-primary/20 px-3 py-1 rounded-full flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px] text-primary">light_mode</span>
+<span class="font-label-sm text-label-sm text-primary">Light Bringer</span>
+</div>
+</div>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Top Contributor: Public Lighting Safety</p>
+</div>
+<div class="text-right hidden md:block">
+<span class="block font-headline-sm text-headline-sm text-primary">9,840</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Hero Points</span>
+</div>
+<div class="text-right ml-4">
+<div class="w-32 h-2 bg-white/5 rounded-full overflow-hidden">
+<div class="w-4/5 h-full bg-gradient-to-r from-primary to-secondary"></div>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant">82% Impact</span>
+</div>
+</div>
+<!-- Rank Item 5 -->
+<div class="glass-panel p-6 rounded-lg flex items-center gap-6 hover:translate-x-2 transition-transform cursor-pointer">
+<span class="font-display-lg text-headline-md w-12 text-on-surface-variant">05</span>
+<div class="w-16 h-16 rounded-full overflow-hidden border border-white/10 shrink-0">
+<img class="w-full h-full object-cover" data-alt="Portrait of a young male software developer wearing sleek noise-canceling headphones, in a futuristic lab environment with holographic displays reflecting in his eyes. The lighting is dominated by deep blues and neon accents. Hyper-realistic and detailed." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC0-ZKK0QKK1G6C63isqddIikvdvVf4Qs4JkHJRLuBX50LWvCkwfBB_VmDS2ukYhcyRuSRvNBO1jEy83PqmHflM0nmqIAdI_GUPiId0th1F8Iz7Y-vjv1bRBHwkGYgTIkNhyIwJnCUtOuDvxZPsq-o4n514sSjVLKMO61dlpmg8Ni2r27htqLEFe2C2xPeOgVE7enf0dSKIe6U6LofCI4xz_hzhN8SFf-uQfnl-nOgpQH7ukxTaBP5DQgCNr5kyTh8YjJ4LSc0k4hE">
+</div>
+<div class="flex-1">
+<div class="flex items-center gap-2">
+<h4 class="font-headline-sm text-headline-sm text-on-surface">David Kim</h4>
+<div class="bg-secondary/10 border border-secondary/20 px-3 py-1 rounded-full flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px] text-secondary">code</span>
+<span class="font-label-sm text-label-sm text-secondary">Data Analyst</span>
+</div>
+</div>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Optimizing traffic flow algorithms</p>
+</div>
+<div class="text-right hidden md:block">
+<span class="block font-headline-sm text-headline-sm text-primary">8,520</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Hero Points</span>
+</div>
+<div class="text-right ml-4">
+<div class="w-32 h-2 bg-white/5 rounded-full overflow-hidden">
+<div class="w-3/5 h-full bg-gradient-to-r from-primary to-secondary"></div>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant">76% Impact</span>
+</div>
+</div>
+<!-- Rank Item 6 (Special Active/Me Style) -->
+<div class="glass-panel p-6 rounded-lg flex items-center gap-6 border-primary/30 active-glow relative translate-x-4 cursor-pointer">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-primary"></div>
+<span class="font-display-lg text-headline-md w-12 text-primary">24</span>
+<div class="w-16 h-16 rounded-full overflow-hidden border-2 border-primary shrink-0 p-0.5">
+<img class="w-full h-full object-cover rounded-full" data-alt="A futuristic circular avatar profile picture of a tech-savvy user, set against a glowing neon circuitry background with soft cyan and violet lighting. The style is hyper-realistic digital art, reflecting high-quality smart city futurism." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC_lI1r8q7YQd01uOQq_Jpv3RcL1D5oK0onwOztVSmRFMkZX_5ybDH5TEItVZFsKm-stLYbX9LxMxbfvsHlSmXL2SypncNswYdK5eEIc_wkYaTLC7PxTsBfnwfsI-vRBawzp_szp4KKr0K3qCQNs-x1tplHZDnPCjvnWiOzmwIgXJdvF7Z4FvEMsC1DsjDVtYVuTiSVCPJA7KE9ooUn3k_Ci_7YVrOJ-0g8KEYR8sOrFvv8mqZ0iCrUMSfMrAEkHnxOYdWIw8Q9B1g">
+</div>
+<div class="flex-1">
+<div class="flex items-center gap-2">
+<h4 class="font-headline-sm text-headline-sm text-on-surface">You (Hero Candidate)</h4>
+<div class="bg-error-container/20 border border-error/30 px-3 py-1 rounded-full flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px] text-error glow-dot">trending_up</span>
+<span class="font-label-sm text-label-sm text-error">Rising Star</span>
+</div>
+</div>
+<p class="font-label-sm text-label-sm text-on-surface-variant">You're in the top 15% of your neighborhood!</p>
+</div>
+<div class="text-right hidden md:block">
+<span class="block font-headline-sm text-headline-sm text-primary">4,210</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Hero Points</span>
+</div>
+<div class="text-right ml-4">
+<div class="w-32 h-2 bg-white/5 rounded-full overflow-hidden">
+<div class="w-2/5 h-full bg-gradient-to-r from-primary to-secondary"></div>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant">42% Impact</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Achievement Showcase (Horizontal Bento Scroll) -->
+<section class="mt-20">
+<h2 class="font-headline-md text-headline-md text-on-surface mb-8">Achievement Gallery</h2>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-grid-gutter">
+<div class="glass-panel p-6 rounded-lg text-center achievement-badge">
+<div class="w-20 h-20 mx-auto bg-gradient-to-br from-primary/20 to-primary/5 rounded-2xl flex items-center justify-center mb-4 border border-primary/20">
+<span class="material-symbols-outlined text-4xl text-primary" style="font-variation-settings: 'FILL' 1;">construction</span>
+</div>
+<h4 class="font-label-md text-label-md text-on-surface mb-1">Pothole Patrol</h4>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Report 50+ road hazards</p>
+<div class="mt-4 text-primary font-bold text-sm">2.4k Achieved</div>
+</div>
+<div class="glass-panel p-6 rounded-lg text-center achievement-badge">
+<div class="w-20 h-20 mx-auto bg-gradient-to-br from-secondary/20 to-secondary/5 rounded-2xl flex items-center justify-center mb-4 border border-secondary/20">
+<span class="material-symbols-outlined text-4xl text-secondary" style="font-variation-settings: 'FILL' 1;">eco</span>
+</div>
+<h4 class="font-label-md text-label-md text-on-surface mb-1">Eco Warrior</h4>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Maintain zero waste for 30 days</p>
+<div class="mt-4 text-secondary font-bold text-sm">842 Achieved</div>
+</div>
+<div class="glass-panel p-6 rounded-lg text-center achievement-badge border-primary/40 active-glow">
+<div class="w-20 h-20 mx-auto bg-gradient-to-br from-yellow-400/20 to-yellow-600/5 rounded-2xl flex items-center justify-center mb-4 border border-yellow-500/20">
+<span class="material-symbols-outlined text-4xl text-yellow-500" style="font-variation-settings: 'FILL' 1;">bolt</span>
+</div>
+<h4 class="font-label-md text-label-md text-on-surface mb-1">Light Bringer</h4>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Report 10+ dark streetlights</p>
+<div class="mt-4 text-yellow-500 font-bold text-sm">1.1k Achieved</div>
+</div>
+<div class="glass-panel p-6 rounded-lg text-center achievement-badge">
+<div class="w-20 h-20 mx-auto bg-gradient-to-br from-tertiary/20 to-tertiary/5 rounded-2xl flex items-center justify-center mb-4 border border-tertiary/20">
+<span class="material-symbols-outlined text-4xl text-tertiary" style="font-variation-settings: 'FILL' 1;">volunteer_activism</span>
+</div>
+<h4 class="font-label-md text-label-md text-on-surface mb-1">City Guardian</h4>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Complete 100 civic missions</p>
+<div class="mt-4 text-tertiary font-bold text-sm">124 Achieved</div>
+</div>
+</div>
+</section>
+</main>
+</div>
+<!-- Footer -->
+<footer class="w-full px-container-padding-desktop mt-stack-gap bg-surface-container-lowest py-12 border-t border-outline-variant">
+<div class="max-w-[1440px] mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
+<div class="flex flex-col gap-2">
+<span class="font-headline-sm text-headline-sm text-on-surface">CivicLens AI</span>
+<p class="font-body-md text-body-md text-on-surface-variant">© 2026 CivicHero AI. Powering Smart Governance.</p>
+</div>
+<div class="flex gap-8">
+<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-colors" href="#">Impact Report</a>
+<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-colors" href="#">Privacy Policy</a>
+<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-colors" href="#">Data Transparency</a>
+<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-colors" href="#">API Access</a>
+</div>
+<div class="flex gap-4">
+<span class="material-symbols-outlined text-on-surface-variant hover:text-primary cursor-pointer">public</span>
+<span class="material-symbols-outlined text-on-surface-variant hover:text-primary cursor-pointer">monitoring</span>
+</div>
+</div>
+</footer>
+<!-- FAB -->
+<button class="fixed bottom-8 right-8 w-16 h-16 rounded-full glass-panel active-glow flex items-center justify-center text-primary shadow-2xl z-50 hover:scale-110 active:scale-95 transition-all group">
+<span class="material-symbols-outlined text-3xl group-hover:rotate-12 transition-transform">add_task</span>
+</button>
+<script>
+        // Simple interactivity for the cards
+        document.querySelectorAll('.glass-panel').forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                card.style.setProperty('--mouse-x', `${x}px`);
+                card.style.setProperty('--mouse-y', `${y}px`);
+            });
+        });
+    </script>
+
+
+
+
+
+
+
+
+</body></html>

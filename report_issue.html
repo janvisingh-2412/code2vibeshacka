@@ -1,0 +1,542 @@
+<!DOCTYPE html><html class="dark" lang="en" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Report Issue | CivicHero AI</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<!-- Injection of Global Style Guidance Tokens -->
+<style>
+        :root {
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --void-bg: #051424;
+        }
+        body {
+            background-color: var(--void-bg);
+            color: #d4e4fa;
+            overflow-x: hidden;
+            font-family: 'Inter', sans-serif;
+        }
+        .glass-panel {
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            background: rgba(18, 33, 49, 0.6);
+        }
+        .glow-border-primary {
+            box-shadow: 0 0 20px rgba(138, 235, 255, 0.2);
+            border: 1px solid rgba(138, 235, 255, 0.4);
+        }
+        .scanning-line {
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #8aebff, transparent);
+            animation: scan 3s linear infinite;
+        }
+        @keyframes scan {
+            0% { top: 0%; opacity: 0; }
+            50% { opacity: 1; }
+            100% { top: 100%; opacity: 0; }
+        }
+        .pulse-animation {
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(138, 235, 255, 0.7); }
+            70% { transform: scale(1.05); box-shadow: 0 0 0 15px rgba(138, 235, 255, 0); }
+            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(138, 235, 255, 0); }
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-container": "#122131",
+                    "secondary-fixed": "#e9ddff",
+                    "tertiary-fixed-dim": "#bec6e0",
+                    "on-primary": "#00363e",
+                    "secondary": "#d0bcff",
+                    "surface": "#051424",
+                    "surface-container-lowest": "#010f1f",
+                    "surface-container-low": "#0d1c2d",
+                    "on-tertiary": "#283044",
+                    "inverse-primary": "#006877",
+                    "on-surface-variant": "#bbc9cd",
+                    "on-secondary-fixed-variant": "#5516be",
+                    "on-primary-container": "#005763",
+                    "on-tertiary-container": "#474e64",
+                    "on-error-container": "#ffdad6",
+                    "on-secondary-fixed": "#23005c",
+                    "surface-variant": "#273647",
+                    "primary-fixed": "#a2eeff",
+                    "secondary-container": "#571bc1",
+                    "secondary-fixed-dim": "#d0bcff",
+                    "error-container": "#93000a",
+                    "on-secondary-container": "#c4abff",
+                    "surface-tint": "#2fd9f4",
+                    "primary": "#8aebff",
+                    "inverse-surface": "#d4e4fa",
+                    "on-primary-fixed": "#001f25",
+                    "surface-container-highest": "#273647",
+                    "outline": "#859397",
+                    "error": "#ffb4ab",
+                    "on-background": "#d4e4fa",
+                    "on-tertiary-fixed": "#131b2e",
+                    "tertiary-container": "#b9c0da",
+                    "tertiary-fixed": "#dae2fd",
+                    "background": "#051424",
+                    "outline-variant": "#3c494c",
+                    "tertiary": "#d5dcf6",
+                    "on-tertiary-fixed-variant": "#3f465c",
+                    "surface-container-high": "#1c2b3c",
+                    "on-surface": "#d4e4fa",
+                    "inverse-on-surface": "#233143",
+                    "on-secondary": "#3c0091",
+                    "primary-container": "#22d3ee",
+                    "surface-bright": "#2c3a4c",
+                    "on-error": "#690005",
+                    "on-primary-fixed-variant": "#004e5a",
+                    "primary-fixed-dim": "#2fd9f4",
+                    "surface-dim": "#051424"
+            },
+            "borderRadius": {
+                    "DEFAULT": "1rem",
+                    "lg": "2rem",
+                    "xl": "3rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "container-padding-desktop": "48px",
+                    "base": "4px",
+                    "container-padding-mobile": "20px",
+                    "grid-gutter": "24px",
+                    "stack-gap": "24px",
+                    "glass-padding": "24px"
+            },
+            "fontFamily": {
+                    "label-sm": ["Inter"],
+                    "label-md": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "display-lg": ["Sora"],
+                    "body-md": ["Inter"],
+                    "display-lg-mobile": ["Sora"],
+                    "headline-md": ["Sora"],
+                    "headline-sm": ["Sora"]
+            },
+            "fontSize": {
+                    "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "500"}],
+                    "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "display-lg-mobile": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+</head>
+<body class="bg-surface selection:bg-primary/30">
+<!-- TopNavBar (Shared Component) -->
+<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-container-padding-desktop max-w-[1440px] left-1/2 -translate-x-1/2 bg-surface/60 backdrop-blur-xl border-b border-white/10 shadow-2xl h-20">
+<div class="flex items-center gap-4">
+<span class="font-display-lg text-display-lg bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent"><span style="font-size: 32px; font-weight: 400; letter-spacing: normal;" class="">CivicLens AI</span></span>
+</div>
+<div class="hidden md:flex items-center gap-8">
+<nav class="flex gap-6">
+<a class="font-label-md text-label-md text-on-surface-variant hover:bg-white/5 transition-all duration-300 px-4 py-2 rounded-lg" href="index.html">Dashboard</a>
+<a class="font-label-md text-label-md text-primary border-b-2 border-primary px-4 py-2" href="report_issue.html">Report Issue</a>
+<a class="font-label-md text-label-md text-on-surface-variant hover:bg-white/5 transition-all duration-300 px-4 py-2 rounded-lg" href="community.html">Community</a>
+<a class="font-label-md text-label-md text-on-surface-variant hover:bg-white/5 transition-all duration-300 px-4 py-2 rounded-lg flex items-center gap-2" href="history.html"><span class="material-symbols-outlined text-[20px]" data-icon="history">history</span>History</a><a class="font-label-md text-label-md text-on-surface-variant hover:bg-white/5 transition-all duration-300 px-4 py-2 rounded-lg flex items-center gap-2" href="ai_assistant.html"><span class="material-symbols-outlined text-[20px]" data-icon="smart_toy">smart_toy</span>Assistant</a></nav>
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary cursor-pointer hover:scale-110 transition-transform" data-icon="smart_toy">smart_toy</span>
+<span class="material-symbols-outlined text-primary cursor-pointer hover:scale-110 transition-transform" data-icon="workspace_premium">workspace_premium</span>
+<div class="w-10 h-10 rounded-full bg-surface-container-high border border-primary/20 overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A futuristic professional portrait of a tech-savvy urban citizen in a high-tech smart city environment. The lighting is dramatic with cyan and violet rim lights against a dark, minimalist architectural background. The image has a clean, premium digital aesthetic consistent with a high-end AI governance platform." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCgT8nvG-4QlHSH6-VJKlDI9LWtNwJvE_hKv7q4MjwQ0ad1Nmm0DxGN1YsAaDHfXqwRLI4RDTDn99vutLIJUlT_6dtTlKnTT6GYJf-ZpgxHYOcJ8Nib8vGTJGsDERAjtLvgwOHG-hHbDOxl1enqC4ZEPfaoa296TOTMqjZc5TUT-cI_34ij7zpyRUrZOyC1W0hRNSeo1Aai9qtzG_1okXLYT2sWFsLlYFdaurXGJVg442ONBFaPT3Wip4-R0RZTqa8dw7VtYTsjjx0">
+</div>
+</div>
+</div>
+</header>
+<!-- SideNavBar (Suppressed for Task-Focused Page per Shell Mandate) -->
+<main class="pt-32 pb-20 px-container-padding-mobile md:px-container-padding-desktop max-w-7xl mx-auto min-h-screen relative">
+<!-- Atmospheric Background Element -->
+<!-- Main Modal Container -->
+<div class="glass-panel rounded-lg p-8 md:p-12 shadow-[0_20px_60px_rgba(0,0,0,0.5)] relative overflow-hidden">
+<!-- Scanning Line Effect -->
+<div class="scanning-line"></div>
+<div class="flex flex-col lg:flex-row gap-12 relative z-10">
+<!-- Left Column: Upload & Input -->
+<div class="flex-1 space-y-8">
+<div class="space-y-2">
+<h1 class="font-display-lg text-display-lg-mobile md:text-display-lg text-on-surface">Initialize Incident Report</h1>
+<p class="font-body-md text-body-md text-on-surface-variant">AI-Enhanced Infrastructure Analysis &amp; Geo-tagging</p>
+</div>
+<!-- Upload Zone -->
+<div class="relative group" onclick="document.getElementById('image').click()">
+<input type="file" id="image" class="hidden" accept="image/*,video/*">
+<div id="uploadZone" class="relative w-full aspect-video rounded-lg border-2 border-dashed border-primary/30 bg-surface-container-low/50 flex flex-col items-center justify-center transition-all duration-500 group-hover:border-primary group-hover:bg-primary/5 cursor-pointer overflow-hidden">
+<div id="uploadPrompt" class="text-center p-6 transition-transform duration-500 group-hover:scale-105 z-10">
+<span class="material-symbols-outlined text-6xl text-primary/60 mb-4 group-hover:text-primary transition-colors" data-icon="cloud_upload">cloud_upload</span>
+<p class="font-headline-sm text-headline-sm text-on-surface">Drop visuals or click to scan</p>
+<p id="imageName" class="font-label-sm text-label-sm text-on-surface-variant mt-2">Support for 4K video and RAW imagery</p>
+</div>
+<img id="imagePreview" class="absolute inset-0 w-full h-full object-cover hidden z-0">
+<div id="analyzingOverlay" class="absolute inset-0 bg-surface/80 backdrop-blur-sm hidden flex-col items-center justify-center z-20">
+<span class="material-symbols-outlined text-6xl text-primary animate-spin mb-4" data-icon="sync">sync</span>
+<p class="font-headline-sm text-primary animate-pulse">Analyzing image...</p>
+</div>
+</div>
+</div>
+<!-- 3D Styled Inputs -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="space-y-2">
+<label class="font-label-md text-label-md text-primary ml-1">Issue Category</label>
+<select id="issueType" class="w-full h-14 px-4 rounded-lg bg-surface-container-high border border-outline-variant text-on-surface focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none transition-all shadow-inner appearance-none">
+<option>Pothole / Road Damage</option>
+<option>Faulty Street Lighting</option>
+<option>Public Space Maintenance</option>
+<option>Vandalism / Graffiti</option>
+</select>
+</div>
+<div class="space-y-2">
+    <label class="font-label-md text-label-md text-primary ml-1">
+        Urgency Level
+    </label>
+
+    <select id="severity"
+        class="w-full h-14 px-4 rounded-lg bg-surface-container-high border border-outline-variant text-on-surface">
+        <option value="Normal">Normal</option>
+        <option value="Medium">Medium</option>
+        <option value="Critical">Critical</option>
+
+    </select>
+</div>
+</div>
+<div class="space-y-2 mt-4">
+<label class="font-label-md text-label-md text-primary ml-1">Description</label>
+<textarea id="description" placeholder="Describe the issue" class="w-full h-32 py-3 px-4 rounded-lg bg-surface-container-high border border-outline-variant text-on-surface focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none transition-all shadow-inner resize-none"></textarea>
+</div>
+<div class="space-y-2 mt-4">
+
+<label class="font-label-md text-label-md text-primary ml-1">
+
+Location
+
+</label>
+
+<input
+
+id="location"
+
+type="text"
+
+placeholder="Enter Issue Location"
+
+class="w-full h-14 px-4 rounded-lg bg-surface-container-high border border-outline-variant text-on-surface">
+
+</div>
+<!-- Voice Button with Pulse -->
+<div class="flex items-center gap-4 p-4 rounded-lg bg-primary/5 border border-primary/20">
+<button class="w-14 h-14 rounded-full bg-gradient-to-tr from-primary to-secondary flex items-center justify-center pulse-animation shadow-lg hover:scale-105 transition-transform">
+<span class="material-symbols-outlined text-on-primary" data-icon="mic" style="font-variation-settings: &quot;FILL&quot; 1;">mic</span>
+</button>
+<div>
+<p class="font-label-md text-label-md text-on-surface">Voice Context Transcription</p>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Tap to describe the issue hands-free</p>
+</div>
+</div>
+</div>
+<!-- Right Column: Map & AI Panel -->
+<div class="w-full lg:w-[400px] space-y-8">
+<!-- Mini Map Container -->
+<div class="space-y-4">
+<div class="flex justify-between items-end">
+<h3 class="font-headline-sm text-headline-sm text-on-surface">GPS Anchor</h3>
+<span class="font-label-sm text-label-sm text-primary">Precise: 28.6139° N, 77.2090° E</span>
+</div>
+<div class="w-full h-64 rounded-lg overflow-hidden border border-white/10 relative"><!-- Background Image: India Gate -->
+<div class="absolute inset-0 bg-cover bg-center" style="background-image: url(&quot;https://lh3.googleusercontent.com/aida-public/AB6AXuDLhbDvCXJ6f7cjCeToRJNILMwHX8h0edhYaH3vmpID1RX6lJ8C_i36BQZ6Ze9ektysRvNCxdU8PvLj6EDN93SrN5oWGJPkrADL7xDCk1AMX4r5QLba-XL52niibxjyAtvHZMfv4jM0WRjappJOrZfyhTKxUgtIhfygWrC2AKa81vGuQABixOgX9s4G2GMgioKfY_M9SK_0XxNQbIjXd3M3grFFGvRpS6hms3H1-wDk7d_QE38erbN28GKQA6aRZ0UcgN-H--oZk7I&quot;);"></div>
+<!-- Overlay Image: New Delhi Map with reduced opacity -->
+<div class="absolute inset-0 bg-cover bg-center opacity-80 mix-blend-screen" style="background-image: url(&quot;https://lh3.googleusercontent.com/aida-public/AB6AXuC975IKep-fJh352iItIoFZA9vHLIfrS4C5AZxGaVdVuyr4qUJ5PaoZiYBzEbOA-i7vOHYx6tWNsVDw11f9SEU1oBjv_GnuywSWOx_kz8E8VPDsa8SuxYygsQjX4woNnaPcc-WPI3EytxGIejteEuvDWiT9IjyeW8EtzKpcnPKi5CAkDSR5HhRPACB6Cz5UC0htcgJ3K8o8qDeeksIu_XLawpYYtl4lR7clXFhicqrwa3RzdSMYkLz8Z_gXB3uhfst7bZ7537DBT3g&quot;);"></div>
+<!-- Crosshair Overlay -->
+<div class="absolute inset-0 flex items-center justify-center pointer-events-none z-10">
+<div class="w-12 h-12 border-2 border-primary rounded-full flex items-center justify-center animate-pulse">
+<div class="w-1 h-1 bg-primary rounded-full"></div>
+</div>
+</div>
+<!-- Signal Strength Badge -->
+<div class="absolute bottom-3 left-3 bg-surface/80 backdrop-blur-md px-3 py-1 rounded-full text-[10px] font-label-md text-on-surface flex items-center gap-2 z-10">
+<span class="w-2 h-2 bg-primary rounded-full animate-ping"></span>
+    SIGNAL STRENGTH: OPTIMAL
+</div></div>
+</div>
+<!-- AI Analysis Panel -->
+<div class="glass-panel glow-border-primary rounded-lg p-6 space-y-6">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary" data-icon="analytics">analytics</span>
+<h3 class="font-headline-sm text-headline-sm text-primary uppercase tracking-widest text-[14px]">Real-Time Diagnostics</h3>
+</div>
+<div class="space-y-4">
+<div class="flex justify-between items-center pb-3 border-b border-white/5">
+<span class="font-label-md text-label-md text-on-surface-variant">Anomaly Detected</span>
+<span class="font-label-md text-label-md text-on-surface font-bold" id="ai-issue-type">Pending Analysis</span>
+</div>
+<div class="space-y-2">
+<div class="flex justify-between">
+<span class="font-label-md text-label-md text-on-surface-variant">Confidence</span>
+<span class="font-label-md text-label-md text-error" id="ai-confidence">0%</span>
+</div>
+<div class="w-full bg-white/5 h-2 rounded-full overflow-hidden">
+<div class="bg-gradient-to-r from-error to-secondary w-[0%] h-full shadow-[0_0_10px_rgba(255,180,171,0.5)]" id="ai-confidence-bar"></div>
+</div>
+</div>
+<div class="flex justify-between items-center pt-3 border-t border-white/5">
+<span class="font-label-md text-label-md text-on-surface-variant">Estimated Repair</span>
+<div class="flex items-center gap-2 text-primary font-bold">
+<span class="material-symbols-outlined text-sm" data-icon="schedule">schedule</span>
+<span class="font-label-md text-label-md" id="ai-repair-time">-</span>
+</div>
+</div>
+</div>
+<div class="p-3 bg-primary/10 rounded-lg flex gap-3">
+<span class="material-symbols-outlined text-primary" data-icon="verified">verified</span>
+<p class="font-label-sm text-label-sm text-on-surface" id="ai-suggested-action">Upload an image to get AI-powered insights.</p>
+</div>
+</div>
+<!-- Submit Button -->
+<button id="submitBtn" class="w-full py-5 rounded-lg bg-gradient-to-r from-primary to-secondary text-on-primary font-headline-sm text-headline-sm shadow-[0_0_30px_rgba(138,235,255,0.4)] hover:shadow-[0_0_50px_rgba(138,235,255,0.6)] hover:scale-[1.02] active:scale-95 transition-all duration-300">
+                        Submit Digital Report
+                    </button>
+<p class="text-center font-label-sm text-label-sm text-on-surface-variant italic">
+                        By submitting, you agree to the CivicHero Data Transparency Protocol.
+                    </p>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer (Shared Component) -->
+<footer class="w-full px-container-padding-desktop mt-stack-gap bg-surface-container-lowest py-12 border-t border-outline-variant">
+<div class="max-w-[1440px] mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
+<div class="space-y-2">
+<span class="font-headline-sm text-headline-sm text-on-surface">CivicLens AI</span>
+<p class="font-body-md text-body-md text-on-surface-variant">© 2026 CivicHero AI. Powering Smart Governance.</p>
+</div>
+<div class="flex flex-wrap justify-center gap-6">
+<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-colors" href="#">Impact Report</a>
+<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-colors" href="#">Privacy Policy</a>
+<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-colors" href="#">Data Transparency</a>
+<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-colors" href="#">API Access</a>
+</div>
+</div>
+</footer>
+<!-- FAB Suppression (Per Mandate for Details/Transactional pages) -->
+<script>
+        // Micro-interactions for input focus
+        document.querySelectorAll('input, select, textarea').forEach(el => {
+            el.addEventListener('focus', () => {
+                el.parentElement.querySelector('label')?.classList.add('text-secondary');
+                el.parentElement.querySelector('label')?.classList.remove('text-primary');
+            });
+            el.addEventListener('blur', () => {
+                el.parentElement.querySelector('label')?.classList.add('text-primary');
+                el.parentElement.querySelector('label')?.classList.remove('text-secondary');
+            });
+        });
+
+        // Toggle urgency
+        const urgencyBtns = document.querySelectorAll('.flex.gap-2.h-14 button');
+        urgencyBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                urgencyBtns.forEach(b => {
+                    b.classList.remove('bg-error/10', 'text-error', 'border-error/50');
+                    b.classList.add('border-outline-variant');
+                });
+                btn.classList.remove('border-outline-variant');
+                btn.classList.add('bg-error/10', 'text-error', 'border-error/50');
+            });
+        });
+    </script>
+
+
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const locInput = document.getElementById("location");
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+            (position) => {
+                if (!locInput.value) {
+                    locInput.value = `${position.coords.latitude}, ${position.coords.longitude}`;
+                }
+            },
+            (error) => {
+                console.warn("Geolocation permission denied or error.", error);
+            }
+        );
+    }
+});
+
+const imageInput = document.getElementById("image");
+const imageName = document.getElementById("imageName");
+
+imageInput.addEventListener("change", async (e) => {
+    const file = e.target.files[0];
+    const uploadPrompt = document.getElementById("uploadPrompt");
+    const imagePreview = document.getElementById("imagePreview");
+    const analyzingOverlay = document.getElementById("analyzingOverlay");
+
+    if (!file) {
+        imageName.innerText = "Support for 4K video and RAW imagery";
+        uploadPrompt.classList.remove("hidden");
+        imagePreview.classList.add("hidden");
+        return;
+    }
+
+    // Show image preview
+    const objectUrl = URL.createObjectURL(file);
+    imagePreview.src = objectUrl;
+    imagePreview.classList.remove("hidden");
+    uploadPrompt.classList.add("hidden");
+
+    // Show analyzing overlay
+    analyzingOverlay.classList.remove("hidden");
+    analyzingOverlay.classList.add("flex");
+    
+    const formData = new FormData();
+    formData.append("image", file);
+
+    try {
+        const response = await fetch("http://localhost:5000/api/ai/analyze-image", {
+            method: "POST",
+            body: formData
+        });
+
+        const data = await response.json();
+        
+        // Hide analyzing overlay
+        analyzingOverlay.classList.add("hidden");
+        analyzingOverlay.classList.remove("flex");
+
+        if (response.ok && data.success) {
+            const analysis = data.analysis;
+            console.log("AI Analysis:", analysis);
+            alert(JSON.stringify(analysis));
+
+            if (analysis.isValidInfrastructureIssue === false) {
+                alert("This image is not a valid civic issue.");
+                imageName.innerText = "This image is not a valid civic issue.";
+            } else {
+                document.getElementById("issueType").value = analysis.issueType || "Unknown";
+                
+                if (analysis.severity) {
+                    const severitySelect = document.getElementById("severity");
+                    let optionExists = Array.from(severitySelect.options).some(opt => opt.value === analysis.severity);
+                    if (!optionExists) {
+                        const newOption = new Option(analysis.severity, analysis.severity);
+                        severitySelect.add(newOption);
+                    }
+                    severitySelect.value = analysis.severity;
+                }
+
+                document.getElementById("description").value = analysis.description || "";
+                
+                document.getElementById("ai-issue-type").innerText = analysis.issueType || "Detected";
+                document.getElementById("ai-confidence").innerText = analysis.confidence || "100%";
+                document.getElementById("ai-confidence-bar").style.width = analysis.confidence || "100%";
+                document.getElementById("ai-repair-time").innerText = analysis.estimatedRepairTime || "Unknown";
+                document.getElementById("ai-suggested-action").innerText = analysis.suggestedAction || "No suggested action provided.";
+                
+                imageName.innerText = file.name;
+            }
+        } else {
+            imageName.innerText = file.name;
+            alert(data.message || "Failed to analyze image.");
+        }
+    } catch (err) {
+        console.error(err);
+        analyzingOverlay.classList.add("hidden");
+        analyzingOverlay.classList.remove("flex");
+        imageName.innerText = file.name;
+        alert("Server Connection Failed");
+    }
+});
+
+const submitBtn = document.getElementById("submitBtn");
+    console.log("SUBMIT BUTTON CLICKED");
+    e.preventDefault();
+
+    const image = document.getElementById("image").files[0];
+    const issueType = document.getElementById("issueType").value;
+    const description = document.getElementById("description").value;
+    const severity = document.getElementById("severity").value;
+    const location = document.getElementById("location").value;
+
+    if (!image || !description || !location) {
+        alert("Please fill all the required fields.");
+        return;
+    }
+
+    const formData = new FormData();
+
+    formData.append("image", image);
+    formData.append("issueType", issueType);
+    formData.append("description", description);
+    formData.append("severity", severity);
+    formData.append("location", location);
+    formData.append("status", "Pending");
+
+    try {
+
+        const response = await fetch("http://localhost:5000/api/issues/create", {
+            method: "POST",
+            body: formData
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+
+            alert("Report submitted successfully.");
+
+            document.getElementById("description").value = "";
+            document.getElementById("location").value = "";
+            document.getElementById("image").value = "";
+            document.getElementById("severity").value = "Normal";
+            document.getElementById("imageName").innerText = "Support for 4K video and RAW imagery";
+            
+            // Reset AI Diagnostics
+            document.getElementById("ai-issue-type").innerText = "Pending Analysis";
+            document.getElementById("ai-confidence").innerText = "0%";
+            document.getElementById("ai-confidence-bar").style.width = "0%";
+            document.getElementById("ai-repair-time").innerText = "-";
+            document.getElementById("ai-suggested-action").innerText = "Upload an image to get AI-powered insights.";
+            
+            // Reset Image Preview
+            document.getElementById("imagePreview").src = "";
+            document.getElementById("imagePreview").classList.add("hidden");
+            document.getElementById("uploadPrompt").classList.remove("hidden");
+
+        } else {
+
+            alert(data.message || "Submission Failed");
+
+        }
+
+    } catch (err) {
+
+        console.error(err);
+        alert("Server Connection Failed");
+
+    }
+
+});
+</script>
+</body></html>

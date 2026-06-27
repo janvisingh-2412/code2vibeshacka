@@ -1,0 +1,439 @@
+<!DOCTYPE html><html class="dark" lang="en" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>CivicHero AI | Analytics Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<style>
+        .glass-panel {
+            background: rgba(18, 33, 49, 0.6);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .active-module {
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            border: 1px solid rgba(138, 235, 255, 0.3);
+        }
+        .neon-glow-cyan {
+            filter: drop-shadow(0 0 8px rgba(138, 235, 255, 0.5));
+        }
+        .pulse-critical {
+            animation: pulse-red 2s infinite;
+        }
+        @keyframes pulse-red {
+            0% { box-shadow: 0 0 0 0 rgba(255, 180, 171, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(255, 180, 171, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(255, 180, 171, 0); }
+        }
+        body {
+            background-color: #051424;
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(34, 211, 238, 0.05) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(208, 188, 255, 0.05) 0px, transparent 50%);
+            min-height: 100vh;
+            color: #d4e4fa;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-container": "#122131",
+                    "secondary-fixed": "#e9ddff",
+                    "tertiary-fixed-dim": "#bec6e0",
+                    "on-primary": "#00363e",
+                    "secondary": "#d0bcff",
+                    "surface": "#051424",
+                    "surface-container-lowest": "#010f1f",
+                    "surface-container-low": "#0d1c2d",
+                    "on-tertiary": "#283044",
+                    "inverse-primary": "#006877",
+                    "on-surface-variant": "#bbc9cd",
+                    "on-secondary-fixed-variant": "#5516be",
+                    "on-primary-container": "#005763",
+                    "on-tertiary-container": "#474e64",
+                    "on-error-container": "#ffdad6",
+                    "on-secondary-fixed": "#23005c",
+                    "surface-variant": "#273647",
+                    "primary-fixed": "#a2eeff",
+                    "secondary-container": "#571bc1",
+                    "secondary-fixed-dim": "#d0bcff",
+                    "error-container": "#93000a",
+                    "on-secondary-container": "#c4abff",
+                    "surface-tint": "#2fd9f4",
+                    "primary": "#8aebff",
+                    "inverse-surface": "#d4e4fa",
+                    "on-primary-fixed": "#001f25",
+                    "surface-container-highest": "#273647",
+                    "outline": "#859397",
+                    "error": "#ffb4ab",
+                    "on-background": "#d4e4fa",
+                    "on-tertiary-fixed": "#131b2e",
+                    "tertiary-container": "#b9c0da",
+                    "tertiary-fixed": "#dae2fd",
+                    "background": "#051424",
+                    "outline-variant": "#3c494c",
+                    "tertiary": "#d5dcf6",
+                    "on-tertiary-fixed-variant": "#3f465c",
+                    "surface-container-high": "#1c2b3c",
+                    "on-surface": "#d4e4fa",
+                    "inverse-on-surface": "#233143",
+                    "on-secondary": "#3c0091",
+                    "primary-container": "#22d3ee",
+                    "surface-bright": "#2c3a4c",
+                    "on-error": "#690005",
+                    "on-primary-fixed-variant": "#004e5a",
+                    "primary-fixed-dim": "#2fd9f4",
+                    "surface-dim": "#051424"
+            },
+            "borderRadius": {
+                    "DEFAULT": "1rem",
+                    "lg": "2rem",
+                    "xl": "3rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "container-padding-desktop": "48px",
+                    "base": "4px",
+                    "container-padding-mobile": "20px",
+                    "grid-gutter": "24px",
+                    "stack-gap": "24px",
+                    "glass-padding": "24px"
+            },
+            "fontFamily": {
+                    "label-sm": ["Inter"],
+                    "label-md": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "display-lg": ["Sora"],
+                    "body-md": ["Inter"],
+                    "display-lg-mobile": ["Sora"],
+                    "headline-md": ["Sora"],
+                    "headline-sm": ["Sora"]
+            },
+            "fontSize": {
+                    "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "500"}],
+                    "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "display-lg-mobile": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+</head>
+<body class="font-body-md text-on-surface">
+<!-- TopNavBar -->
+<header class="fixed top-0 left-0 w-full z-50 bg-surface/60 backdrop-blur-xl border-b border-white/10 shadow-2xl">
+<div class="max-w-[1440px] mx-auto px-container-padding-desktop h-20 flex justify-between items-center">
+<div class="flex items-center gap-8">
+<h1 class="font-display-lg text-headline-md bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent"><span style="font-size: 32px; font-weight: 400;" class="">CivicLens AI</span></h1>
+<div class="hidden lg:flex items-center gap-4 bg-white/5 px-4 py-2 rounded-full border border-white/10">
+<span class="material-symbols-outlined text-primary">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-label-md w-64 text-on-surface-variant" placeholder="Search analytics..." type="text">
+</div>
+</div>
+<div class="flex items-center gap-6">
+<button class="hover:bg-white/5 transition-all duration-300 p-2 rounded-full active:scale-95 duration-200">
+<span class="material-symbols-outlined text-primary">smart_toy</span>
+</button>
+<button class="hover:bg-white/5 transition-all duration-300 p-2 rounded-full active:scale-95 duration-200">
+<span class="material-symbols-outlined text-primary">workspace_premium</span>
+</button>
+<div class="w-10 h-10 rounded-full overflow-hidden border-2 border-primary/30">
+<img class="w-full h-full object-cover" data-alt="A professional close-up portrait of a diverse city administrator in a futuristic office environment with soft neon lighting reflections on glass surfaces. High-fidelity rendering with a shallow depth of field and premium corporate aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBazZmxVHmWf9tdsZ3HTUncNNrD9Kp25vrOBjC51987vzP74pVbIsnMRrGAkcPJ6VndUvkZg5ksn_EwwJWQ3i95yBvR4mP6qbxdVz9BWOhsgX7se5gMF5Vv2IueU93XWN8JP117QWUVJkgiJmr3-ceYzFRFfNrwVMCJ0h06NMONFaOkzN80-s6uYp1DDo-EiisZgARqYPfipd9ncHTzuu0KU6wqcY0Ax2NhwSo69SLlkkUPoU2_jm521DSr8gs-kCk-DIt2fl-Ekg8">
+</div>
+</div>
+</div>
+</header>
+<!-- SideNavBar -->
+<nav class="hidden lg:flex fixed left-0 top-20 h-[calc(100vh-80px)] w-64 flex-col bg-surface-container/80 backdrop-blur-2xl border-r border-white/10 shadow-[20px_0_40px_rgba(0,0,0,0.4)] z-40 p-6">
+<div class="flex-1 space-y-2">
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-on-surface-variant hover:text-on-surface hover:bg-surface-variant/50 transition-all duration-300" href="index.html">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-label-md text-label-md">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-on-surface-variant hover:text-on-surface hover:bg-surface-variant/50 transition-all duration-300" href="community_map.html">
+<span class="material-symbols-outlined">map</span>
+<span class="font-label-md text-label-md">Map View</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-on-surface-variant hover:text-on-surface hover:bg-surface-variant/50 transition-all duration-300" href="community.html">
+<span class="material-symbols-outlined">group</span>
+<span class="font-label-md text-label-md">Community</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl bg-gradient-to-r from-primary/20 to-secondary/20 text-primary border-r-4 border-primary transition-all duration-300" href="analytics.html">
+<span class="material-symbols-outlined">analytics</span>
+<span class="font-label-md text-label-md">Analytics</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-on-surface-variant hover:text-on-surface hover:bg-surface-variant/50 transition-all duration-300" href="history.html">
+<span class="material-symbols-outlined">history</span>
+<span class="font-label-md text-label-md">History</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-on-surface-variant hover:text-on-surface hover:bg-surface-variant/50 transition-all duration-300" href="ai_assistant.html">
+<span class="material-symbols-outlined">smart_toy</span>
+<span class="font-label-md text-label-md">Assistant</span>
+</a></div>
+<div class="mt-auto space-y-2 pt-6 border-t border-white/10">
+<button class="w-full bg-gradient-to-r from-primary to-secondary text-on-primary py-3 rounded-full font-label-md shadow-lg shadow-primary/20 hover:scale-105 transition-transform">
+                Report Issue
+            </button>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-on-surface-variant hover:text-on-surface hover:bg-surface-variant/50 transition-all duration-300" href="ai_assistant.html">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-label-md text-label-md">Settings</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-on-surface-variant hover:text-on-surface hover:bg-surface-variant/50 transition-all duration-300" href="report_issue.html">
+<span class="material-symbols-outlined">help</span>
+<span class="font-label-md text-label-md">Support</span>
+</a>
+</div>
+</nav>
+<!-- Main Content Canvas -->
+<main class="lg:ml-64 pt-28 px-container-padding-desktop pb-12 max-w-[1440px]">
+<!-- Header Section -->
+<section class="mb-10">
+<h2 class="font-display-lg text-display-lg mb-2">City Health Dashboard</h2>
+<p class="text-on-surface-variant font-body-md">Real-time governance insights powered by CivicHero AI Engines.</p>
+</section>
+<!-- Bento Grid: Key Metrics -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-grid-gutter mb-10">
+<!-- Metric Card 1 -->
+<div class="glass-panel p-glass-padding rounded-lg flex flex-col justify-between group hover:border-primary/50 transition-all duration-500">
+<div class="flex justify-between items-start">
+<span class="material-symbols-outlined text-primary bg-primary/10 p-2 rounded-lg">assessment</span>
+<span class="text-emerald-400 font-label-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">trending_up</span> +12%
+                    </span>
+</div>
+<div class="mt-6">
+<p class="text-on-surface-variant font-label-md uppercase tracking-wider">Total Reported</p>
+<h3 class="font-display-lg text-headline-md mt-1">12,842</h3>
+</div>
+</div>
+<!-- Metric Card 2 -->
+<div class="glass-panel p-glass-padding rounded-lg flex flex-col justify-between group hover:border-secondary/50 transition-all duration-500">
+<div class="flex justify-between items-start">
+<span class="material-symbols-outlined text-secondary bg-secondary/10 p-2 rounded-lg">check_circle</span>
+<span class="text-emerald-400 font-label-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">trending_up</span> +8%
+                    </span>
+</div>
+<div class="mt-6">
+<p class="text-on-surface-variant font-label-md uppercase tracking-wider">Total Resolved</p>
+<h3 class="font-display-lg text-headline-md mt-1">11,209</h3>
+</div>
+</div>
+<!-- Metric Card 3 -->
+<div class="glass-panel p-glass-padding rounded-lg flex flex-col justify-between border-error/20 bg-error-container/5">
+<div class="flex justify-between items-start">
+<span class="material-symbols-outlined text-error bg-error/10 p-2 rounded-lg pulse-critical">warning</span>
+<span class="text-error font-label-sm">High Priority</span>
+</div>
+<div class="mt-6">
+<p class="text-on-surface-variant font-label-md uppercase tracking-wider">Critical Alerts</p>
+<h3 class="font-display-lg text-headline-md mt-1">24</h3>
+</div>
+</div>
+<!-- Gauge Card -->
+<div class="glass-panel p-glass-padding rounded-lg relative overflow-hidden flex flex-col items-center justify-center">
+<div class="relative w-32 h-32 flex items-center justify-center">
+<svg class="w-full h-full transform -rotate-90">
+<circle class="text-white/5" cx="64" cy="64" fill="transparent" r="58" stroke="currentColor" stroke-width="8"></circle>
+<circle class="text-primary neon-glow-cyan" cx="64" cy="64" fill="transparent" r="58" stroke="currentColor" stroke-dasharray="364.4" stroke-dashoffset="72.8" stroke-linecap="round" stroke-width="10"></circle>
+</svg>
+<div class="absolute inset-0 flex flex-col items-center justify-center">
+<span class="font-display-lg text-headline-md">82</span>
+<span class="text-[10px] uppercase font-label-sm text-on-surface-variant">Participation</span>
+</div>
+</div>
+<p class="mt-4 font-label-md text-on-surface-variant">Community Score</p>
+</div>
+</div>
+<!-- Main Analytics Grid -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-grid-gutter mb-10">
+<!-- Issue Trends Chart (Large) -->
+<div class="lg:col-span-2 glass-panel rounded-lg p-glass-padding flex flex-col h-[450px]">
+<div class="flex justify-between items-center mb-8">
+<div>
+<h4 class="font-headline-sm">Issue Trends</h4>
+<p class="text-on-surface-variant text-label-md">Frequency of reports by category (Last 30 Days)</p>
+</div>
+<div class="flex gap-2">
+<button class="px-3 py-1 rounded-full bg-primary/20 text-primary text-label-sm border border-primary/30">Monthly</button>
+<button class="px-3 py-1 rounded-full bg-white/5 text-on-surface-variant text-label-sm border border-white/10">Weekly</button>
+</div>
+</div>
+<div class="flex-1 flex items-end justify-between gap-4 px-4">
+<!-- Placeholder Bars for a Bar Chart with neon effect -->
+<div class="flex-1 bg-gradient-to-t from-primary/10 to-primary/40 rounded-t-lg h-[40%] relative group">
+<div class="absolute -top-8 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity bg-surface-container p-1 rounded text-[10px]">420</div>
+</div>
+<div class="flex-1 bg-gradient-to-t from-secondary/10 to-secondary/40 rounded-t-lg h-[65%] relative group">
+<div class="absolute -top-8 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity bg-surface-container p-1 rounded text-[10px]">680</div>
+</div>
+<div class="flex-1 bg-gradient-to-t from-primary/10 to-primary/40 rounded-t-lg h-[50%] relative group">
+<div class="absolute -top-8 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity bg-surface-container p-1 rounded text-[10px]">510</div>
+</div>
+<div class="flex-1 bg-gradient-to-t from-secondary/10 to-secondary/40 rounded-t-lg h-[85%] relative group">
+<div class="absolute -top-8 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity bg-surface-container p-1 rounded text-[10px]">920</div>
+</div>
+<div class="flex-1 bg-gradient-to-t from-primary/10 to-primary/40 rounded-t-lg h-[70%] relative group border-t-2 border-primary">
+<div class="absolute -top-8 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity bg-surface-container p-1 rounded text-[10px]">740</div>
+</div>
+<div class="flex-1 bg-gradient-to-t from-secondary/10 to-secondary/40 rounded-t-lg h-[95%] relative group">
+<div class="absolute -top-8 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity bg-surface-container p-1 rounded text-[10px]">1,105</div>
+</div>
+</div>
+<div class="flex justify-between mt-4 text-on-surface-variant font-label-sm px-4">
+<span class="">Jan</span><span class="">Feb</span><span class="">Mar</span><span class="">Apr</span><span class="">May</span><span class="">Jun</span>
+</div>
+</div>
+<!-- Smart Insights Panel -->
+<div class="glass-panel rounded-lg p-glass-padding flex flex-col h-[450px]">
+<div class="flex items-center gap-3 mb-6">
+<span class="material-symbols-outlined text-primary">auto_awesome</span>
+<h4 class="font-headline-sm">Smart Insights</h4>
+</div>
+<div class="space-y-4 overflow-y-auto pr-2 custom-scrollbar">
+<div class="p-4 rounded-xl bg-primary/5 border border-primary/20 space-y-2">
+<div class="flex justify-between">
+<span class="text-primary font-label-md">Waste Management</span>
+<span class="text-[10px] text-on-surface-variant">JUST NOW</span>
+</div>
+<p class="font-body-md">Waste collection in <span class="text-primary font-bold">District 4</span> requires optimization. Peak report volume identified between 08:00 and 10:00.</p>
+</div>
+<div class="p-4 rounded-xl bg-secondary/5 border border-secondary/20 space-y-2">
+<div class="flex justify-between">
+<span class="text-secondary font-label-md">Public Safety</span>
+<span class="text-[10px] text-on-surface-variant">2H AGO</span>
+</div>
+<p class="font-body-md">Street lighting outages in <span class="text-secondary font-bold">Old Town</span> correlate with a 15% increase in safety reports.</p>
+</div>
+<div class="p-4 rounded-xl bg-white/5 border border-white/10 space-y-2">
+<div class="flex justify-between">
+<span class="text-on-surface font-label-md">Infrastructure</span>
+<span class="text-[10px] text-on-surface-variant">5H AGO</span>
+</div>
+<p class="font-body-md">Pothole reports near <span class="font-bold">Grand Ave</span> have decreased by 40% after the latest repair cycle.</p>
+</div>
+</div>
+<button class="mt-auto w-full py-3 text-primary font-label-md border border-primary/30 rounded-full hover:bg-primary/10 transition-colors">
+                    View Full Analysis
+                </button>
+</div>
+</div>
+<!-- Glassmorphic Map & Activity -->
+<div class="grid grid-cols-1 lg:grid-cols-4 gap-grid-gutter">
+<!-- Map Preview (3 cols) -->
+<div class="lg:col-span-3 h-[400px] rounded-lg overflow-hidden glass-panel relative group">
+<div class="absolute inset-0 opacity-50 grayscale group-hover:grayscale-0 transition-all duration-700" data-alt="A high-tech digital satellite map of a modern city at night with glowing data overlays, illuminated heatmaps showing infrastructure activity, and vibrant lines representing traffic flow. Neon cyan and violet colors dominate the aesthetic." style="background-image: url(&quot;https://lh3.googleusercontent.com/aida/AP1WRLu_3YogLvdcF5yTqIt1YbNPu_98KiiA3yoBg7b4yV-2iOr6MWLvEIVrJWnvDwB0A40UXoKjrMqnmRc0LLtLd-En5UrcfK97dLtbRD-Bpssy8DtP-WQGjUTdEK1CQ5Bnmt5o_hK8IyY5fANn6C9kwwjZ48AoxWYVsgOTQlAx5fw2ZZl4nCK79CmpVjgO2X4OS89gT7baF4VwAYTkac4fgG7FtciEcCaI0_CzRzP8v67hNePyOL1f_0ALF4k&quot;); background-size: cover; background-position: center center;"></div>
+<div class="absolute top-4 right-4 flex flex-col gap-2">
+<button class="bg-surface/80 backdrop-blur-md p-2 rounded-lg border border-white/10 hover:bg-primary/20 transition-colors">
+<span class="material-symbols-outlined text-primary">layers</span>
+</button>
+<button class="bg-surface/80 backdrop-blur-md p-2 rounded-lg border border-white/10 hover:bg-primary/20 transition-colors">
+<span class="material-symbols-outlined text-primary">my_location</span>
+</button>
+</div>
+<div class="absolute bottom-6 left-6 p-4 glass-panel rounded-xl max-w-xs border-primary/30">
+<h5 class="font-headline-sm text-primary">Active Hotspots</h5>
+<p class="text-label-sm text-on-surface-variant mt-1">High report density detected in central business district.</p>
+</div>
+</div>
+<!-- Live Activity (1 col) -->
+<div class="glass-panel rounded-lg p-glass-padding flex flex-col h-[400px]">
+<h4 class="font-headline-sm mb-6">Recent Activity</h4>
+<div class="flex-1 space-y-6 overflow-y-auto pr-2">
+<div class="flex gap-4">
+<div class="w-2 h-2 mt-2 rounded-full bg-primary shadow-[0_0_8px_rgba(138,235,255,0.8)]"></div>
+<div>
+<p class="text-label-md font-bold">New Report: Water Leak</p>
+<p class="text-[12px] text-on-surface-variant">Oak Street · 2 mins ago</p>
+</div>
+</div>
+<div class="flex gap-4">
+<div class="w-2 h-2 mt-2 rounded-full bg-secondary"></div>
+<div>
+<p class="text-label-md font-bold">Resolved: Graffiti</p>
+<p class="text-[12px] text-on-surface-variant">Metro Station · 15 mins ago</p>
+</div>
+</div>
+<div class="flex gap-4">
+<div class="w-2 h-2 mt-2 rounded-full bg-primary"></div>
+<div>
+<p class="text-label-md font-bold">New Comment</p>
+<p class="text-[12px] text-on-surface-variant">Citizen #412 · 45 mins ago</p>
+</div>
+</div>
+<div class="flex gap-4">
+<div class="w-2 h-2 mt-2 rounded-full bg-error"></div>
+<div>
+<p class="text-label-md font-bold">Emergency Alert</p>
+<p class="text-[12px] text-on-surface-variant">Traffic Collision · 1h ago</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer -->
+<footer class="w-full px-container-padding-desktop mt-stack-gap py-12 border-t border-outline-variant bg-surface-container-lowest">
+<div class="max-w-[1440px] mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
+<div class="space-y-2 text-center md:text-left">
+<h3 class="font-headline-sm text-on-surface"><span style="font-size: 20px; font-weight: 600;" class="">CivicLens AI</span></h3>
+<p class="text-on-surface-variant font-label-sm">© 2026 CivicHero AI. Powering Smart Governance.</p>
+</div>
+<div class="flex flex-wrap justify-center gap-6">
+<a class="text-on-surface-variant font-label-sm hover:text-primary transition-colors" href="#">Impact Report</a>
+<a class="text-on-surface-variant font-label-sm hover:text-primary transition-colors" href="#">Privacy Policy</a>
+<a class="text-on-surface-variant font-label-sm hover:text-primary transition-colors" href="#">Data Transparency</a>
+<a class="text-on-surface-variant font-label-sm hover:text-primary transition-colors" href="#">API Access</a>
+</div>
+</div>
+</footer>
+<!-- FAB -->
+<button class="fixed bottom-8 right-8 w-16 h-16 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center shadow-2xl hover:scale-110 active:scale-95 transition-all z-50 group">
+<span class="material-symbols-outlined text-on-primary text-3xl group-hover:rotate-12 transition-transform">add</span>
+</button>
+<script>
+        // Micro-interaction for hover states on charts
+        document.querySelectorAll('.flex-1.bg-gradient-to-t').forEach(bar => {
+            bar.addEventListener('mouseenter', () => {
+                bar.classList.add('active-module');
+            });
+            bar.addEventListener('mouseleave', () => {
+                bar.classList.remove('active-module');
+            });
+        });
+
+        // Simple scroll reveal effect
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 20) {
+                header.classList.add('shadow-2xl', 'bg-surface/90');
+            } else {
+                header.classList.remove('shadow-2xl', 'bg-surface/90');
+            }
+        });
+    </script>
+
+
+
+
+
+
+
+
+
+
+</body></html>

@@ -1,0 +1,402 @@
+<!DOCTYPE html><html class="dark" lang="en" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>CivicHero AI | Smart City Governance</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<style>
+        @keyframes pulse-glow {
+            0%, 100% { opacity: 0.6; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.05); }
+        }
+        .neon-glow-primary {
+            box-shadow: 0 0 20px rgba(138, 235, 255, 0.3);
+        }
+        .glass-border {
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .text-gradient {
+            background: linear-gradient(to right, #8aebff, #d0bcff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        body {
+            background-color: #051424;
+            color: #d4e4fa;
+            overflow-x: hidden;
+        }
+    </style>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-container": "#122131",
+                    "secondary-fixed": "#e9ddff",
+                    "tertiary-fixed-dim": "#bec6e0",
+                    "on-primary": "#00363e",
+                    "secondary": "#d0bcff",
+                    "surface": "#051424",
+                    "surface-container-lowest": "#010f1f",
+                    "surface-container-low": "#0d1c2d",
+                    "on-tertiary": "#283044",
+                    "inverse-primary": "#006877",
+                    "on-surface-variant": "#bbc9cd",
+                    "on-secondary-fixed-variant": "#5516be",
+                    "on-primary-container": "#005763",
+                    "on-tertiary-container": "#474e64",
+                    "on-error-container": "#ffdad6",
+                    "on-secondary-fixed": "#23005c",
+                    "surface-variant": "#273647",
+                    "primary-fixed": "#a2eeff",
+                    "secondary-container": "#571bc1",
+                    "secondary-fixed-dim": "#d0bcff",
+                    "error-container": "#93000a",
+                    "on-secondary-container": "#c4abff",
+                    "surface-tint": "#2fd9f4",
+                    "primary": "#8aebff",
+                    "inverse-surface": "#d4e4fa",
+                    "on-primary-fixed": "#001f25",
+                    "surface-container-highest": "#273647",
+                    "outline": "#859397",
+                    "error": "#ffb4ab",
+                    "on-background": "#d4e4fa",
+                    "on-tertiary-fixed": "#131b2e",
+                    "tertiary-container": "#b9c0da",
+                    "tertiary-fixed": "#dae2fd",
+                    "background": "#051424",
+                    "outline-variant": "#3c494c",
+                    "tertiary": "#d5dcf6",
+                    "on-tertiary-fixed-variant": "#3f465c",
+                    "surface-container-high": "#1c2b3c",
+                    "on-surface": "#d4e4fa",
+                    "inverse-on-surface": "#233143",
+                    "on-secondary": "#3c0091",
+                    "primary-container": "#22d3ee",
+                    "surface-bright": "#2c3a4c",
+                    "on-error": "#690005",
+                    "on-primary-fixed-variant": "#004e5a",
+                    "primary-fixed-dim": "#2fd9f4",
+                    "surface-dim": "#051424"
+            },
+            "borderRadius": {
+                    "DEFAULT": "1rem",
+                    "lg": "2rem",
+                    "xl": "3rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "container-padding-desktop": "48px",
+                    "base": "4px",
+                    "container-padding-mobile": "20px",
+                    "grid-gutter": "24px",
+                    "stack-gap": "24px",
+                    "glass-padding": "24px"
+            },
+            "fontFamily": {
+                    "label-sm": ["Inter"],
+                    "label-md": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "display-lg": ["Sora"],
+                    "body-md": ["Inter"],
+                    "display-lg-mobile": ["Sora"],
+                    "headline-md": ["Sora"],
+                    "headline-sm": ["Sora"]
+            },
+            "fontSize": {
+                    "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "500"}],
+                    "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "display-lg-mobile": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+</head>
+<body class="font-body-md text-on-surface">
+<!-- Header / TopAppBar -->
+<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-container-padding-desktop py-4 bg-surface/60 backdrop-blur-xl border-b border-white/10 shadow-2xl max-w-full">
+<div class="flex items-center gap-4">
+<span class="font-display-lg text-headline-md bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">CivicLens</span>
+</div>
+<nav class="hidden md:flex gap-8 items-center">
+<a class="font-label-md text-label-md text-primary border-b-2 border-primary py-1" href="index.html">Dashboard</a>
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-all" href="community_map.html">Map View</a>
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-all" href="community.html">Community</a>
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-all" href="analytics.html">Analytics</a>
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-all flex items-center gap-2" href="history.html"><span class="material-symbols-outlined text-[18px]" data-icon="history">history</span>History</a><a class="font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-all flex items-center gap-2" href="ai_assistant.html"><span class="material-symbols-outlined text-[18px]" data-icon="smart_toy">smart_toy</span>Assistant</a></nav>
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-primary" data-icon="smart_toy">smart_toy</span>
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="workspace_premium">workspace_premium</span>
+<a href="report_issue.html" class="bg-gradient-to-r from-primary/20 to-secondary/20 border border-primary/30 px-6 py-2 rounded-full font-label-md text-primary hover:scale-95 transition-all inline-flex items-center justify-center">Report Issue</a>
+</div>
+</header>
+<main class="relative pt-24 overflow-hidden">
+<!-- Hero Section -->
+<section class="relative min-h-screen flex flex-col items-center justify-center text-center px-container-padding-desktop">
+<!-- 3D City Background Placeholder -->
+<div class="absolute inset-0 z-0 opacity-40">
+<div class="w-full h-full bg-cover bg-center" data-alt="A sprawling futuristic 3D city illustration with glowing holographic building outlines, neon light trails from flying vehicles, and a deep indigo sky. The visual style is cinematic and highly detailed, featuring volumetric fog and cyan and violet lighting that creates a sense of depth and advanced urban technology." style="background-image: url(&quot;https://lh3.googleusercontent.com/aida-public/AB6AXuDDgKBb_uWmyGenHnukmL3mwrYuci4S6xc76_qMM8Soie2BejXwxbwTGy24xgN7gO88ql0zgEuPDys6WI783cw2F5svBfAcAtn692hLKy6CueSDuLX9aSKJg0OKkh5We6ZdNYunzm48tv4VWUT4BjE1y88O167G8koewT0QY-uuCBDT-Pt8jIiPp00SSaZJG9HMIxCDWLsfz1IbdvY4wXf5k5OB_7PAtSRLJqS2OwuC3ZIVOEHdzc9VL8SDCCvtPq-30PwHdOTJS48&quot;); transform: scale(1.1) translate(9.125px, 8.70937px);"></div>
+<div class="absolute inset-0 bg-gradient-to-b from-surface/0 via-surface/80 to-surface"></div>
+</div>
+<div class="relative z-10 max-w-4xl space-y-8 animate-in fade-in duration-1000">
+<h1 class="font-display-lg text-display-lg md:text-6xl text-white tracking-tight leading-tight">
+                    Transforming Community Complaints into <span class="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Community Solutions</span>
+</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mx-auto">
+                    The world's first AI-powered civic platform that identifies, verifies, and resolves urban infrastructure issues through decentralized hero networks.
+                </p>
+<div class="flex flex-col md:flex-row gap-6 justify-center pt-4">
+<button class="px-8 py-4 rounded-full bg-gradient-to-r from-primary to-secondary text-on-primary font-label-md text-headline-sm hover:shadow-[0_0_30px_rgba(138,235,255,0.4)] transition-all transform hover:-translate-y-1">
+                        Become a CivicHero
+                    </button>
+<button class="px-8 py-4 rounded-full bg-surface-container/50 backdrop-blur-md border border-white/10 text-on-surface font-label-md text-headline-sm hover:bg-white/10 transition-all">
+                        View Live Map
+                    </button>
+</div>
+</div>
+<!-- Scroll Indicator -->
+<div class="absolute bottom-12 animate-bounce">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="expand_more">expand_more</span>
+</div>
+</section>
+<!-- Stats Section -->
+<section class="relative py-24 z-10 px-container-padding-desktop">
+<div class="max-w-[1440px] mx-auto grid grid-cols-1 md:grid-cols-3 gap-grid-gutter">
+<div class="bg-surface-container/40 backdrop-blur-xl glass-border rounded-xl p-8 text-center hover:scale-105 transition-transform duration-300">
+<div class="text-primary font-display-lg text-display-lg mb-2">12,450</div>
+<div class="text-on-surface-variant font-label-md">Issues Resolved</div>
+</div>
+<div class="bg-surface-container/40 backdrop-blur-xl glass-border rounded-xl p-8 text-center hover:scale-105 transition-transform duration-300 border-t border-primary/30">
+<div class="text-secondary font-display-lg text-display-lg mb-2">98%</div>
+<div class="text-on-surface-variant font-label-md">AI Accuracy</div>
+</div>
+<div class="bg-surface-container/40 backdrop-blur-xl glass-border rounded-xl p-8 text-center hover:scale-105 transition-transform duration-300">
+<div class="text-primary-container font-display-lg text-display-lg mb-2">45k</div>
+<div class="text-on-surface-variant font-label-md">Active Heroes</div>
+</div>
+</div>
+</section>
+<!-- AI Reporting Showcase -->
+<section class="py-24 px-container-padding-desktop relative">
+<div class="max-w-[1440px] mx-auto flex flex-col lg:flex-row items-center gap-16">
+<div class="lg:w-1/2 space-y-6">
+<div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 text-primary">
+<span class="material-symbols-outlined text-sm" data-icon="auto_awesome">auto_awesome</span>
+<span class="text-label-md font-label-md">AI POWERED VISION</span>
+</div>
+<h2 class="font-display-lg text-headline-md md:text-5xl">Automated Reporting with <br><span class="text-secondary">Precision Intelligence</span></h2>
+<p class="text-on-surface-variant text-body-lg">
+                        Our AI vision model analyzes reports in real-time, instantly identifying severity levels and categorizing infrastructure needs to bypass bureaucratic delays.
+                    </p>
+<ul class="space-y-4 pt-4">
+<li class="flex items-center gap-4 text-body-md">
+<span class="material-symbols-outlined text-primary" data-icon="check_circle">check_circle</span>
+<span class="">Real-time visual pothole &amp; structural analysis</span>
+</li>
+<li class="flex items-center gap-4 text-body-md">
+<span class="material-symbols-outlined text-primary" data-icon="check_circle">check_circle</span>
+<span class="">GPS-tagged blockchain verification</span>
+</li>
+</ul>
+</div>
+<div class="lg:w-1/2 relative">
+<!-- Glassmorphic Showcase Card -->
+<div class="bg-surface-container-high/80 backdrop-blur-2xl glass-border rounded-lg p-6 shadow-2xl relative z-10">
+<div class="relative overflow-hidden rounded-lg mb-6 group">
+<div class="w-full aspect-video bg-cover bg-center transition-transform duration-700 group-hover:scale-110" data-alt="A close-up photograph of a deep, jagged pothole on an urban asphalt street at dusk. Digital UI overlays in glowing cyan and magenta highlight the edges of the pothole with wireframe patterns. HUD elements float over the image showing data like 'Depth: 4.5cm' and 'Risk Factor: High'. The aesthetic is sleek, tech-focused, and highly polished." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAxnwA8Py_asZhgY1Kr59-vHGCNWHYcVU2B34g0r92ot-lX35UQysI5MgrjlLjgS1DVRc2np_LCY4kjO2l3WV0Af_oOhy76TKELELlg5d8mPqNtct7wwaRuP-J2h2HIXTSEwam_BJXQB49P4SqwccLZeuT0xaON20y4HWMQoiwvFe6A8GpbAF_Jwmd3Tsy2K7gXpAoyIlkN0SiarSt7_2b_zt38VZEWlZLJR73wcWNlFcykwAfRL36qxBNNnzCytIfofkAVC6mFcbQ')"></div>
+<div class="absolute top-4 left-4 bg-error/90 text-on-error px-3 py-1 rounded-full text-label-sm font-label-md flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-white animate-pulse"></span>
+                                SEVERITY: CRITICAL
+                            </div>
+</div>
+<div class="space-y-4">
+<div class="flex justify-between items-center border-b border-white/5 pb-4">
+<div>
+<h4 class="font-headline-sm text-white">Main St. Infrastructure Fault</h4>
+<p class="text-label-sm text-on-surface-variant">Report ID: #CH-88291</p>
+</div>
+<div class="text-right">
+<span class="text-primary font-bold text-headline-sm">94/100</span>
+<p class="text-label-sm text-on-surface-variant">Match Confidence</p>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div class="p-3 bg-surface/50 rounded-lg border border-white/5">
+<p class="text-label-sm text-on-surface-variant">Category</p>
+<p class="text-body-md font-semibold text-white">Road Maintenance</p>
+</div>
+<div class="p-3 bg-surface/50 rounded-lg border border-white/5">
+<p class="text-label-sm text-on-surface-variant">Priority</p>
+<p class="text-body-md font-semibold text-error">High Priority</p>
+</div>
+</div>
+<button class="w-full py-4 rounded-xl bg-primary text-on-primary font-label-md hover:brightness-110 transition-all">
+                                Validate &amp; Send to City Council
+                            </button>
+</div>
+</div>
+<!-- Decorative background element -->
+<div class="absolute -top-10 -right-10 w-64 h-64 bg-primary/20 rounded-full blur-[80px] -z-10"></div>
+<div class="absolute -bottom-10 -left-10 w-64 h-64 bg-secondary/20 rounded-full blur-[80px] -z-10"></div>
+</div>
+</div>
+</section>
+<!-- Features Bento Grid -->
+<section class="py-24 px-container-padding-desktop">
+<div class="max-w-[1440px] mx-auto space-y-12">
+<div class="text-center space-y-4">
+<h2 class="font-display-lg text-headline-md md:text-5xl">Engineered for Transparency</h2>
+<p class="text-on-surface-variant max-w-xl mx-auto">Modern tools for modern citizens. We've built the foundation of the next-generation smart city.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<!-- Feature 1 -->
+<div class="md:col-span-2 bg-surface-container/30 backdrop-blur-lg glass-border rounded-lg p-10 flex flex-col justify-between group hover:bg-surface-container/50 transition-all">
+<div class="flex justify-between items-start">
+<div class="space-y-4">
+<span class="material-symbols-outlined text-4xl text-primary" data-icon="location_on">location_on</span>
+<h3 class="font-headline-md text-3xl">Real-time Tracking</h3>
+<p class="text-on-surface-variant text-body-md max-w-md">Watch your report move from initial AI analysis to dispatch, city council approval, and final resolution on our live global ledger.</p>
+</div>
+<div class="hidden lg:block w-48 h-48 relative">
+<div class="w-full h-full bg-cover rounded-xl shadow-2xl" data-alt="A clean, minimalist 3D map interface showing glowing route paths and circular icons representing city issues in a tech-inspired aesthetic. The map uses a dark mode palette with cyan highlight markers and soft glowing edges." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAegG4IU78rIff2ziXFi0Dm2CGD_31atrtdPwA5VoL5mdlats-rfPnBLAVeNYHZVsyPM19MGCJ6Ox9j63F_QzI2sSLdyTVomp8ZMD_wSU2sRin0t4XydsXRQ4OMvmE6YXgC_C8wFiDJ_U7Kcu8GghKXSJ4-FPqa9cBw5i2dhJHRR8RI7XPnIutwOwgIhz5d42DCMdRV0hDk-7mX8kEwGKyLbyBaIZLgmqmliuOphn84AlY__8D_SvYM3KVVpBcLKoVikxKioTQw2xM')"></div>
+</div>
+</div>
+</div>
+<!-- Feature 2 -->
+<div class="bg-surface-container/30 backdrop-blur-lg glass-border rounded-lg p-10 space-y-6 hover:border-secondary/40 transition-all">
+<span class="material-symbols-outlined text-4xl text-secondary" data-icon="mic">mic</span>
+<h3 class="font-headline-md">AI Voice Reporting</h3>
+<p class="text-on-surface-variant text-body-md">Don't have time to type? Speak to CivicHero. Our NLP understands nuances and transcribes reports with perfect context.</p>
+</div>
+<!-- Feature 3 -->
+<div class="bg-surface-container/30 backdrop-blur-lg glass-border rounded-lg p-10 space-y-6 hover:border-primary-container/40 transition-all">
+<span class="material-symbols-outlined text-4xl text-primary-container" data-icon="shield">shield</span>
+<h3 class="font-headline-md">Blockchain Verification</h3>
+<p class="text-on-surface-variant text-body-md">Immutable proof of every issue reported. We ensure data integrity so city officials can trust every civic data point.</p>
+</div>
+<!-- Feature 4 -->
+<div class="md:col-span-2 bg-gradient-to-br from-surface-container-highest/50 to-surface-container-low/50 backdrop-blur-lg glass-border rounded-lg p-10 flex items-center gap-8 overflow-hidden">
+<div class="space-y-4 flex-1">
+<h3 class="font-headline-md text-3xl">Hero Rewards Program</h3>
+<p class="text-on-surface-variant text-body-md">Earn reputation points and "Hero Tokens" for every verified report. Influence city policy through our decentralized governance DAO.</p>
+<button class="text-primary font-label-md flex items-center gap-2 hover:gap-4 transition-all">
+                                Learn about tokenomics <span class="material-symbols-outlined">arrow_forward</span>
+</button>
+</div>
+<div class="hidden md:flex gap-4">
+<div class="w-24 h-32 bg-primary/20 rounded-lg glass-border flex flex-col items-center justify-center">
+<span class="material-symbols-outlined text-primary text-3xl" data-icon="stars">stars</span>
+<span class="text-label-sm mt-2">Elite</span>
+</div>
+<div class="w-24 h-32 bg-secondary/20 rounded-lg glass-border flex flex-col items-center justify-center transform translate-y-4">
+<span class="material-symbols-outlined text-secondary text-3xl" data-icon="workspace_premium">workspace_premium</span>
+<span class="text-label-sm mt-2">Vanguard</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Call to Action -->
+<section class="py-24 px-container-padding-desktop">
+<div class="max-w-[1440px] mx-auto bg-gradient-to-r from-primary/10 via-surface-container to-secondary/10 glass-border rounded-lg p-12 md:p-24 text-center space-y-8 relative overflow-hidden">
+<!-- Floating geometric shapes -->
+<div class="absolute top-0 left-0 w-32 h-32 bg-primary/20 rounded-full blur-3xl"></div>
+<div class="absolute bottom-0 right-0 w-32 h-32 bg-secondary/20 rounded-full blur-3xl"></div>
+<h2 class="font-display-lg text-headline-md md:text-5xl max-w-2xl mx-auto">Ready to make your city <span class="text-primary">smarter?</span></h2>
+<p class="text-on-surface-variant text-body-lg max-w-xl mx-auto">Join thousands of citizens reclaiming their urban environment. Download the app today.</p>
+<div class="flex flex-wrap justify-center gap-6 pt-4">
+<button class="bg-white text-black px-8 py-4 rounded-full font-label-md flex items-center gap-3 hover:bg-primary transition-all">
+<span class="material-symbols-outlined">apps</span>
+                        App Store
+                    </button>
+<button class="bg-surface-container-high text-white px-8 py-4 rounded-full font-label-md flex items-center gap-3 glass-border hover:bg-white/10 transition-all">
+<span class="material-symbols-outlined">play_arrow</span>
+                        Google Play
+                    </button>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="w-full px-container-padding-desktop mt-stack-gap py-12 bg-surface-container-lowest border-t border-outline-variant">
+<div class="max-w-[1440px] mx-auto grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+<div class="md:col-span-1 space-y-6">
+<span class="font-headline-sm text-headline-sm text-on-surface block">CivicLens AI</span>
+<p class="text-on-surface-variant text-body-md">Leveraging AI and blockchain to build resilient, transparent urban infrastructure.</p>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-3 md:col-span-3 gap-8">
+<div class="space-y-4">
+<h5 class="text-white font-label-md">Platform</h5>
+<ul class="space-y-2">
+<li class=""><a class="text-on-surface-variant hover:text-primary transition-colors text-label-sm" href="#">Impact Report</a></li>
+<li class=""><a class="text-on-surface-variant hover:text-primary transition-colors text-label-sm" href="#">Privacy Policy</a></li>
+</ul>
+</div>
+<div class="space-y-4">
+<h5 class="text-white font-label-md">Company</h5>
+<ul class="space-y-2">
+<li class=""><a class="text-on-surface-variant hover:text-primary transition-colors text-label-sm" href="#">Data Transparency</a></li>
+<li class=""><a class="text-on-surface-variant hover:text-primary transition-colors text-label-sm" href="#">API Access</a></li>
+</ul>
+</div>
+<div class="space-y-4">
+<h5 class="text-white font-label-md">Social</h5>
+<div class="flex gap-4">
+<span class="material-symbols-outlined text-on-surface-variant cursor-pointer hover:text-primary" data-icon="public">public</span>
+<span class="material-symbols-outlined text-on-surface-variant cursor-pointer hover:text-primary" data-icon="share">share</span>
+</div>
+</div>
+</div>
+</div>
+<div class="max-w-[1440px] mx-auto pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4">
+<p class="text-on-surface-variant font-label-sm text-label-sm">© 2026 CivicHero AI. Powering Smart Governance.</p>
+<div class="flex gap-6">
+<span class="text-on-surface-variant text-label-sm">Terms of Service</span>
+<span class="text-on-surface-variant text-label-sm">Cookie Policy</span>
+</div>
+</div>
+</footer>
+<!-- FAB -->
+<button class="fixed bottom-8 right-8 w-16 h-16 rounded-full bg-primary text-on-primary shadow-[0_0_20px_rgba(138,235,255,0.4)] flex items-center justify-center z-50 hover:scale-110 transition-transform active:scale-95">
+<span class="material-symbols-outlined text-3xl" data-icon="add_a_photo">add_a_photo</span>
+</button>
+<script>
+        // Micro-interaction for scroll effects
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 50) {
+                header.classList.add('py-2');
+                header.classList.remove('py-4');
+            } else {
+                header.classList.add('py-4');
+                header.classList.remove('py-2');
+            }
+        });
+
+        // Simple parallax for hero
+        window.addEventListener('mousemove', (e) => {
+            const x = (e.clientX / window.innerWidth) - 0.5;
+            const y = (e.clientY / window.innerHeight) - 0.5;
+            const heroBg = document.querySelector('[data-alt*="3D city"]');
+            if (heroBg) {
+                heroBg.style.transform = `scale(1.1) translate(${x * 20}px, ${y * 20}px)`;
+            }
+        });
+    </script>
+
+
+
+
+
+
+</body></html>

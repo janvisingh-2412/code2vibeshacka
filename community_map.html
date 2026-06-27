@@ -1,0 +1,376 @@
+<!DOCTYPE html><html class="dark" lang="en" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>CivicHero AI | Community Map</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-panel {
+            backdrop-filter: blur(20px);
+            background: rgba(18, 33, 49, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .neon-border-primary {
+            box-shadow: 0 0 15px rgba(138, 235, 255, 0.3);
+            border: 1px solid rgba(138, 235, 255, 0.5);
+        }
+        .map-marker-pulse {
+            animation: pulse-glow 2s infinite;
+        }
+        @keyframes pulse-glow {
+            0% { transform: scale(1); opacity: 1; box-shadow: 0 0 0 0 rgba(138, 235, 255, 0.7); }
+            70% { transform: scale(1.1); opacity: 0.8; box-shadow: 0 0 0 15px rgba(138, 235, 255, 0); }
+            100% { transform: scale(1); opacity: 1; box-shadow: 0 0 0 0 rgba(138, 235, 255, 0); }
+        }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.1); border-radius: 10px; }
+    </style>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-container": "#122131",
+                    "secondary-fixed": "#e9ddff",
+                    "tertiary-fixed-dim": "#bec6e0",
+                    "on-primary": "#00363e",
+                    "secondary": "#d0bcff",
+                    "surface": "#051424",
+                    "surface-container-lowest": "#010f1f",
+                    "surface-container-low": "#0d1c2d",
+                    "on-tertiary": "#283044",
+                    "inverse-primary": "#006877",
+                    "on-surface-variant": "#bbc9cd",
+                    "on-secondary-fixed-variant": "#5516be",
+                    "on-primary-container": "#005763",
+                    "on-tertiary-container": "#474e64",
+                    "on-error-container": "#ffdad6",
+                    "on-secondary-fixed": "#23005c",
+                    "surface-variant": "#273647",
+                    "primary-fixed": "#a2eeff",
+                    "secondary-container": "#571bc1",
+                    "secondary-fixed-dim": "#d0bcff",
+                    "error-container": "#93000a",
+                    "on-secondary-container": "#c4abff",
+                    "surface-tint": "#2fd9f4",
+                    "primary": "#8aebff",
+                    "inverse-surface": "#d4e4fa",
+                    "on-primary-fixed": "#001f25",
+                    "surface-container-highest": "#273647",
+                    "outline": "#859397",
+                    "error": "#ffb4ab",
+                    "on-background": "#d4e4fa",
+                    "on-tertiary-fixed": "#131b2e",
+                    "tertiary-container": "#b9c0da",
+                    "tertiary-fixed": "#dae2fd",
+                    "background": "#051424",
+                    "outline-variant": "#3c494c",
+                    "tertiary": "#d5dcf6",
+                    "on-tertiary-fixed-variant": "#3f465c",
+                    "surface-container-high": "#1c2b3c",
+                    "on-surface": "#d4e4fa",
+                    "inverse-on-surface": "#233143",
+                    "on-secondary": "#3c0091",
+                    "primary-container": "#22d3ee",
+                    "surface-bright": "#2c3a4c",
+                    "on-error": "#690005",
+                    "on-primary-fixed-variant": "#004e5a",
+                    "primary-fixed-dim": "#2fd9f4",
+                    "surface-dim": "#051424"
+            },
+            "borderRadius": {
+                    "DEFAULT": "1rem",
+                    "lg": "2rem",
+                    "xl": "3rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "container-padding-desktop": "48px",
+                    "base": "4px",
+                    "container-padding-mobile": "20px",
+                    "grid-gutter": "24px",
+                    "stack-gap": "24px",
+                    "glass-padding": "24px"
+            },
+            "fontFamily": {
+                    "label-sm": ["Inter"],
+                    "label-md": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "display-lg": ["Sora"],
+                    "body-md": ["Inter"],
+                    "display-lg-mobile": ["Sora"],
+                    "headline-md": ["Sora"],
+                    "headline-sm": ["Sora"]
+            },
+            "fontSize": {
+                    "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "500"}],
+                    "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "display-lg-mobile": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+</head>
+<body class="bg-surface text-on-surface font-body-md overflow-hidden h-screen flex">
+<!-- Left Side Navigation (SideNavBar Anchor) -->
+<aside class="hidden lg:flex flex-col h-full bg-surface-container/80 backdrop-blur-2xl border-r border-white/10 shadow-[20px_0_40px_rgba(0,0,0,0.4)] w-64 z-50 shrink-0">
+<div class="p-6">
+<h1 class="font-headline-sm text-headline-sm text-primary mb-2"><font color="rgba(0, 0, 0, 0)"><span style="font-size: 32px; font-weight: 400; background-color: rgba(5, 20, 36, 0.6);" class="">CivicLens AI</span></font></h1>
+<p class="text-on-surface-variant font-label-sm uppercase tracking-widest opacity-60">City Governance</p>
+</div>
+<nav class="flex-1 px-4 mt-6 space-y-2">
+<a class="flex items-center gap-4 px-4 py-3 text-on-surface-variant hover:text-on-surface hover:bg-surface-variant/50 transition-all duration-300 rounded-xl" href="index.html">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-label-md text-label-md">Dashboard</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 bg-gradient-to-r from-primary/20 to-secondary/20 text-primary border-r-4 border-primary transition-all duration-300 rounded-xl" href="community_map.html">
+<span class="material-symbols-outlined">map</span>
+<span class="font-label-md text-label-md">Map View</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 text-on-surface-variant hover:text-on-surface hover:bg-surface-variant/50 transition-all duration-300 rounded-xl" href="community.html">
+<span class="material-symbols-outlined">group</span>
+<span class="font-label-md text-label-md">Community</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 text-on-surface-variant hover:text-on-surface hover:bg-surface-variant/50 transition-all duration-300 rounded-xl" href="analytics.html">
+<span class="material-symbols-outlined">analytics</span>
+<span class="font-label-md text-label-md">Analytics</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 text-on-surface-variant hover:text-on-surface hover:bg-surface-variant/50 transition-all duration-300 rounded-xl" href="history.html">
+<span class="material-symbols-outlined">history</span>
+<span class="font-label-md text-label-md">History</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 text-on-surface-variant hover:text-on-surface hover:bg-surface-variant/50 transition-all duration-300 rounded-xl" href="ai_assistant.html">
+<span class="material-symbols-outlined">smart_toy</span>
+<span class="font-label-md text-label-md">Assistant</span>
+</a></nav>
+<div class="px-6 mb-6">
+<button class="w-full py-3 rounded-full bg-gradient-to-r from-primary to-secondary text-on-primary font-label-md shadow-lg shadow-primary/20 hover:scale-105 transition-transform active:scale-95">
+                Report Issue
+            </button>
+</div>
+<div class="p-4 border-t border-white/10 space-y-1">
+<a class="flex items-center gap-4 px-4 py-2 text-on-surface-variant hover:text-on-surface font-label-sm" href="analytics.html">
+<span class="material-symbols-outlined">settings</span>
+<span class="">Settings</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-2 text-on-surface-variant hover:text-on-surface font-label-sm" href="report_issue.html">
+<span class="material-symbols-outlined">help</span>
+<span class="">Support</span>
+</a>
+</div>
+</aside>
+<!-- Main Map Canvas -->
+<main class="relative flex-1 h-screen overflow-hidden">
+<!-- Interactive Background Map -->
+<div class="absolute inset-0 z-0 bg-surface">
+<div class="w-full h-full opacity-60" data-alt="A highly detailed cinematic aerial view of New Delhi city streets at night, showing Connaught Place and surrounding areas in a dark futuristic aesthetic. The buildings are dark silhouettes with glowing neon cyan and violet outlines. Streetlights cast a soft ambient blue glow on the pavement, and the map topology is represented with elegant glass-like textures and faint digital grid lines." data-location="New Delhi" style="background-image: url(&quot;https://lh3.googleusercontent.com/aida/AP1WRLu_3YogLvdcF5yTqIt1YbNPu_98KiiA3yoBg7b4yV-2iOr6MWLvEIVrJWnvDwB0A40UXoKjrMqnmRc0LLtLd-En5UrcfK97dLtbRD-Bpssy8DtP-WQGjUTdEK1CQ5Bnmt5o_hK8IyY5fANn6C9kwwjZ48AoxWYVsgOTQlAx5fw2ZZl4nCK79CmpVjgO2X4OS89gT7baF4VwAYTkac4fgG7FtciEcCaI0_CzRzP8v67hNePyOL1f_0ALF4k&quot;); background-size: cover; background-position: center center;">
+</div>
+<!-- Custom Markers -->
+<div class="absolute inset-0 pointer-events-none" id="markers-container">
+<!-- Marker 1: High Severity Waste -->
+<button class="pointer-events-auto absolute left-[45%] top-[35%] group flex flex-col items-center" onclick="openPreview('marker1')" style="transform: translate(-3.90234px, -6.5625px);">
+<div class="w-12 h-12 rounded-full bg-error/20 border-2 border-error flex items-center justify-center text-error animate-pulse shadow-[0_0_15px_rgba(255,180,171,0.5)]">
+<span class="material-symbols-outlined text-3xl">delete</span>
+</div>
+<div class="mt-2 bg-surface-container-highest/90 backdrop-blur px-3 py-1 rounded-full text-xs font-label-md border border-white/10 opacity-0 group-hover:opacity-100 transition-opacity">
+                        Hazardous Leak
+                    </div>
+</button>
+<!-- Marker 2: Moderate Infrastructure -->
+<button class="pointer-events-auto absolute left-[62%] top-[55%] group flex flex-col items-center" onclick="openPreview('marker2')" style="transform: translate(-3.90234px, -6.5625px);">
+<div class="w-10 h-10 rounded-full bg-primary/20 border-2 border-primary flex items-center justify-center text-primary map-marker-pulse">
+<span class="material-symbols-outlined text-2xl">construction</span>
+</div>
+<div class="mt-2 bg-surface-container-highest/90 backdrop-blur px-3 py-1 rounded-full text-xs font-label-md border border-white/10 opacity-0 group-hover:opacity-100 transition-opacity">
+                        Pothole Alert
+                    </div>
+</button>
+<!-- Marker 3: Low Lighting -->
+<button class="pointer-events-auto absolute left-[30%] top-[70%] group flex flex-col items-center" onclick="openPreview('marker3')" style="transform: translate(-3.90234px, -6.5625px);">
+<div class="w-10 h-10 rounded-full bg-secondary/20 border-2 border-secondary flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined text-2xl">lightbulb</span>
+</div>
+<div class="mt-2 bg-surface-container-highest/90 backdrop-blur px-3 py-1 rounded-full text-xs font-label-md border border-white/10 opacity-0 group-hover:opacity-100 transition-opacity">
+                        Outage
+                    </div>
+</button>
+</div>
+</div>
+<!-- Filter Bar -->
+<header class="absolute top-8 left-8 right-8 z-20 flex flex-wrap gap-4 items-center">
+<div class="glass-panel px-6 py-3 rounded-full flex items-center gap-6 shadow-2xl">
+<div class="flex items-center gap-3 border-r border-white/10 pr-6">
+<span class="material-symbols-outlined text-primary">filter_alt</span>
+<span class="font-label-md">Filters</span>
+</div>
+<div class="flex gap-2">
+<button class="px-4 py-1.5 rounded-full bg-primary/10 border border-primary/30 text-primary text-label-sm font-label-sm hover:bg-primary/20 transition-colors">Infrastructure</button>
+<button class="px-4 py-1.5 rounded-full bg-white/5 border border-white/10 text-on-surface-variant text-label-sm font-label-sm hover:bg-white/10 transition-colors">Waste</button>
+<button class="px-4 py-1.5 rounded-full bg-white/5 border border-white/10 text-on-surface-variant text-label-sm font-label-sm hover:bg-white/10 transition-colors">Lighting</button>
+</div>
+<div class="h-6 w-[1px] bg-white/10"></div>
+<div class="flex gap-3 items-center">
+<span class="text-label-sm text-on-surface-variant">Severity:</span>
+<select class="bg-transparent border-none text-label-sm font-label-sm focus:ring-0 cursor-pointer">
+<option class="bg-surface">All Levels</option>
+<option class="bg-surface">High Priority</option>
+<option class="bg-surface">Moderate</option>
+<option class="bg-surface">Resolved</option>
+</select>
+</div>
+</div>
+<div class="ml-auto flex gap-3">
+<div class="glass-panel px-4 py-2 rounded-full flex items-center gap-3">
+<span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+<span class="text-label-sm">Live System Status: Optimal</span>
+</div>
+<button class="w-12 h-12 glass-panel rounded-full flex items-center justify-center hover:bg-white/10 transition-colors">
+<span class="material-symbols-outlined">my_location</span>
+</button>
+</div>
+</header>
+<!-- Right Side Panel (Issues/Trending) -->
+<aside class="absolute top-28 right-8 bottom-8 w-80 z-20 flex flex-col gap-6">
+<!-- Trending Problems -->
+<section class="glass-panel rounded-2xl flex-1 flex flex-col overflow-hidden">
+<div class="p-6 border-b border-white/10 flex justify-between items-center">
+<h3 class="font-headline-sm text-headline-sm">Trending</h3>
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">trending_up</span>
+</div>
+<div class="flex-1 overflow-y-auto p-4 space-y-4">
+<!-- Issue Card -->
+<div class="p-4 rounded-xl bg-white/5 border border-white/10 hover:border-primary/50 transition-all cursor-pointer group">
+<div class="flex justify-between items-start mb-2">
+<span class="px-2 py-0.5 rounded-md bg-error/20 text-error text-[10px] font-bold uppercase">Critical</span>
+<span class="text-xs text-on-surface-variant">2h ago</span>
+</div>
+<h4 class="font-label-md text-label-md mb-1 group-hover:text-primary transition-colors">Janpath Road Water Leak</h4>
+<p class="text-sm text-on-surface-variant line-clamp-2">Significant water flow detected near the city library intersection...</p>
+<div class="mt-3 flex items-center gap-4 text-xs text-on-surface-variant">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm">chat</span> 12</span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm">thumb_up</span> 45</span>
+</div>
+</div>
+<!-- Issue Card -->
+<div class="p-4 rounded-xl bg-white/5 border border-white/10 hover:border-primary/50 transition-all cursor-pointer group">
+<div class="flex justify-between items-start mb-2">
+<span class="px-2 py-0.5 rounded-md bg-amber-500/20 text-amber-500 text-[10px] font-bold uppercase">Moderate</span>
+<span class="text-xs text-on-surface-variant">5h ago</span>
+</div>
+<h4 class="font-label-md text-label-md mb-1 group-hover:text-primary transition-colors">Lodhi Garden Bench Repair</h4>
+<p class="text-sm text-on-surface-variant line-clamp-2">Graffiti on historical markers in Central Plaza.</p>
+<div class="mt-3 flex items-center gap-4 text-xs text-on-surface-variant">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm">chat</span> 4</span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm">thumb_up</span> 18</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Nearby Statistics -->
+<section class="glass-panel p-6 rounded-2xl">
+<h4 class="font-label-md text-label-md mb-4 text-on-surface-variant uppercase tracking-wider">Nearby Impact</h4>
+<div class="grid grid-cols-2 gap-4">
+<div class="text-center p-3 rounded-xl bg-white/5">
+<div class="text-2xl font-bold text-primary">84%</div>
+<div class="text-[10px] uppercase text-on-surface-variant">Resolved</div>
+</div>
+<div class="text-center p-3 rounded-xl bg-white/5">
+<div class="text-2xl font-bold text-secondary">12m</div>
+<div class="text-[10px] uppercase text-on-surface-variant">Avg. Resp</div>
+</div>
+</div>
+</section>
+</aside>
+<!-- Glassmorphic Preview Modal (Hidden by default) -->
+<div class="hidden absolute inset-0 z-[60] items-center justify-center bg-surface/40 backdrop-blur-md p-6" id="preview-modal">
+<div class="glass-panel max-w-2xl w-full rounded-3xl overflow-hidden shadow-[0_0_80px_rgba(0,0,0,0.6)] border border-white/20 animate-in fade-in zoom-in duration-300">
+<div class="relative h-64 bg-surface-variant">
+<img class="w-full h-full object-cover" data-alt="A raw, realistic photograph showing a deep asphalt pothole on a rainy city street. The surrounding pavement is wet and reflecting city lights. The scene is slightly gritty to emphasize the 'before' state of a civic issue. High contrast, cinematic urban photography style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA370oZhMDyLM3HuJyj0BrEVBRcCkA0k3Xc7Z-SBQ8SZyYxv-ftu4NKn1bniXltnO7bxN9-k4eI1y0nFoBLbspgReipo8A4bh2GQl4scnwoxa0M4DKlRutgPB4pZirh8geomuca5MzCLFZYJfe3Uvq3HeRchwgBWJXIzpjMRhb9EWpcPDxPcb79T1LCUftu7fZfGWHX2jIjPI7gMrQTCncnsMwJcOmO8nF-QmsYkZDRS7SL8zV394sZX3pOhJ33QAEYHHxOKBBdtmw">
+<div class="absolute top-4 left-4 bg-error px-4 py-1.5 rounded-full text-on-error text-xs font-bold shadow-lg">BEFORE</div>
+<button class="absolute top-4 right-4 w-10 h-10 rounded-full bg-surface/60 backdrop-blur-md flex items-center justify-center text-white hover:bg-surface transition-colors" onclick="closePreview()">
+<span class="material-symbols-outlined">close</span>
+</button>
+</div>
+<div class="p-8">
+<div class="flex justify-between items-start mb-6">
+<div>
+<h2 class="font-headline-md text-headline-md text-primary mb-2">Severe Infrastructure Damage</h2>
+<p class="text-on-surface-variant flex items-center gap-2"><span class="material-symbols-outlined text-sm">location_on</span> 12 Connaught Lane, New Delhi</p>
+</div>
+<div class="text-right">
+<span class="text-label-sm block text-on-surface-variant mb-1">Impact Score</span>
+<div class="text-3xl font-bold text-error">9.4</div>
+</div>
+</div>
+<p class="text-body-md mb-8 opacity-80 leading-relaxed">
+                        Artificial intelligence analysis identifies this pothole as a high-risk factor for vehicle suspension damage and cyclist safety. Reported by 24 citizens in the last 48 hours. Scheduled for emergency repair within 6 hours.
+                    </p>
+<div class="flex gap-4">
+<button class="flex-1 py-4 rounded-2xl bg-gradient-to-r from-primary to-secondary text-on-primary font-bold hover:shadow-[0_0_20px_rgba(138,235,255,0.4)] transition-all">
+                            Boost Priority
+                        </button>
+<button class="px-6 py-4 rounded-2xl border border-white/10 hover:bg-white/5 transition-colors">
+<span class="material-symbols-outlined">share</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- FAB (Floating Action Button) -->
+<button class="fixed bottom-10 right-10 w-16 h-16 rounded-full bg-gradient-to-tr from-primary to-secondary flex items-center justify-center text-on-primary shadow-2xl z-50 hover:scale-110 transition-transform active:scale-95 group">
+<span class="material-symbols-outlined text-3xl group-hover:rotate-12 transition-transform">add_a_photo</span>
+</button>
+</main>
+<script>
+        function openPreview(markerId) {
+            const modal = document.getElementById('preview-modal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            
+            // Interaction logic could be expanded here to change content based on markerId
+        }
+
+        function closePreview() {
+            const modal = document.getElementById('preview-modal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        // Close modal on escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closePreview();
+        });
+
+        // Background atmosphere micro-interactions
+        document.addEventListener('mousemove', (e) => {
+            const markers = document.querySelectorAll('#markers-container button');
+            const x = (e.clientX / window.innerWidth - 0.5) * 15;
+            const y = (e.clientY / window.innerHeight - 0.5) * 15;
+            
+            markers.forEach(marker => {
+                marker.style.transform = `translate(${x}px, ${y}px)`;
+            });
+        });
+    </script>
+
+
+
+
+
+
+
+
+</body></html>
