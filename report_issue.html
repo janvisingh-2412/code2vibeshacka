@@ -146,21 +146,21 @@
 </head>
 <body class="bg-surface selection:bg-primary/30">
 <!-- TopNavBar (Shared Component) -->
-<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-container-padding-desktop max-w-[1440px] left-1/2 -translate-x-1/2 bg-surface/60 backdrop-blur-xl border-b border-white/10 shadow-2xl h-20">
+<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-container-padding-desktop max-w-[1440px] left-1/2 -translate-x-1/2 bg-surface/60 backdrop-blur-xl border-b border-outline-variant">
 <div class="flex items-center gap-4">
-<span class="font-display-lg text-display-lg bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent"><span style="font-size: 32px; font-weight: 400; letter-spacing: normal;" class="">CivicLens AI</span></span>
+<span class="font-display-lg text-display-lg bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent"><span style="font-size: 32px; font-weight: 400; letter-spacing: normal;" class="font-display-lg">CivicLens</span></span>
 </div>
 <div class="hidden md:flex items-center gap-8">
 <nav class="flex gap-6">
 <a class="font-label-md text-label-md text-on-surface-variant hover:bg-white/5 transition-all duration-300 px-4 py-2 rounded-lg" href="index.html">Dashboard</a>
 <a class="font-label-md text-label-md text-primary border-b-2 border-primary px-4 py-2" href="report_issue.html">Report Issue</a>
 <a class="font-label-md text-label-md text-on-surface-variant hover:bg-white/5 transition-all duration-300 px-4 py-2 rounded-lg" href="community.html">Community</a>
-<a class="font-label-md text-label-md text-on-surface-variant hover:bg-white/5 transition-all duration-300 px-4 py-2 rounded-lg flex items-center gap-2" href="history.html"><span class="material-symbols-outlined text-[20px]" data-icon="history">history</span>History</a><a class="font-label-md text-label-md text-on-surface-variant hover:bg-white/5 transition-all duration-300 px-4 py-2 rounded-lg flex items-center gap-2" href="ai_assistant.html"><span class="material-symbols-outlined text-[20px]" data-icon="smart_toy">smart_toy</span>Assistant</a></nav>
+<a class="font-label-md text-label-md text-on-surface-variant hover:bg-white/5 transition-all duration-300 px-4 py-2 rounded-lg flex items-center gap-2" href="history.html"><span class="material-symbols-outlined">history</span></a>
 <div class="flex items-center gap-3">
 <span class="material-symbols-outlined text-primary cursor-pointer hover:scale-110 transition-transform" data-icon="smart_toy">smart_toy</span>
 <span class="material-symbols-outlined text-primary cursor-pointer hover:scale-110 transition-transform" data-icon="workspace_premium">workspace_premium</span>
 <div class="w-10 h-10 rounded-full bg-surface-container-high border border-primary/20 overflow-hidden">
-<img class="w-full h-full object-cover" data-alt="A futuristic professional portrait of a tech-savvy urban citizen in a high-tech smart city environment. The lighting is dramatic with cyan and violet rim lights against a dark, minimalist architectural background. The image has a clean, premium digital aesthetic consistent with a high-end AI governance platform." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCgT8nvG-4QlHSH6-VJKlDI9LWtNwJvE_hKv7q4MjwQ0ad1Nmm0DxGN1YsAaDHfXqwRLI4RDTDn99vutLIJUlT_6dtTlKnTT6GYJf-ZpgxHYOcJ8Nib8vGTJGsDERAjtLvgwOHG-hHbDOxl1enqC4ZEPfaoa296TOTMqjZc5TUT-cI_34ij7zpyRUrZOyC1W0hRNSeo1Aai9qtzG_1okXLYT2sWFsLlYFdaurXGJVg442ONBFaPT3Wip4-R0RZTqa8dw7VtYTsjjx0">
+<img class="w-full h-full object-cover" data-alt="A futuristic professional portrait of a tech-savvy urban citizen in a high-tech smart city environment. The lighting is dramatic with cyan and vi" src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjQwIiBoZWlnaHQ9IjQwIiBmaWxsPSIjOGFlYmZmIi8+PC9zdmc+">
 </div>
 </div>
 </div>
@@ -182,7 +182,7 @@
 <!-- Upload Zone -->
 <div class="relative group" onclick="document.getElementById('image').click()">
 <input type="file" id="image" class="hidden" accept="image/*,video/*">
-<div id="uploadZone" class="relative w-full aspect-video rounded-lg border-2 border-dashed border-primary/30 bg-surface-container-low/50 flex flex-col items-center justify-center transition-all duration-500 group-hover:border-primary group-hover:bg-primary/5 cursor-pointer overflow-hidden">
+<div id="uploadZone" class="relative w-full aspect-video rounded-lg border-2 border-dashed border-primary/30 bg-surface-container-low/50 flex flex-col items-center justify-center transition-all duration-500 group-hover:border-primary/60 group-hover:bg-primary/5">
 <div id="uploadPrompt" class="text-center p-6 transition-transform duration-500 group-hover:scale-105 z-10">
 <span class="material-symbols-outlined text-6xl text-primary/60 mb-4 group-hover:text-primary transition-colors" data-icon="cloud_upload">cloud_upload</span>
 <p class="font-headline-sm text-headline-sm text-on-surface">Drop visuals or click to scan</p>
@@ -199,7 +199,7 @@
 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
 <div class="space-y-2">
 <label class="font-label-md text-label-md text-primary ml-1">Issue Category</label>
-<select id="issueType" class="w-full h-14 px-4 rounded-lg bg-surface-container-high border border-outline-variant text-on-surface focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none transition-all shadow-inner appearance-none">
+<select id="issueType" class="w-full h-14 px-4 rounded-lg bg-surface-container-high border border-outline-variant text-on-surface focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none">
 <option>Pothole / Road Damage</option>
 <option>Faulty Street Lighting</option>
 <option>Public Space Maintenance</option>
@@ -222,7 +222,7 @@
 </div>
 <div class="space-y-2 mt-4">
 <label class="font-label-md text-label-md text-primary ml-1">Description</label>
-<textarea id="description" placeholder="Describe the issue" class="w-full h-32 py-3 px-4 rounded-lg bg-surface-container-high border border-outline-variant text-on-surface focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none transition-all shadow-inner resize-none"></textarea>
+<textarea id="description" placeholder="Describe the issue" class="w-full h-32 py-3 px-4 rounded-lg bg-surface-container-high border border-outline-variant text-on-surface focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none"></textarea>
 </div>
 <div class="space-y-2 mt-4">
 
@@ -263,9 +263,9 @@ class="w-full h-14 px-4 rounded-lg bg-surface-container-high border border-outli
 <span class="font-label-sm text-label-sm text-primary">Precise: 28.6139° N, 77.2090° E</span>
 </div>
 <div class="w-full h-64 rounded-lg overflow-hidden border border-white/10 relative"><!-- Background Image: India Gate -->
-<div class="absolute inset-0 bg-cover bg-center" style="background-image: url(&quot;https://lh3.googleusercontent.com/aida-public/AB6AXuDLhbDvCXJ6f7cjCeToRJNILMwHX8h0edhYaH3vmpID1RX6lJ8C_i36BQZ6Ze9ektysRvNCxdU8PvLj6EDN93SrN5oWGJPkrADL7xDCk1AMX4r5QLba-XL52niibxjyAtvHZMfv4jM0WRjappJOrZfyhTKxUgtIhfygWrC2AKa81vGuQABixOgX9s4G2GMgioKfY_M9SK_0XxNQbIjXd3M3grFFGvRpS6hms3H1-wDk7d_QE38erbN28GKQA6aRZ0UcgN-H--oZk7I&quot;);"></div>
+<div class="absolute inset-0 bg-cover bg-center" style="background-image: url(&quot;https://lh3.googleusercontent.com/aida-public/AB6AXuDLhbDvCXJ6f7cjCeToRJNILMwHX8h0edhYaH3vmpID1RX6lJ8C_i36BQZ6Z[...]"></div>
 <!-- Overlay Image: New Delhi Map with reduced opacity -->
-<div class="absolute inset-0 bg-cover bg-center opacity-80 mix-blend-screen" style="background-image: url(&quot;https://lh3.googleusercontent.com/aida-public/AB6AXuC975IKep-fJh352iItIoFZA9vHLIfrS4C5AZxGaVdVuyr4qUJ5PaoZiYBzEbOA-i7vOHYx6tWNsVDw11f9SEU1oBjv_GnuywSWOx_kz8E8VPDsa8SuxYygsQjX4woNnaPcc-WPI3EytxGIejteEuvDWiT9IjyeW8EtzKpcnPKi5CAkDSR5HhRPACB6Cz5UC0htcgJ3K8o8qDeeksIu_XLawpYYtl4lR7clXFhicqrwa3RzdSMYkLz8Z_gXB3uhfst7bZ7537DBT3g&quot;);"></div>
+<div class="absolute inset-0 bg-cover bg-center opacity-80 mix-blend-screen" style="background-image: url(&quot;https://lh3.googleusercontent.com/aida-public/AB6AXuC975IKep-fJh352iItIoFZA9vHLIfrS[...]"></div>
 <!-- Crosshair Overlay -->
 <div class="absolute inset-0 flex items-center justify-center pointer-events-none z-10">
 <div class="w-12 h-12 border-2 border-primary rounded-full flex items-center justify-center animate-pulse">
@@ -312,7 +312,7 @@ class="w-full h-14 px-4 rounded-lg bg-surface-container-high border border-outli
 </div>
 </div>
 <!-- Submit Button -->
-<button id="submitBtn" class="w-full py-5 rounded-lg bg-gradient-to-r from-primary to-secondary text-on-primary font-headline-sm text-headline-sm shadow-[0_0_30px_rgba(138,235,255,0.4)] hover:shadow-[0_0_50px_rgba(138,235,255,0.6)] hover:scale-[1.02] active:scale-95 transition-all duration-300">
+<button id="submitBtn" class="w-full py-5 rounded-lg bg-gradient-to-r from-primary to-secondary text-on-primary font-headline-sm text-headline-sm shadow-[0_0_30px_rgba(138,235,255,0.4)] hover:shadow-[0_0_40px_rgba(138,235,255,0.6)] transition-all duration-300 hover:scale-105">
                         Submit Digital Report
                     </button>
 <p class="text-center font-label-sm text-label-sm text-on-surface-variant italic">
@@ -394,11 +394,14 @@ imageInput.addEventListener("change", async (e) => {
     const analyzingOverlay = document.getElementById("analyzingOverlay");
 
     if (!file) {
+        console.log("No file selected");
         imageName.innerText = "Support for 4K video and RAW imagery";
         uploadPrompt.classList.remove("hidden");
         imagePreview.classList.add("hidden");
         return;
     }
+
+    console.log("File selected:", file.name);
 
     // Show image preview
     const objectUrl = URL.createObjectURL(file);
@@ -414,28 +417,36 @@ imageInput.addEventListener("change", async (e) => {
     formData.append("image", file);
 
     try {
+        console.log("Sending image to AI analysis endpoint...");
         const response = await fetch("http://localhost:5000/api/ai/analyze-image", {
             method: "POST",
             body: formData
         });
 
+        console.log("AI response status:", response.status);
         const data = await response.json();
+        console.log("AI response data:", data);
         
-        // Hide analyzing overlay
+        // Hide analyzing overlay - keep image preview visible
         analyzingOverlay.classList.add("hidden");
         analyzingOverlay.classList.remove("flex");
 
         if (response.ok && data.success) {
             const analysis = data.analysis;
-            console.log("AI Analysis:", analysis);
-            alert(JSON.stringify(analysis));
+            console.log("✓ AI Analysis successful:", analysis);
 
             if (analysis.isValidInfrastructureIssue === false) {
+                console.warn("Image is not a valid civic issue");
                 alert("This image is not a valid civic issue.");
                 imageName.innerText = "This image is not a valid civic issue.";
             } else {
-                document.getElementById("issueType").value = analysis.issueType || "Unknown";
+                console.log("✓ Valid infrastructure issue detected");
                 
+                // Auto-fill Issue Category
+                document.getElementById("issueType").value = analysis.issueType || "Unknown";
+                console.log("✓ Issue Type set to:", analysis.issueType);
+                
+                // Auto-fill Severity with validation
                 if (analysis.severity) {
                     const severitySelect = document.getElementById("severity");
                     let optionExists = Array.from(severitySelect.options).some(opt => opt.value === analysis.severity);
@@ -444,24 +455,41 @@ imageInput.addEventListener("change", async (e) => {
                         severitySelect.add(newOption);
                     }
                     severitySelect.value = analysis.severity;
+                    console.log("✓ Severity set to:", analysis.severity);
                 }
 
+                // Auto-fill Description
                 document.getElementById("description").value = analysis.description || "";
-                
+                console.log("✓ Description set");
+
+                // Update AI Diagnostics Panel
                 document.getElementById("ai-issue-type").innerText = analysis.issueType || "Detected";
-                document.getElementById("ai-confidence").innerText = analysis.confidence || "100%";
-                document.getElementById("ai-confidence-bar").style.width = analysis.confidence || "100%";
+                
+                // Parse confidence properly (remove % sign)
+                let confidenceValue = analysis.confidence || "0%";
+                let confidencePercent = parseInt(confidenceValue.toString().replace('%', '')) || 0;
+                document.getElementById("ai-confidence").innerText = confidenceValue;
+                document.getElementById("ai-confidence-bar").style.width = confidencePercent + "%";
+                console.log("✓ Confidence set to:", confidenceValue);
+                
+                // Set repair time
                 document.getElementById("ai-repair-time").innerText = analysis.estimatedRepairTime || "Unknown";
+                console.log("✓ Repair Time set to:", analysis.estimatedRepairTime);
+                
+                // Set suggested action
                 document.getElementById("ai-suggested-action").innerText = analysis.suggestedAction || "No suggested action provided.";
+                console.log("✓ Suggested Action set");
                 
                 imageName.innerText = file.name;
+                console.log("✓ All fields auto-filled successfully");
             }
         } else {
+            console.error("AI analysis failed:", data.message);
             imageName.innerText = file.name;
             alert(data.message || "Failed to analyze image.");
         }
     } catch (err) {
-        console.error(err);
+        console.error("Error during image analysis:", err);
         analyzingOverlay.classList.add("hidden");
         analyzingOverlay.classList.remove("flex");
         imageName.innerText = file.name;
@@ -469,8 +497,10 @@ imageInput.addEventListener("change", async (e) => {
     }
 });
 
+// ===== SUBMIT BUTTON EVENT LISTENER =====
 const submitBtn = document.getElementById("submitBtn");
-    console.log("SUBMIT BUTTON CLICKED");
+submitBtn.addEventListener("click", async (e) => {
+    console.log("✓ SUBMIT BUTTON CLICKED");
     e.preventDefault();
 
     const image = document.getElementById("image").files[0];
@@ -479,13 +509,20 @@ const submitBtn = document.getElementById("submitBtn");
     const severity = document.getElementById("severity").value;
     const location = document.getElementById("location").value;
 
+    console.log("Form Data Validation:");
+    console.log("  - Image:", image ? image.name : "MISSING");
+    console.log("  - Issue Type:", issueType);
+    console.log("  - Description:", description.substring(0, 50) + "...");
+    console.log("  - Severity:", severity);
+    console.log("  - Location:", location);
+
     if (!image || !description || !location) {
+        console.error("Missing required fields");
         alert("Please fill all the required fields.");
         return;
     }
 
     const formData = new FormData();
-
     formData.append("image", image);
     formData.append("issueType", issueType);
     formData.append("description", description);
@@ -493,22 +530,27 @@ const submitBtn = document.getElementById("submitBtn");
     formData.append("location", location);
     formData.append("status", "Pending");
 
-    try {
+    console.log("Submitting FormData to /api/issues/create...");
 
+    try {
         const response = await fetch("http://localhost:5000/api/issues/create", {
             method: "POST",
             body: formData
         });
 
+        console.log("Submit response status:", response.status);
         const data = await response.json();
+        console.log("Submit response:", data);
 
         if (response.ok) {
-
+            console.log("✓ Report submitted successfully");
             alert("Report submitted successfully.");
 
+            // Reset form
             document.getElementById("description").value = "";
             document.getElementById("location").value = "";
             document.getElementById("image").value = "";
+            document.getElementById("issueType").value = "Pothole / Road Damage";
             document.getElementById("severity").value = "Normal";
             document.getElementById("imageName").innerText = "Support for 4K video and RAW imagery";
             
@@ -523,18 +565,17 @@ const submitBtn = document.getElementById("submitBtn");
             document.getElementById("imagePreview").src = "";
             document.getElementById("imagePreview").classList.add("hidden");
             document.getElementById("uploadPrompt").classList.remove("hidden");
+            
+            console.log("✓ Form reset complete");
 
         } else {
-
+            console.error("Submission failed:", data.message);
             alert(data.message || "Submission Failed");
-
         }
 
     } catch (err) {
-
-        console.error(err);
+        console.error("Error submitting report:", err);
         alert("Server Connection Failed");
-
     }
 
 });
