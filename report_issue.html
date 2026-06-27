@@ -50,6 +50,22 @@
         .material-symbols-outlined {
             font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
         }
+        .toast-notification {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            padding: 16px 24px;
+            background: rgba(138, 235, 255, 0.1);
+            border: 1px solid rgba(138, 235, 255, 0.4);
+            border-radius: 8px;
+            color: #8aebff;
+            z-index: 1000;
+            animation: slideIn 0.3s ease;
+        }
+        @keyframes slideIn {
+            from { transform: translateX(400px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
     </style>
 <script id="tailwind-config">
       tailwind.config = {
@@ -160,7 +176,7 @@
 <span class="material-symbols-outlined text-primary cursor-pointer hover:scale-110 transition-transform" data-icon="smart_toy">smart_toy</span>
 <span class="material-symbols-outlined text-primary cursor-pointer hover:scale-110 transition-transform" data-icon="workspace_premium">workspace_premium</span>
 <div class="w-10 h-10 rounded-full bg-surface-container-high border border-primary/20 overflow-hidden">
-<img class="w-full h-full object-cover" data-alt="A futuristic professional portrait of a tech-savvy urban citizen in a high-tech smart city environment. The lighting is dramatic with cyan and vi" src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjQwIiBoZWlnaHQ9IjQwIiBmaWxsPSIjOGFlYmZmIi8+PC9zdmc+">
+<img class="w-full h-full object-cover" data-alt="Avatar" src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjQwIiBoZWlnaHQ9IjQwIiBmaWxsPSIjOGFlYmZmIi8+PC9zdmc+">
 </div>
 </div>
 </div>
@@ -180,7 +196,7 @@
 <p class="font-body-md text-body-md text-on-surface-variant">AI-Enhanced Infrastructure Analysis &amp; Geo-tagging</p>
 </div>
 <!-- Upload Zone -->
-<div class="relative group" onclick="document.getElementById('image').click()">
+<div class="relative group cursor-pointer" onclick="document.getElementById('image').click()">
 <input type="file" id="image" class="hidden" accept="image/*,video/*">
 <div id="uploadZone" class="relative w-full aspect-video rounded-lg border-2 border-dashed border-primary/30 bg-surface-container-low/50 flex flex-col items-center justify-center transition-all duration-500 group-hover:border-primary/60 group-hover:bg-primary/5">
 <div id="uploadPrompt" class="text-center p-6 transition-transform duration-500 group-hover:scale-105 z-10">
@@ -188,8 +204,8 @@
 <p class="font-headline-sm text-headline-sm text-on-surface">Drop visuals or click to scan</p>
 <p id="imageName" class="font-label-sm text-label-sm text-on-surface-variant mt-2">Support for 4K video and RAW imagery</p>
 </div>
-<img id="imagePreview" class="absolute inset-0 w-full h-full object-cover hidden z-0">
-<div id="analyzingOverlay" class="absolute inset-0 bg-surface/80 backdrop-blur-sm hidden flex-col items-center justify-center z-20">
+<img id="imagePreview" class="absolute inset-0 w-full h-full object-cover rounded-lg hidden z-0" style="display: none;">
+<div id="analyzingOverlay" class="absolute inset-0 bg-surface/80 backdrop-blur-sm hidden flex-col items-center justify-center z-20 rounded-lg" style="display: none;">
 <span class="material-symbols-outlined text-6xl text-primary animate-spin mb-4" data-icon="sync">sync</span>
 <p class="font-headline-sm text-primary animate-pulse">Analyzing image...</p>
 </div>
@@ -200,52 +216,35 @@
 <div class="space-y-2">
 <label class="font-label-md text-label-md text-primary ml-1">Issue Category</label>
 <select id="issueType" class="w-full h-14 px-4 rounded-lg bg-surface-container-high border border-outline-variant text-on-surface focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none">
-<option>Pothole / Road Damage</option>
-<option>Faulty Street Lighting</option>
-<option>Public Space Maintenance</option>
-<option>Vandalism / Graffiti</option>
+<option value="">Select Category</option>
+<option value="Pothole / Road Damage">Pothole / Road Damage</option>
+<option value="Faulty Street Lighting">Faulty Street Lighting</option>
+<option value="Public Space Maintenance">Public Space Maintenance</option>
+<option value="Vandalism / Graffiti">Vandalism / Graffiti</option>
 </select>
 </div>
 <div class="space-y-2">
     <label class="font-label-md text-label-md text-primary ml-1">
         Urgency Level
     </label>
-
-    <select id="severity"
-        class="w-full h-14 px-4 rounded-lg bg-surface-container-high border border-outline-variant text-on-surface">
+    <select id="severity" class="w-full h-14 px-4 rounded-lg bg-surface-container-high border border-outline-variant text-on-surface focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none">
         <option value="Normal">Normal</option>
         <option value="Medium">Medium</option>
         <option value="Critical">Critical</option>
-
     </select>
 </div>
 </div>
 <div class="space-y-2 mt-4">
 <label class="font-label-md text-label-md text-primary ml-1">Description</label>
-<textarea id="description" placeholder="Describe the issue" class="w-full h-32 py-3 px-4 rounded-lg bg-surface-container-high border border-outline-variant text-on-surface focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none"></textarea>
+<textarea id="description" placeholder="Describe the issue" class="w-full h-32 py-3 px-4 rounded-lg bg-surface-container-high border border-outline-variant text-on-surface focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none" readonly></textarea>
 </div>
 <div class="space-y-2 mt-4">
-
-<label class="font-label-md text-label-md text-primary ml-1">
-
-Location
-
-</label>
-
-<input
-
-id="location"
-
-type="text"
-
-placeholder="Enter Issue Location"
-
-class="w-full h-14 px-4 rounded-lg bg-surface-container-high border border-outline-variant text-on-surface">
-
+<label class="font-label-md text-label-md text-primary ml-1">Location</label>
+<input id="location" type="text" placeholder="Enter Issue Location" class="w-full h-14 px-4 rounded-lg bg-surface-container-high border border-outline-variant text-on-surface focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none">
 </div>
 <!-- Voice Button with Pulse -->
 <div class="flex items-center gap-4 p-4 rounded-lg bg-primary/5 border border-primary/20">
-<button class="w-14 h-14 rounded-full bg-gradient-to-tr from-primary to-secondary flex items-center justify-center pulse-animation shadow-lg hover:scale-105 transition-transform">
+<button type="button" class="w-14 h-14 rounded-full bg-gradient-to-tr from-primary to-secondary flex items-center justify-center pulse-animation shadow-lg hover:scale-105 transition-transform">
 <span class="material-symbols-outlined text-on-primary" data-icon="mic" style="font-variation-settings: &quot;FILL&quot; 1;">mic</span>
 </button>
 <div>
@@ -262,21 +261,18 @@ class="w-full h-14 px-4 rounded-lg bg-surface-container-high border border-outli
 <h3 class="font-headline-sm text-headline-sm text-on-surface">GPS Anchor</h3>
 <span class="font-label-sm text-label-sm text-primary">Precise: 28.6139° N, 77.2090° E</span>
 </div>
-<div class="w-full h-64 rounded-lg overflow-hidden border border-white/10 relative"><!-- Background Image: India Gate -->
-<div class="absolute inset-0 bg-cover bg-center" style="background-image: url(&quot;https://lh3.googleusercontent.com/aida-public/AB6AXuDLhbDvCXJ6f7cjCeToRJNILMwHX8h0edhYaH3vmpID1RX6lJ8C_i36BQZ6Z[...]"></div>
-<!-- Overlay Image: New Delhi Map with reduced opacity -->
-<div class="absolute inset-0 bg-cover bg-center opacity-80 mix-blend-screen" style="background-image: url(&quot;https://lh3.googleusercontent.com/aida-public/AB6AXuC975IKep-fJh352iItIoFZA9vHLIfrS[...]"></div>
-<!-- Crosshair Overlay -->
+<div class="w-full h-64 rounded-lg overflow-hidden border border-white/10 relative">
+<div class="absolute inset-0 bg-cover bg-center" style="background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjI1NiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iNDAwIiBoZWlnaHQ9IjI1NiIgZmlsbD0iIzA1MTQyNCIvPjwvc3ZnPg==')"></div>
 <div class="absolute inset-0 flex items-center justify-center pointer-events-none z-10">
 <div class="w-12 h-12 border-2 border-primary rounded-full flex items-center justify-center animate-pulse">
 <div class="w-1 h-1 bg-primary rounded-full"></div>
 </div>
 </div>
-<!-- Signal Strength Badge -->
 <div class="absolute bottom-3 left-3 bg-surface/80 backdrop-blur-md px-3 py-1 rounded-full text-[10px] font-label-md text-on-surface flex items-center gap-2 z-10">
 <span class="w-2 h-2 bg-primary rounded-full animate-ping"></span>
-    SIGNAL STRENGTH: OPTIMAL
-</div></div>
+SIGNAL STRENGTH: OPTIMAL
+</div>
+</div>
 </div>
 <!-- AI Analysis Panel -->
 <div class="glass-panel glow-border-primary rounded-lg p-6 space-y-6">
@@ -312,12 +308,12 @@ class="w-full h-14 px-4 rounded-lg bg-surface-container-high border border-outli
 </div>
 </div>
 <!-- Submit Button -->
-<button id="submitBtn" class="w-full py-5 rounded-lg bg-gradient-to-r from-primary to-secondary text-on-primary font-headline-sm text-headline-sm shadow-[0_0_30px_rgba(138,235,255,0.4)] hover:shadow-[0_0_40px_rgba(138,235,255,0.6)] transition-all duration-300 hover:scale-105">
-                        Submit Digital Report
-                    </button>
+<button id="submitBtn" type="button" class="w-full py-5 rounded-lg bg-gradient-to-r from-primary to-secondary text-on-primary font-headline-sm text-headline-sm shadow-[0_0_30px_rgba(138,235,255,0.4)] hover:shadow-[0_0_40px_rgba(138,235,255,0.6)] transition-all duration-300 hover:scale-105">
+Submit Digital Report
+</button>
 <p class="text-center font-label-sm text-label-sm text-on-surface-variant italic">
-                        By submitting, you agree to the CivicHero Data Transparency Protocol.
-                    </p>
+By submitting, you agree to the CivicHero Data Transparency Protocol.
+</p>
 </div>
 </div>
 </div>
@@ -337,246 +333,253 @@ class="w-full h-14 px-4 rounded-lg bg-surface-container-high border border-outli
 </div>
 </div>
 </footer>
-<!-- FAB Suppression (Per Mandate for Details/Transactional pages) -->
-<script>
-        // Micro-interactions for input focus
-        document.querySelectorAll('input, select, textarea').forEach(el => {
-            el.addEventListener('focus', () => {
-                el.parentElement.querySelector('label')?.classList.add('text-secondary');
-                el.parentElement.querySelector('label')?.classList.remove('text-primary');
-            });
-            el.addEventListener('blur', () => {
-                el.parentElement.querySelector('label')?.classList.add('text-primary');
-                el.parentElement.querySelector('label')?.classList.remove('text-secondary');
-            });
-        });
-
-        // Toggle urgency
-        const urgencyBtns = document.querySelectorAll('.flex.gap-2.h-14 button');
-        urgencyBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                urgencyBtns.forEach(b => {
-                    b.classList.remove('bg-error/10', 'text-error', 'border-error/50');
-                    b.classList.add('border-outline-variant');
-                });
-                btn.classList.remove('border-outline-variant');
-                btn.classList.add('bg-error/10', 'text-error', 'border-error/50');
-            });
-        });
-    </script>
-
-
 
 <script>
+// Global variables to store file and analysis data
+let selectedFile = null;
+let analysisData = null;
+
+// Toast notification function
+function showToast(message, type = 'info') {
+    const toast = document.createElement('div');
+    toast.className = 'toast-notification';
+    toast.textContent = message;
+    if (type === 'error') {
+        toast.style.borderColor = 'rgba(255, 180, 171, 0.4)';
+        toast.style.color = '#ffb4ab';
+        toast.style.background = 'rgba(255, 180, 171, 0.1)';
+    }
+    document.body.appendChild(toast);
+    setTimeout(() => toast.remove(), 3000);
+}
+
 document.addEventListener("DOMContentLoaded", () => {
+    console.log("🚀 PAGE LOADED - Initializing...");
+    
+    // Get geolocation
     const locInput = document.getElementById("location");
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
             (position) => {
                 if (!locInput.value) {
                     locInput.value = `${position.coords.latitude}, ${position.coords.longitude}`;
+                    console.log("📍 Location auto-filled");
                 }
             },
             (error) => {
-                console.warn("Geolocation permission denied or error.", error);
+                console.warn("⚠️ Geolocation denied:", error);
             }
         );
     }
-});
 
-const imageInput = document.getElementById("image");
-const imageName = document.getElementById("imageName");
+    // Image upload handler
+    const imageInput = document.getElementById("image");
+    const imageName = document.getElementById("imageName");
 
-imageInput.addEventListener("change", async (e) => {
-    const file = e.target.files[0];
-    const uploadPrompt = document.getElementById("uploadPrompt");
-    const imagePreview = document.getElementById("imagePreview");
-    const analyzingOverlay = document.getElementById("analyzingOverlay");
+    imageInput.addEventListener("change", async (e) => {
+        const file = e.target.files[0];
+        if (!file) {
+            console.log("❌ No file selected");
+            return;
+        }
 
-    if (!file) {
-        console.log("❌ No file selected");
-        imageName.innerText = "Support for 4K video and RAW imagery";
-        uploadPrompt.classList.remove("hidden");
-        imagePreview.classList.add("hidden");
-        return;
-    }
+        console.log("📤 FILE SELECTED:", file.name);
+        selectedFile = file;
 
-    console.log("📤 File selected:", file.name);
+        const uploadPrompt = document.getElementById("uploadPrompt");
+        const imagePreview = document.getElementById("imagePreview");
+        const analyzingOverlay = document.getElementById("analyzingOverlay");
 
-    // Show image preview BEFORE analysis
-    const objectUrl = URL.createObjectURL(file);
-    imagePreview.src = objectUrl;
-    imagePreview.classList.remove("hidden");
-    uploadPrompt.classList.add("hidden");
+        // Show image preview
+        const objectUrl = URL.createObjectURL(file);
+        imagePreview.src = objectUrl;
+        imagePreview.style.display = "block";
+        uploadPrompt.style.display = "none";
 
-    // Show analyzing overlay
-    analyzingOverlay.classList.remove("hidden");
-    analyzingOverlay.classList.add("flex");
-    
-    const formData = new FormData();
-    formData.append("image", file);
+        // Show analyzing overlay
+        analyzingOverlay.style.display = "flex";
+        imageName.innerText = "🔄 Analyzing...";
 
-    try {
-        console.log("🔄 Sending image to AI analysis endpoint...");
-        const response = await fetch("http://localhost:5000/api/ai/analyze-image", {
-            method: "POST",
-            body: formData
-        });
+        const formData = new FormData();
+        formData.append("image", file);
 
-        console.log("📡 AI response status:", response.status);
-        const data = await response.json();
-        console.log("📊 AI response data:", data);
-        
-        // Hide analyzing overlay - IMAGE PREVIEW STAYS VISIBLE
-        analyzingOverlay.classList.add("hidden");
-        analyzingOverlay.classList.remove("flex");
+        try {
+            console.log("🔄 SENDING TO /api/ai/analyze-image...");
+            
+            const response = await fetch("http://localhost:5000/api/ai/analyze-image", {
+                method: "POST",
+                body: formData
+            });
 
-        if (response.ok && data.success) {
-            const analysis = data.analysis;
-            console.log("✅ AI Analysis successful:", analysis);
+            console.log("📡 Response Status:", response.status);
+            const data = await response.json();
+            console.log("📊 Response Data:", data);
 
-            if (analysis.isValidInfrastructureIssue === false) {
-                console.warn("⚠️ Image is not a valid civic issue");
-                alert("This image is not a valid civic issue.");
-                imageName.innerText = "This image is not a valid civic issue.";
-            } else {
-                console.log("✅ Valid infrastructure issue detected");
+            // Hide analyzing overlay
+            analyzingOverlay.style.display = "none";
+
+            if (response.ok && data.success) {
+                const analysis = data.analysis;
+                console.log("✅ ANALYSIS SUCCESSFUL:", analysis);
                 
-                // AUTO-FILL Issue Category
-                document.getElementById("issueType").value = analysis.issueType || "Unknown";
-                console.log("✅ Issue Type set to:", analysis.issueType);
-                
-                // AUTO-FILL Severity with validation
-                if (analysis.severity) {
-                    const severitySelect = document.getElementById("severity");
-                    let optionExists = Array.from(severitySelect.options).some(opt => opt.value === analysis.severity);
-                    if (!optionExists) {
-                        const newOption = new Option(analysis.severity, analysis.severity);
-                        severitySelect.add(newOption);
+                analysisData = analysis;
+
+                if (analysis.isValidInfrastructureIssue === false) {
+                    console.warn("⚠️ Not a valid infrastructure issue");
+                    showToast("❌ This image is not a valid civic infrastructure issue", "error");
+                    imageName.innerText = "Invalid image - not a civic issue";
+                    imagePreview.style.display = "none";
+                    uploadPrompt.style.display = "flex";
+                } else {
+                    console.log("✅ VALID INFRASTRUCTURE ISSUE - AUTO-FILLING FIELDS");
+
+                    // AUTO-FILL Issue Category
+                    const issueTypeVal = analysis.issueType || "Unknown";
+                    document.getElementById("issueType").value = issueTypeVal;
+                    console.log("✅ Issue Type:", issueTypeVal);
+
+                    // AUTO-FILL Severity
+                    if (analysis.severity) {
+                        const severitySelect = document.getElementById("severity");
+                        let optionExists = Array.from(severitySelect.options).some(opt => opt.value === analysis.severity);
+                        if (!optionExists) {
+                            const newOption = new Option(analysis.severity, analysis.severity);
+                            severitySelect.add(newOption);
+                        }
+                        severitySelect.value = analysis.severity;
+                        console.log("✅ Severity:", analysis.severity);
                     }
-                    severitySelect.value = analysis.severity;
-                    console.log("✅ Severity set to:", analysis.severity);
+
+                    // AUTO-FILL Description
+                    document.getElementById("description").value = analysis.description || "";
+                    console.log("✅ Description auto-filled");
+
+                    // UPDATE AI Diagnostics Panel
+                    document.getElementById("ai-issue-type").innerText = issueTypeVal;
+                    
+                    // Parse and set confidence
+                    let confidenceValue = analysis.confidence || "0%";
+                    let confidencePercent = parseInt(confidenceValue.toString().replace('%', '')) || 0;
+                    document.getElementById("ai-confidence").innerText = confidenceValue;
+                    document.getElementById("ai-confidence-bar").style.width = confidencePercent + "%";
+                    console.log("✅ Confidence:", confidenceValue);
+
+                    // AUTO-FILL Repair Time
+                    document.getElementById("ai-repair-time").innerText = analysis.estimatedRepairTime || "-";
+                    console.log("✅ Repair Time:", analysis.estimatedRepairTime);
+
+                    // AUTO-FILL Suggested Action
+                    document.getElementById("ai-suggested-action").innerText = analysis.suggestedAction || "Ready for submission";
+                    console.log("✅ Suggested Action loaded");
+
+                    imageName.innerText = "✅ " + file.name + " - Analysis Complete";
+                    showToast("✅ Image analyzed successfully!", "success");
+                    console.log("✅ ALL FIELDS AUTO-FILLED SUCCESSFULLY");
                 }
-
-                // AUTO-FILL Description
-                document.getElementById("description").value = analysis.description || "";
-                console.log("✅ Description auto-filled");
-
-                // UPDATE AI Diagnostics Panel
-                document.getElementById("ai-issue-type").innerText = analysis.issueType || "Detected";
-                
-                // Parse confidence properly (remove % sign if present)
-                let confidenceValue = analysis.confidence || "0%";
-                let confidencePercent = parseInt(confidenceValue.toString().replace('%', '')) || 0;
-                document.getElementById("ai-confidence").innerText = confidenceValue;
-                document.getElementById("ai-confidence-bar").style.width = confidencePercent + "%";
-                console.log("✅ Confidence set to:", confidenceValue);
-                
-                // AUTO-FILL Repair Time
-                document.getElementById("ai-repair-time").innerText = analysis.estimatedRepairTime || "Unknown";
-                console.log("✅ Repair Time set to:", analysis.estimatedRepairTime);
-                
-                // AUTO-FILL Suggested Action
-                document.getElementById("ai-suggested-action").innerText = analysis.suggestedAction || "No suggested action provided.";
-                console.log("✅ Suggested Action auto-filled");
-                
+            } else {
+                console.error("❌ Analysis failed:", data.message);
+                showToast("❌ " + (data.message || "Failed to analyze image"), "error");
                 imageName.innerText = file.name;
-                console.log("✅ ALL FIELDS AUTO-FILLED SUCCESSFULLY");
             }
-        } else {
-            console.error("❌ AI analysis failed:", data.message);
+        } catch (err) {
+            console.error("❌ FETCH ERROR:", err);
+            showToast("❌ Server connection failed", "error");
+            analyzingOverlay.style.display = "none";
             imageName.innerText = file.name;
-            alert(data.message || "Failed to analyze image.");
         }
-    } catch (err) {
-        console.error("❌ Error during image analysis:", err);
-        analyzingOverlay.classList.add("hidden");
-        analyzingOverlay.classList.remove("flex");
-        imageName.innerText = file.name;
-        alert("Server Connection Failed");
-    }
-});
+    });
 
-// ===== SUBMIT BUTTON EVENT LISTENER (FIXED) =====
-const submitBtn = document.getElementById("submitBtn");
-submitBtn.addEventListener("click", async (e) => {
-    console.log("\n========== SUBMIT BUTTON CLICKED ==========");
-    e.preventDefault();
+    // Submit button handler
+    const submitBtn = document.getElementById("submitBtn");
+    submitBtn.addEventListener("click", async (e) => {
+        console.log("\n========== FORM SUBMISSION ==========");
+        e.preventDefault();
 
-    const image = document.getElementById("image").files[0];
-    const issueType = document.getElementById("issueType").value;
-    const description = document.getElementById("description").value;
-    const severity = document.getElementById("severity").value;
-    const location = document.getElementById("location").value;
-
-    console.log("📋 Form Data Validation:");
-    console.log("   ├─ Image:", image ? image.name : "❌ MISSING");
-    console.log("   ├─ Issue Type:", issueType || "❌ MISSING");
-    console.log("   ├─ Description:", description.substring(0, 50) + "...");
-    console.log("   ├─ Severity:", severity);
-    console.log("   └─ Location:", location || "❌ MISSING");
-
-    if (!image || !description || !location) {
-        console.error("❌ Missing required fields!");
-        alert("Please fill all the required fields (image, description, location).");
-        return;
-    }
-
-    const formData = new FormData();
-    formData.append("image", image);
-    formData.append("issueType", issueType);
-    formData.append("description", description);
-    formData.append("severity", severity);
-    formData.append("location", location);
-    formData.append("status", "Pending");
-
-    console.log("🚀 Submitting FormData to /api/issues/create...");
-
-    try {
-        const response = await fetch("http://localhost:5000/api/issues/create", {
-            method: "POST",
-            body: formData
-        });
-
-        console.log("📡 Submit response status:", response.status);
-        const data = await response.json();
-        console.log("📊 Submit response:", data);
-
-        if (response.ok) {
-            console.log("✅ Report submitted successfully to MongoDB!");
-            alert("Report submitted successfully.");
-
-            // Reset form
-            document.getElementById("description").value = "";
-            document.getElementById("location").value = "";
-            document.getElementById("image").value = "";
-            document.getElementById("issueType").value = "Pothole / Road Damage";
-            document.getElementById("severity").value = "Normal";
-            document.getElementById("imageName").innerText = "Support for 4K video and RAW imagery";
-            
-            // Reset AI Diagnostics
-            document.getElementById("ai-issue-type").innerText = "Pending Analysis";
-            document.getElementById("ai-confidence").innerText = "0%";
-            document.getElementById("ai-confidence-bar").style.width = "0%";
-            document.getElementById("ai-repair-time").innerText = "-";
-            document.getElementById("ai-suggested-action").innerText = "Upload an image to get AI-powered insights.";
-            
-            // Reset Image Preview
-            document.getElementById("imagePreview").src = "";
-            document.getElementById("imagePreview").classList.add("hidden");
-            document.getElementById("uploadPrompt").classList.remove("hidden");
-            
-            console.log("✅ Form reset complete\n");
-
-        } else {
-            console.error("❌ Submission failed:", data.message);
-            alert(data.message || "Submission Failed");
+        if (!selectedFile) {
+            showToast("❌ Please upload an image first", "error");
+            return;
         }
 
-    } catch (err) {
-        console.error("❌ Error submitting report:", err);
-        alert("Server Connection Failed");
-    }
+        const issueType = document.getElementById("issueType").value;
+        const description = document.getElementById("description").value;
+        const severity = document.getElementById("severity").value;
+        const location = document.getElementById("location").value;
+
+        console.log("📋 FORM DATA CHECK:");
+        console.log("  ✓ Image:", selectedFile.name);
+        console.log("  ✓ Issue Type:", issueType);
+        console.log("  ✓ Description:", description ? "✓" : "❌ MISSING");
+        console.log("  ✓ Severity:", severity);
+        console.log("  ✓ Location:", location ? "✓" : "❌ MISSING");
+
+        if (!issueType || !description || !location) {
+            showToast("❌ Please fill all required fields", "error");
+            return;
+        }
+
+        // Prepare FormData for submission
+        const formData = new FormData();
+        formData.append("image", selectedFile);
+        formData.append("issueType", issueType);
+        formData.append("description", description);
+        formData.append("severity", severity);
+        formData.append("location", location);
+        formData.append("status", "Pending");
+
+        console.log("🚀 SUBMITTING TO /api/issues/create...");
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<span class="animate-spin">⏳</span> Submitting...';
+
+        try {
+            const response = await fetch("http://localhost:5000/api/issues/create", {
+                method: "POST",
+                body: formData
+            });
+
+            console.log("📡 Submit Response Status:", response.status);
+            const data = await response.json();
+            console.log("📊 Submit Response:", data);
+
+            if (response.ok) {
+                console.log("✅ REPORT SUBMITTED SUCCESSFULLY!");
+                showToast("✅ Report submitted successfully to MongoDB!", "success");
+
+                // Reset form
+                document.getElementById("description").value = "";
+                document.getElementById("location").value = "";
+                document.getElementById("issueType").value = "";
+                document.getElementById("severity").value = "Normal";
+                document.getElementById("image").value = "";
+                document.getElementById("imageName").innerText = "Support for 4K video and RAW imagery";
+                
+                // Reset AI Diagnostics
+                document.getElementById("ai-issue-type").innerText = "Pending Analysis";
+                document.getElementById("ai-confidence").innerText = "0%";
+                document.getElementById("ai-confidence-bar").style.width = "0%";
+                document.getElementById("ai-repair-time").innerText = "-";
+                document.getElementById("ai-suggested-action").innerText = "Upload an image to get AI-powered insights.";
+                
+                // Reset Image Preview
+                document.getElementById("imagePreview").src = "";
+                document.getElementById("imagePreview").style.display = "none";
+                document.getElementById("uploadPrompt").style.display = "flex";
+
+                selectedFile = null;
+                analysisData = null;
+                console.log("✅ FORM RESET COMPLETE");
+
+            } else {
+                console.error("❌ Submission failed:", data.message);
+                showToast("❌ " + (data.message || "Submission failed"), "error");
+            }
+        } catch (err) {
+            console.error("❌ SUBMISSION ERROR:", err);
+            showToast("❌ Server connection failed", "error");
+        } finally {
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = "Submit Digital Report";
+        }
+    });
 });
 </script>
 </body></html>
