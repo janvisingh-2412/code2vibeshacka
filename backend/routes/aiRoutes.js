@@ -49,17 +49,22 @@ router.post(
   "/analyze-image",
   upload.single("image"),
   async (req, res) => {
+    console.log("\n========== GEMINI IMAGE ANALYSIS ==========");
     try {
       if (!req.file) {
-        console.log(req.file);
+        console.error("❌ No file uploaded");
         return res.status(400).json({
           success: false,
           message: "No image uploaded."
         });
       }
 
+      console.log("📎 File Details:", { filename: req.file.filename, path: req.file.path, mimetype: req.file.mimetype });
+      console.log("🔄 Reading file from disk...");
+
       const imageBuffer = fs.readFileSync(req.file.path);
       const base64Image = imageBuffer.toString("base64");
+      console.log("✅ File converted to Base64 (" + base64Image.length + " bytes)");
 
       const model = genAI.getGenerativeModel({
         model: "gemini-2.5-flash"
@@ -98,7 +103,7 @@ Otherwise detect:
 
 • Severity
 
-• Confidence
+• Confidence (as percentage with % sign, e.g., "85%")
 
 • Description
 
@@ -152,7 +157,7 @@ Return ONLY valid JSON
 
 Never return markdown.
 
-JSON
+JSON:
 
 {
 "isValidInfrastructureIssue":true,
@@ -163,9 +168,9 @@ JSON
 "description":"",
 "suggestedAction":"",
 "estimatedRepairTime":""
-}
-`;
+}`;
 
+      console.log("🔄 Sending request to Gemini API...");
       const result = await model.generateContent([
         
         prompt,
@@ -176,22 +181,28 @@ JSON
           }
         }
       ]);
-      console.log("Gemini request sent");
+      console.log("✅ Gemini API response received");
 
       let text = result.response.text();
-      console.log(text);
+      console.log("📝 Raw Gemini Response:\n" + text);
+      
+      // Parse JSON from response
       text = text.replace(/\`\`\`json/g, "").replace(/\`\`\`/g, "").trim();
       const analysis = JSON.parse(text);
+      console.log("✅ Parsed Analysis JSON:", analysis);
 
       res.json({
         success: true,
         analysis: analysis
       });
     } catch (err) {
-      console.log(err);
+      console.error("\n❌ ERROR IN IMAGE ANALYSIS:");
+      console.error("   Error Message:", err.message);
+      console.error("   Error Stack:", err.stack);
+      
       res.status(500).json({
         success: false,
-        message: "Image analysis failed."
+        message: "Image analysis failed: " + err.message
       });
     }
   }

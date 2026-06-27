@@ -3,9 +3,9 @@
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
 <title>Report Issue | CivicHero AI</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
 <!-- Injection of Global Style Guidance Tokens -->
 <style>
         :root {
@@ -394,16 +394,16 @@ imageInput.addEventListener("change", async (e) => {
     const analyzingOverlay = document.getElementById("analyzingOverlay");
 
     if (!file) {
-        console.log("No file selected");
+        console.log("❌ No file selected");
         imageName.innerText = "Support for 4K video and RAW imagery";
         uploadPrompt.classList.remove("hidden");
         imagePreview.classList.add("hidden");
         return;
     }
 
-    console.log("File selected:", file.name);
+    console.log("📤 File selected:", file.name);
 
-    // Show image preview
+    // Show image preview BEFORE analysis
     const objectUrl = URL.createObjectURL(file);
     imagePreview.src = objectUrl;
     imagePreview.classList.remove("hidden");
@@ -417,36 +417,36 @@ imageInput.addEventListener("change", async (e) => {
     formData.append("image", file);
 
     try {
-        console.log("Sending image to AI analysis endpoint...");
+        console.log("🔄 Sending image to AI analysis endpoint...");
         const response = await fetch("http://localhost:5000/api/ai/analyze-image", {
             method: "POST",
             body: formData
         });
 
-        console.log("AI response status:", response.status);
+        console.log("📡 AI response status:", response.status);
         const data = await response.json();
-        console.log("AI response data:", data);
+        console.log("📊 AI response data:", data);
         
-        // Hide analyzing overlay - keep image preview visible
+        // Hide analyzing overlay - IMAGE PREVIEW STAYS VISIBLE
         analyzingOverlay.classList.add("hidden");
         analyzingOverlay.classList.remove("flex");
 
         if (response.ok && data.success) {
             const analysis = data.analysis;
-            console.log("✓ AI Analysis successful:", analysis);
+            console.log("✅ AI Analysis successful:", analysis);
 
             if (analysis.isValidInfrastructureIssue === false) {
-                console.warn("Image is not a valid civic issue");
+                console.warn("⚠️ Image is not a valid civic issue");
                 alert("This image is not a valid civic issue.");
                 imageName.innerText = "This image is not a valid civic issue.";
             } else {
-                console.log("✓ Valid infrastructure issue detected");
+                console.log("✅ Valid infrastructure issue detected");
                 
-                // Auto-fill Issue Category
+                // AUTO-FILL Issue Category
                 document.getElementById("issueType").value = analysis.issueType || "Unknown";
-                console.log("✓ Issue Type set to:", analysis.issueType);
+                console.log("✅ Issue Type set to:", analysis.issueType);
                 
-                // Auto-fill Severity with validation
+                // AUTO-FILL Severity with validation
                 if (analysis.severity) {
                     const severitySelect = document.getElementById("severity");
                     let optionExists = Array.from(severitySelect.options).some(opt => opt.value === analysis.severity);
@@ -455,41 +455,41 @@ imageInput.addEventListener("change", async (e) => {
                         severitySelect.add(newOption);
                     }
                     severitySelect.value = analysis.severity;
-                    console.log("✓ Severity set to:", analysis.severity);
+                    console.log("✅ Severity set to:", analysis.severity);
                 }
 
-                // Auto-fill Description
+                // AUTO-FILL Description
                 document.getElementById("description").value = analysis.description || "";
-                console.log("✓ Description set");
+                console.log("✅ Description auto-filled");
 
-                // Update AI Diagnostics Panel
+                // UPDATE AI Diagnostics Panel
                 document.getElementById("ai-issue-type").innerText = analysis.issueType || "Detected";
                 
-                // Parse confidence properly (remove % sign)
+                // Parse confidence properly (remove % sign if present)
                 let confidenceValue = analysis.confidence || "0%";
                 let confidencePercent = parseInt(confidenceValue.toString().replace('%', '')) || 0;
                 document.getElementById("ai-confidence").innerText = confidenceValue;
                 document.getElementById("ai-confidence-bar").style.width = confidencePercent + "%";
-                console.log("✓ Confidence set to:", confidenceValue);
+                console.log("✅ Confidence set to:", confidenceValue);
                 
-                // Set repair time
+                // AUTO-FILL Repair Time
                 document.getElementById("ai-repair-time").innerText = analysis.estimatedRepairTime || "Unknown";
-                console.log("✓ Repair Time set to:", analysis.estimatedRepairTime);
+                console.log("✅ Repair Time set to:", analysis.estimatedRepairTime);
                 
-                // Set suggested action
+                // AUTO-FILL Suggested Action
                 document.getElementById("ai-suggested-action").innerText = analysis.suggestedAction || "No suggested action provided.";
-                console.log("✓ Suggested Action set");
+                console.log("✅ Suggested Action auto-filled");
                 
                 imageName.innerText = file.name;
-                console.log("✓ All fields auto-filled successfully");
+                console.log("✅ ALL FIELDS AUTO-FILLED SUCCESSFULLY");
             }
         } else {
-            console.error("AI analysis failed:", data.message);
+            console.error("❌ AI analysis failed:", data.message);
             imageName.innerText = file.name;
             alert(data.message || "Failed to analyze image.");
         }
     } catch (err) {
-        console.error("Error during image analysis:", err);
+        console.error("❌ Error during image analysis:", err);
         analyzingOverlay.classList.add("hidden");
         analyzingOverlay.classList.remove("flex");
         imageName.innerText = file.name;
@@ -497,10 +497,10 @@ imageInput.addEventListener("change", async (e) => {
     }
 });
 
-// ===== SUBMIT BUTTON EVENT LISTENER =====
+// ===== SUBMIT BUTTON EVENT LISTENER (FIXED) =====
 const submitBtn = document.getElementById("submitBtn");
 submitBtn.addEventListener("click", async (e) => {
-    console.log("✓ SUBMIT BUTTON CLICKED");
+    console.log("\n========== SUBMIT BUTTON CLICKED ==========");
     e.preventDefault();
 
     const image = document.getElementById("image").files[0];
@@ -509,16 +509,16 @@ submitBtn.addEventListener("click", async (e) => {
     const severity = document.getElementById("severity").value;
     const location = document.getElementById("location").value;
 
-    console.log("Form Data Validation:");
-    console.log("  - Image:", image ? image.name : "MISSING");
-    console.log("  - Issue Type:", issueType);
-    console.log("  - Description:", description.substring(0, 50) + "...");
-    console.log("  - Severity:", severity);
-    console.log("  - Location:", location);
+    console.log("📋 Form Data Validation:");
+    console.log("   ├─ Image:", image ? image.name : "❌ MISSING");
+    console.log("   ├─ Issue Type:", issueType || "❌ MISSING");
+    console.log("   ├─ Description:", description.substring(0, 50) + "...");
+    console.log("   ├─ Severity:", severity);
+    console.log("   └─ Location:", location || "❌ MISSING");
 
     if (!image || !description || !location) {
-        console.error("Missing required fields");
-        alert("Please fill all the required fields.");
+        console.error("❌ Missing required fields!");
+        alert("Please fill all the required fields (image, description, location).");
         return;
     }
 
@@ -530,7 +530,7 @@ submitBtn.addEventListener("click", async (e) => {
     formData.append("location", location);
     formData.append("status", "Pending");
 
-    console.log("Submitting FormData to /api/issues/create...");
+    console.log("🚀 Submitting FormData to /api/issues/create...");
 
     try {
         const response = await fetch("http://localhost:5000/api/issues/create", {
@@ -538,12 +538,12 @@ submitBtn.addEventListener("click", async (e) => {
             body: formData
         });
 
-        console.log("Submit response status:", response.status);
+        console.log("📡 Submit response status:", response.status);
         const data = await response.json();
-        console.log("Submit response:", data);
+        console.log("📊 Submit response:", data);
 
         if (response.ok) {
-            console.log("✓ Report submitted successfully");
+            console.log("✅ Report submitted successfully to MongoDB!");
             alert("Report submitted successfully.");
 
             // Reset form
@@ -566,18 +566,17 @@ submitBtn.addEventListener("click", async (e) => {
             document.getElementById("imagePreview").classList.add("hidden");
             document.getElementById("uploadPrompt").classList.remove("hidden");
             
-            console.log("✓ Form reset complete");
+            console.log("✅ Form reset complete\n");
 
         } else {
-            console.error("Submission failed:", data.message);
+            console.error("❌ Submission failed:", data.message);
             alert(data.message || "Submission Failed");
         }
 
     } catch (err) {
-        console.error("Error submitting report:", err);
+        console.error("❌ Error submitting report:", err);
         alert("Server Connection Failed");
     }
-
 });
 </script>
 </body></html>
