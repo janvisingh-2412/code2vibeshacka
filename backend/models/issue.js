@@ -16,9 +16,28 @@ const issueSchema = new mongoose.Schema({
     default: "Medium"
   },
 
+  // Human-readable address
   location: {
     type: String,
     required: true
+  },
+
+  // NEW: Latitude
+  lat: {
+    type: Number,
+    default: null
+  },
+
+  // NEW: Longitude
+  lng: {
+    type: Number,
+    default: null
+  },
+
+  // NEW: Complete Address
+  address: {
+    type: String,
+    default: ""
   },
 
   imageUrl: {
