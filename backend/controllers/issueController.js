@@ -21,6 +21,9 @@ exports.createIssue = async (req, res) => {
             description: req.body.description,
             severity: req.body.severity,
             location: req.body.location,
+            lat: req.body.lat ? parseFloat(req.body.lat) : null,
+            lng: req.body.lng ? parseFloat(req.body.lng) : null,
+            address: req.body.address || "",
             imageUrl: req.file.filename,
             status: req.body.status || "Pending"
         });
@@ -31,6 +34,9 @@ exports.createIssue = async (req, res) => {
             description: newIssue.description.substring(0, 50) + "...",
             severity: newIssue.severity,
             location: newIssue.location,
+            lat: newIssue.lat,
+            lng: newIssue.lng,
+            address: newIssue.address,
             imageUrl: newIssue.imageUrl,
             status: newIssue.status
         });
@@ -56,6 +62,36 @@ exports.createIssue = async (req, res) => {
         res.status(500).json({
             success: false,
             message: err.message || "Failed to save issue"
+        });
+
+    }
+
+};
+
+exports.getAllIssues = async (req, res) => {
+
+    console.log("\n========== GET ALL ISSUES ==========");
+
+    try {
+
+        const issues = await Issue.find().sort({ createdAt: -1 });
+
+        console.log(`✅ Retrieved ${issues.length} issues from MongoDB`);
+
+        res.json({
+            success: true,
+            issues: issues
+        });
+
+    } catch (err) {
+
+        console.error("\n❌ ERROR FETCHING ISSUES:");
+        console.error("   Error Message:", err.message);
+        console.error("   Error Stack:", err.stack);
+
+        res.status(500).json({
+            success: false,
+            message: err.message || "Failed to fetch issues"
         });
 
     }
