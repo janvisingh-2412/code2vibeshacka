@@ -170,19 +170,36 @@
 </section>
 <!-- Stats Section -->
 <section class="relative py-24 z-10 px-container-padding-desktop">
-<div class="max-w-[1440px] mx-auto grid grid-cols-1 md:grid-cols-3 gap-grid-gutter">
+<div class="max-w-[1440px] mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-grid-gutter">
 <div class="bg-surface-container/40 backdrop-blur-xl glass-border rounded-xl p-8 text-center hover:scale-105 transition-transform duration-300">
-<div class="text-primary font-display-lg text-display-lg mb-2">12,450</div>
-<div class="text-on-surface-variant font-label-md">Issues Resolved</div>
+<div id="stat-total" class="text-primary font-display-lg text-display-lg mb-2">-</div>
+<div class="text-on-surface-variant font-label-md">Total Reports</div>
 </div>
-<div class="bg-surface-container/40 backdrop-blur-xl glass-border rounded-xl p-8 text-center hover:scale-105 transition-transform duration-300 border-t border-primary/30">
-<div class="text-secondary font-display-lg text-display-lg mb-2">98%</div>
-<div class="text-on-surface-variant font-label-md">AI Accuracy</div>
+<div class="bg-surface-container/40 backdrop-blur-xl glass-border rounded-xl p-8 text-center hover:scale-105 transition-transform duration-300 border-t border-secondary/30">
+<div id="stat-pending" class="text-secondary font-display-lg text-display-lg mb-2">-</div>
+<div class="text-on-surface-variant font-label-md">Pending Reports</div>
 </div>
-<div class="bg-surface-container/40 backdrop-blur-xl glass-border rounded-xl p-8 text-center hover:scale-105 transition-transform duration-300">
-<div class="text-primary-container font-display-lg text-display-lg mb-2">45k</div>
-<div class="text-on-surface-variant font-label-md">Active Heroes</div>
+<div class="bg-surface-container/40 backdrop-blur-xl glass-border rounded-xl p-8 text-center hover:scale-105 transition-transform duration-300 border-t border-emerald-400/30">
+<div id="stat-resolved" class="text-emerald-400 font-display-lg text-display-lg mb-2">-</div>
+<div class="text-on-surface-variant font-label-md">Resolved Reports</div>
 </div>
+<div class="bg-surface-container/40 backdrop-blur-xl glass-border rounded-xl p-8 text-center hover:scale-105 transition-transform duration-300 border-t border-error/30">
+<div id="stat-critical" class="text-error font-display-lg text-display-lg mb-2">-</div>
+<div class="text-on-surface-variant font-label-md">Critical Reports</div>
+</div>
+</div>
+</section>
+
+<!-- Latest Reports Section -->
+<section class="relative pb-24 z-10 px-container-padding-desktop">
+<div class="max-w-[1440px] mx-auto">
+    <div class="text-center space-y-4 mb-12">
+        <h2 class="font-display-lg text-headline-md md:text-5xl">Latest Reports</h2>
+        <p class="text-on-surface-variant max-w-xl mx-auto">Recent community submissions awaiting validation or resolution.</p>
+    </div>
+    <div id="latest-reports-container" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+        <!-- Reports injected here -->
+    </div>
 </div>
 </section>
 <!-- AI Reporting Showcase -->
@@ -390,6 +407,78 @@
             const heroBg = document.querySelector('[data-alt*="3D city"]');
             if (heroBg) {
                 heroBg.style.transform = `scale(1.1) translate(${x * 20}px, ${y * 20}px)`;
+            }
+        });
+
+        // Fetch and populate dashboard data
+        document.addEventListener('DOMContentLoaded', async () => {
+            try {
+                const response = await fetch('http://localhost:5000/api/issues');
+                const data = await response.json();
+                
+                if (data.success && data.issues) {
+                    const issues = data.issues;
+                    
+                    // Calculate Stats
+                    const total = issues.length;
+                    const pending = issues.filter(i => i.status === 'Pending').length;
+                    const resolved = issues.filter(i => i.status === 'Resolved').length;
+                    const critical = issues.filter(i => i.severity === 'Critical').length;
+                    
+                    document.getElementById('stat-total').innerText = total;
+                    document.getElementById('stat-pending').innerText = pending;
+                    document.getElementById('stat-resolved').innerText = resolved;
+                    document.getElementById('stat-critical').innerText = critical;
+                    
+                    // Display Latest 5 Reports
+                    const container = document.getElementById('latest-reports-container');
+                    const latest5 = issues.slice(0, 5);
+                    
+                    latest5.forEach(issue => {
+                        let severityClass = 'bg-primary/20 text-primary border-primary/30';
+                        if (issue.severity === 'Medium') severityClass = 'bg-secondary/20 text-secondary border-secondary/30';
+                        if (issue.severity === 'Critical') severityClass = 'bg-error/20 text-error border-error/30';
+                        
+                        let statusClass = 'bg-surface-variant/80 text-on-surface';
+                        if (issue.status === 'Resolved') statusClass = 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30';
+                        
+                        const date = new Date(issue.createdAt).toLocaleDateString('en-US', {
+                            year: 'numeric', month: 'short', day: 'numeric'
+                        });
+                        
+                        const card = document.createElement('div');
+                        card.className = 'bg-surface-container-high/80 backdrop-blur-2xl glass-border rounded-lg p-6 shadow-2xl relative transition-all duration-300 hover:scale-[1.02] flex flex-col';
+                        card.innerHTML = `
+                            <div class="relative overflow-hidden rounded-lg mb-6 group aspect-video bg-surface-container">
+                                <img src="http://localhost:5000/uploads/${issue.imageUrl}" alt="${issue.issueType}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                                <div class="absolute top-4 left-4 ${severityClass} px-3 py-1 rounded-full text-label-sm font-label-md flex items-center gap-2 backdrop-blur-md">
+                                    ${issue.severity === 'Critical' ? '<span class="w-2 h-2 rounded-full bg-error animate-pulse"></span>' : ''}
+                                    SEVERITY: ${issue.severity.toUpperCase()}
+                                </div>
+                                <div class="absolute top-4 right-4 ${statusClass} px-3 py-1 rounded-full text-label-sm font-label-md flex items-center gap-2 backdrop-blur-md border border-white/10">
+                                    ${issue.status}
+                                </div>
+                            </div>
+                            <div class="space-y-4 flex flex-col flex-grow">
+                                <div class="flex justify-between items-center border-b border-white/5 pb-4">
+                                    <div class="w-full overflow-hidden">
+                                        <h4 class="font-headline-sm text-white truncate w-full pr-4" title="${issue.issueType}">${issue.issueType}</h4>
+                                        <p class="text-label-sm text-on-surface-variant truncate" title="${issue.location}">${issue.location}</p>
+                                    </div>
+                                </div>
+                                <div class="text-body-md text-on-surface-variant line-clamp-3 min-h-[72px] flex-grow">
+                                    ${issue.description}
+                                </div>
+                                <div class="pt-4 border-t border-white/5 flex justify-between items-center text-label-sm text-on-surface-variant">
+                                    <span class="flex items-center gap-1"><span class="material-symbols-outlined text-[16px]">calendar_today</span> ${date}</span>
+                                </div>
+                            </div>
+                        `;
+                        container.appendChild(card);
+                    });
+                }
+            } catch (err) {
+                console.error('Error fetching data:', err);
             }
         });
     </script>
