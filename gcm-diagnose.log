@@ -1,0 +1,147 @@
+﻿Diagnose log at 2026-06-29T14:39:21Z
+
+AppPath: C:\Program Files\Git\mingw64\bin\git-credential-manager.exe
+InstallDir: C:\Program Files\Git\mingw64\bin\
+Version: 2.6.1+786ab03440ddc82e807a97c0e540f5247e44cec6
+
+------------
+Diagnostic: Environment
+Skipped: False
+Success: True
+Exception: None
+Log:
+OSType: Windows
+OSVersion: 10.0 (build 26200)
+Reading environment variables... OK
+ Variables:
+MSYSTEM_CHOST=x86_64-w64-mingw32
+_=C:/Program Files/Git/mingw64/bin/git
+ORIGINAL_TMP=C:/Users/JANVIS~1/AppData/Local/Temp
+PUBLIC=C:\Users\Public
+ALLUSERSPROFILE=C:\ProgramData
+LOGONSERVER=\\LAPTOP-A16PGGQF
+INFOPATH=C:\Program Files\Git\mingw64\local\info;C:\Program Files\Git\mingw64\share\info;C:\Program Files\Git\usr\local\info;C:\Program Files\Git\usr\share\info;C:\Program Files\Git\usr\info;C:\Program Files\Git\share\info
+LOCALAPPDATA=C:\Users\Janvi Singh\AppData\Local
+ProgramData=C:\ProgramData
+PKG_CONFIG_PATH=C:\Program Files\Git\mingw64\lib\pkgconfig;C:\Program Files\Git\mingw64\share\pkgconfig
+TMPDIR=C:\Users\JANVIS~1\AppData\Local\Temp
+ORIGINAL_PATH=C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\Users\Janvi Singh\bin;C:\Users\Janvi Singh\AppData\Roaming\Code\User\globalStorage\github.copilot-chat\debugCommand;C:\Users\Janvi Singh\AppData\Roaming\Code\User\globalStorage\github.copilot-chat\copilotCli;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0;C:\WINDOWS\System32\OpenSSH;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\MinGW\bin;C:\MinGW\bin;C:\Program Files\Git\cmd;C:\Program Files\NVIDIA Corporation\NVIDIA App\NvDLISR;C:\Program Files\nodejs;C:\Users\Janvi Singh\AppData\Local\Programs\Python\Python313\Scripts;C:\Users\Janvi Singh\AppData\Local\Programs\Python\Python313;C:\Users\Janvi Singh\AppData\Local\Programs\Python\Launcher;C:\Users\Janvi Singh\AppData\Local\Microsoft\WindowsApps;C:\Users\Janvi Singh\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\Janvi Singh\AppData\Local\Programs\Antigravity\bin;C:\Users\Janvi Singh\AppData\Roaming\npm;C:\Users\Janvi Singh\.vscode\extensions\ms-python.debugpy-2026.6.0-win32-x64\bundled\scripts\noConfigScripts
+ACLOCAL_PATH=C:\Program Files\Git\mingw64\share\aclocal;C:\Program Files\Git\usr\share\aclocal
+BUNDLED_DEBUGPY_PATH=c:\Users\Janvi Singh\.vscode\extensions\ms-python.debugpy-2026.6.0-win32-x64\bundled\libs\debugpy
+EFC_25760_344590478=1
+ProgramW6432=C:\Program Files
+MINGW_PREFIX=C:/Program Files/Git/mingw64
+SYSTEMROOT=C:\WINDOWS
+MANPATH=C:\Program Files\Git\mingw64\local\man;C:\Program Files\Git\mingw64\share\man;C:\Program Files\Git\usr\local\man;C:\Program Files\Git\usr\share\man;C:\Program Files\Git\usr\man;C:\Program Files\Git\share\man
+MSYSTEM=MINGW64
+PYTHONSTARTUP=c:\Users\Janvi Singh\AppData\Roaming\Code\User\workspaceStorage\5fe24e264830ef515362520f77169e66\ms-python.python\pythonrc.py
+CONFIG_SITE=C:/Program Files/Git/etc/config.site
+VSCODE_GIT_ASKPASS_MAIN=c:\Users\Janvi Singh\AppData\Roaming\Code\User\globalStorage\vscode.git\askpass\70789581cae28aa7\askpass-main.js
+SHELL=C:\Program Files\Git\usr\bin\bash.exe
+ZES_ENABLE_SYSMAN=1
+OS=Windows_NT
+PROCESSOR_ARCHITECTURE=x86
+MINGW_PACKAGE_PREFIX=mingw-w64-x86_64
+SHLVL=1
+PATHEXT=.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC
+DISPLAY=needs-to-be-defined
+PYDEVD_DISABLE_FILE_VALIDATION=1
+ORIGINAL_TEMP=C:/Users/JANVIS~1/AppData/Local/Temp
+CommonProgramW6432=C:\Program Files\Common Files
+ProgramFiles(x86)=C:\Program Files (x86)
+VSCODE_GIT_ASKPASS_EXTRA_ARGS=
+COMSPEC=C:\WINDOWS\system32\cmd.exe
+MSYSTEM_CARCH=x86_64
+USERNAME=Janvi Singh
+GIT_ASKPASS=c:\Users\Janvi Singh\AppData\Roaming\Code\User\globalStorage\vscode.git\askpass\70789581cae28aa7\askpass.sh
+PYTHON_BASIC_REPL=1
+MINGW_CHOST=x86_64-w64-mingw32
+TERM=xterm-256color
+LANG=en_US.UTF-8
+PATH=C:/Program Files/Git/mingw64/libexec/git-core;C:\Users\Janvi Singh\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\local\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\Users\Janvi Singh\bin;C:\Users\Janvi Singh\AppData\Roaming\Code\User\globalStorage\github.copilot-chat\debugCommand;C:\Users\Janvi Singh\AppData\Roaming\Code\User\globalStorage\github.copilot-chat\copilotCli;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0;C:\WINDOWS\System32\OpenSSH;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\MinGW\bin;C:\MinGW\bin;C:\Program Files\Git\cmd;C:\Program Files\NVIDIA Corporation\NVIDIA App\NvDLISR;C:\Program Files\nodejs;C:\Users\Janvi Singh\AppData\Local\Programs\Python\Python313\Scripts;C:\Users\Janvi Singh\AppData\Local\Programs\Python\Python313;C:\Users\Janvi Singh\AppData\Local\Programs\Python\Launcher;C:\Users\Janvi Singh\AppData\Local\Microsoft\WindowsApps;C:\Users\Janvi Singh\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\Janvi Singh\AppData\Local\Programs\Antigravity\bin;C:\Users\Janvi Singh\AppData\Roaming\npm;C:\Users\Janvi Singh\.vscode\extensions\ms-python.debugpy-2026.6.0-win32-x64\bundled\scripts\noConfigScripts;C:\Program Files\Git\usr\bin\vendor_perl;C:\Program Files\Git\usr\bin\core_perl
+OneDrive=C:\Users\Janvi Singh\OneDrive
+PSModulePath=C:\Program Files\WindowsPowerShell\Modules;C:\WINDOWS\system32\WindowsPowerShell\v1.0\Modules
+PROCESSOR_REVISION=9a03
+GIT_EXEC_PATH=C:/Program Files/Git/mingw64/libexec/git-core
+PWD=C:/Users/Janvi Singh/OneDrive/Desktop/college work/projects all/hackathon
+APPDATA=C:\Users\Janvi Singh\AppData\Roaming
+FPS_BROWSER_APP_PROFILE_STRING=Internet Explorer
+COMPUTERNAME=LAPTOP-A16PGGQF
+CommonProgramFiles(x86)=C:\Program Files (x86)\Common Files
+FPS_BROWSER_USER_PROFILE_STRING=Default
+DriverData=C:\Windows\System32\Drivers\DriverData
+VSCODE_DEBUGPY_ADAPTER_ENDPOINTS=c:\Users\Janvi Singh\.vscode\extensions\ms-python.debugpy-2026.6.0-win32-x64\.noConfigDebugAdapterEndpoints\endpoint-703c3eafcbb3dfc1.txt
+WINDIR=C:\WINDOWS
+PLINK_PROTOCOL=ssh
+PROCESSOR_LEVEL=6
+EXEPATH=C:\Program Files\Git\bin
+HOMEDRIVE=C:
+PKG_CONFIG_SYSTEM_INCLUDE_PATH=C:/Program Files/Git/mingw64/include
+OneDriveConsumer=C:\Users\Janvi Singh\OneDrive
+PKG_CONFIG_SYSTEM_LIBRARY_PATH=C:/Program Files/Git/mingw64/lib
+PROGRAMFILES=C:\Program Files (x86)
+SSH_ASKPASS=C:/Program Files/Git/mingw64/bin/git-askpass.exe
+EFC_25760_4126798990=1
+USERPROFILE=C:\Users\Janvi Singh
+GIT_TRACE2_PARENT_SID=54913eb5-01b3-4f5b-9478-fd0f07997d72
+PROCESSOR_IDENTIFIER=Intel64 Family 6 Model 154 Stepping 3, GenuineIntel
+COPILOT_DEBUG_NONCE=2842648e1d017579c4ab63796d14be9b
+EFC_25760_1592913036=1
+SESSIONNAME=Console
+TMP=C:\Users\JANVIS~1\AppData\Local\Temp
+TERM_PROGRAM_VERSION=1.126.0
+HOSTNAME=LAPTOP-A16PGGQF
+TERM_PROGRAM=vscode
+USERDOMAIN=LAPTOP-A16PGGQF
+NUMBER_OF_PROCESSORS=16
+PS1=\[]633;A\]\[\033]0;$TITLEPREFIX:$PWD\007\]\n\[\033[32m\]\u@\h \[\033[35m\]$MSYSTEM \[\033[33m\]\w\[\033[36m\]`__git_ps1`\[\033[0m\]\n$ \[]633;B\]
+CHROME_CRASHPAD_PIPE_NAME=\\.\pipe\crashpad_53352_PAWMSSJHPGDRHLDK
+SYSTEMDRIVE=C:
+VSCODE_GIT_ASKPASS_NODE=C:\Users\Janvi Singh\AppData\Local\Programs\Microsoft VS Code\Code.exe
+USERDOMAIN_ROAMINGPROFILE=LAPTOP-A16PGGQF
+COMMONPROGRAMFILES=C:\Program Files (x86)\Common Files
+VSCODE_GIT_IPC_HANDLE=\\.\pipe\vscode-git-2e6088c826-sock
+VSCODE_PYTHON_AUTOACTIVATE_GUARD=1
+HOMEPATH=\Users\Janvi Singh
+COLORTERM=truecolor
+HOME=C:\Users\Janvi Singh
+MSYSTEM_PREFIX=C:/Program Files/Git/mingw64
+PROCESSOR_ARCHITEW6432=AMD64
+EFC_25760_2946480783=1
+TEMP=C:\Users\JANVIS~1\AppData\Local\Temp
+
+
+------------
+Diagnostic: File system
+Skipped: False
+Success: True
+Exception: None
+Log:
+Temporary directory is 'C:\Users\Janvi Singh\AppData\Local\Temp\'...
+Checking basic file I/O...
+Writing to temporary file 'C:\Users\Janvi Singh\AppData\Local\Temp\a80a41b18c84b1ad04cdd684'... OK
+Reading from temporary file 'C:\Users\Janvi Singh\AppData\Local\Temp\a80a41b18c84b1ad04cdd684'... OK
+Deleting temporary file 'C:\Users\Janvi Singh\AppData\Local\Temp\a80a41b18c84b1ad04cdd684'... OK
+Testing IFileSystem instance...
+UserHomePath: C:\Users\Janvi Singh
+UserDataDirectoryPath: C:\Users\Janvi Singh\.gcm
+GetCurrentDirectory(): C:\Users\Janvi Singh\OneDrive\Desktop\college work\projects all\hackathon
+
+------------
+Diagnostic: Networking
+Skipped: False
+Success: True
+Exception: None
+Log:
+Checking networking and HTTP stack...
+Creating HTTP client... OK
+IsNetworkAvailable: True
+Sending HEAD request to http://example.com...Sending HEAD request to https://example.com... OK
+Acquiring free TCP port... OK
+Testing local HTTP loopback connections...
+Creating new HTTP listener for http://localhost:62811/... OK
+Waiting for loopback connection... OK
+Writing response... OK
+Waiting for response data... OK
+Loopback connection data OK
+

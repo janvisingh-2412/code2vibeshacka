@@ -216,189 +216,22 @@
 <!-- Main Content -->
 <main class="pt-24 lg:pl-72 pr-6 pb-12 min-h-screen">
 <div class="max-w-[1200px] mx-auto space-y-grid-gutter">
-<!-- Header Section -->
-<div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
-<div>
-<div class="flex items-center gap-3 mb-2">
-<span class="px-3 py-1 rounded-full bg-primary/10 border border-primary/30 text-primary font-label-sm text-label-sm">Issue #CH-9402</span>
-<span class="px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 font-label-sm text-label-sm flex items-center gap-1">
-<span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span> Resolved
-                        </span>
-</div>
-<h1 class="font-display-lg text-display-lg text-on-surface mb-2">Main St. Pothole Complex</h1>
-<p class="font-body-md text-body-md text-on-surface-variant max-w-2xl">Hazardous road conditions reported near the North intersection. Severe damage causing traffic delays and vehicle damage risks.</p>
-</div>
-<div class="flex gap-4">
-<button class="glass-panel px-6 py-3 rounded-2xl flex items-center gap-2 hover:bg-white/10 transition-all border border-white/10">
-<span class="material-symbols-outlined">share</span> Share
-                    </button>
-<button class="bg-primary text-on-primary px-8 py-3 rounded-2xl font-bold hover:scale-[1.02] active:scale-95 transition-all shadow-xl shadow-primary/20">
-                        Follow Updates
-                    </button>
-</div>
-</div>
-<!-- Bento Grid Layout -->
-<div class="grid grid-cols-1 lg:grid-cols-12 gap-grid-gutter">
-<!-- Left Column: Before & After + Timeline -->
-<div class="lg:col-span-8 space-y-grid-gutter">
-<!-- Comparison Slider Card -->
-<div class="glass-panel rounded-xl overflow-hidden relative glow-border-primary group">
-<div class="p-6 border-b border-white/10 flex justify-between items-center bg-white/5">
-<h3 class="font-headline-sm text-headline-sm flex items-center gap-2">
-<span class="material-symbols-outlined text-primary">published_with_changes</span>
-                                Resolution Verification
-                            </h3>
-<div class="flex gap-2">
-<span class="text-label-sm font-label-sm text-on-surface-variant">Drag slider to compare</span>
-</div>
-</div>
-<div class="relative h-[450px] w-full overflow-hidden cursor-ew-resize" id="comparison-container">
-<!-- After Image (Base) -->
-<div class="absolute inset-0 w-full h-full">
-<img class="w-full h-full object-cover" data-alt="A crystal clear, high-resolution photo of a perfectly repaired urban asphalt road at sunset. The surface is smooth and dark, with fresh white paint markings. The lighting is warm and cinematic, reflecting off the clean pavement. The environment is a modern city street with glass skyscrapers in the background under a violet and cyan sky." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA6ocow_owdZyBTGdbQAfqLR4-7AHqEVpIKwqVPD5XjVnt49IF-XS6Obaz_kmCGDWpt6j_ujhgyOWnxggnPMDuxSmBctL3f3wAG1_baZsaa7rNdmfS-8JEF3INofb2tnbVRHoDgf7UWEn2NacFaeYlt24YceNSn3kNLniPzbkKV5QMqXHOIugT9PrWkXF7Zl4VHoNw-Lm6qiADd3dCA_4GOSLENDDqQYWvrXX1afB5qSGy93oIxbLjgRfNqWLbSB6g_5X1My84cfAc">
-<div class="absolute bottom-6 right-6 px-4 py-2 bg-emerald-500/80 backdrop-blur-md rounded-lg text-white font-bold text-label-md">AFTER</div>
-</div>
-<!-- Before Image (Overlay) -->
-<div class="absolute inset-0 w-1/2 h-full overflow-hidden border-r-2 border-primary z-10" id="before-image">
-<div class="w-[200%] h-full">
-<img class="w-full h-full object-cover grayscale-[0.3]" data-alt="A gritty, high-contrast photo of a severely damaged city road with deep, dangerous potholes and cracked asphalt. The scene is captured during a gray, overcast day with puddles of murky water in the crevices. The atmosphere is somber and neglected, emphasizing the urgent need for repair in a busy metropolitan area." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAN2lv40UkE8VzJXbKJcLHUaNY80yZb9eM8B1_NUbdY3bP7YEZsKvOX57ZPXqwg57hMvbwmifNA48tSpCOHCG8Mv2l56etTIwL1mowRnR-sKUTDveg_W7qaXXkWuBT4heqx_4VTkyVH6b2FQxxxc4hIva_5d5MyrcfFSK0QqPOzQVv90DKmeZ4zWTVVMmtsIaT3dLgqwQIagb39HuI2TFqAYbLKZR6hC5ZPrirFeVZoe6006AlfAFMsl24LNbLy8ZHV-le4lSmnQlI">
-</div>
-<div class="absolute bottom-6 left-6 px-4 py-2 bg-surface/80 backdrop-blur-md rounded-lg text-white font-bold text-label-md">BEFORE</div>
-</div>
-<!-- Slider Controls -->
-<div class="slider-handle" id="slider-handle"></div>
-<div class="slider-thumb" id="slider-thumb">
-<span class="material-symbols-outlined">unfold_more</span>
-</div>
-</div>
-</div>
-<!-- AI Impact Analysis -->
-<div class="grid grid-cols-1 md:grid-cols-3 gap-grid-gutter">
-<div class="glass-panel p-6 rounded-xl flex flex-col items-center text-center glow-border-primary relative overflow-hidden group">
-<div class="shimmer absolute inset-0 opacity-20 pointer-events-none"></div>
-<span class="material-symbols-outlined text-primary text-4xl mb-3">schedule</span>
-<div class="font-display-lg text-3xl text-primary mb-1">40 hrs</div>
-<div class="font-label-md text-label-md text-on-surface-variant">Community Hours Saved</div>
-</div>
-<div class="glass-panel p-6 rounded-xl flex flex-col items-center text-center border border-white/10">
-<span class="material-symbols-outlined text-secondary text-4xl mb-3">moving</span>
-<div class="font-display-lg text-3xl text-secondary mb-1">15%</div>
-<div class="font-label-md text-label-md text-on-surface-variant">Traffic Flow Increase</div>
-</div>
-<div class="glass-panel p-6 rounded-xl flex flex-col items-center text-center border border-white/10">
-<span class="material-symbols-outlined text-tertiary text-4xl mb-3">eco</span>
-<div class="font-display-lg text-3xl text-tertiary mb-1">2.4t</div>
-<div class="font-label-md text-label-md text-on-surface-variant">CO2 Emission Reduction</div>
-</div>
-</div>
-<!-- Authority Response Panel -->
-<div class="glass-panel p-8 rounded-xl border border-white/10 space-y-6">
-<div class="flex items-center gap-4">
-<div class="w-14 h-14 rounded-full bg-primary/20 flex items-center justify-center border border-primary/40">
-<span class="material-symbols-outlined text-primary text-3xl">account_balance</span>
-</div>
-<div>
-<h3 class="font-headline-sm text-headline-sm">Department of Public Works</h3>
-<p class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-widest">Official Resolution Report</p>
-</div>
-</div>
-<div class="bg-white/5 p-6 rounded-2xl border-l-4 border-primary italic text-body-md leading-relaxed">
-                            "The reported damage was analyzed by CivicHero AI as a Grade 4 structural risk. Rapid response team #12 was dispatched within 45 minutes of verification. The repair utilized advanced polymer-reinforced asphalt for 3x longer durability. Site cleared and reopened for traffic at 14:30 local time."
-                        </div>
-<div class="flex items-center justify-between">
-<div class="flex items-center gap-2 text-label-md">
-<span class="material-symbols-outlined text-emerald-400">verified</span>
-<span class="text-emerald-400">Verified by Inspector Sarah Chen</span>
-</div>
-<button class="text-primary font-label-md flex items-center gap-1 hover:underline">
-                                View Full Report <span class="material-symbols-outlined text-sm">open_in_new</span>
-</button>
-</div>
-</div>
-</div>
-<!-- Right Column: Timeline + Community -->
-<div class="lg:col-span-4 space-y-grid-gutter">
-<!-- Vertical Timeline -->
-<div class="glass-panel p-8 rounded-xl border border-white/10">
-<h3 class="font-headline-sm text-headline-sm mb-8">Incident Timeline</h3>
-<div class="relative pl-10 space-y-12">
-<div class="absolute left-[19px] top-2 bottom-2 timeline-line"></div>
-<!-- Step 1 -->
-<div class="relative">
-<div class="absolute -left-[30px] top-0 w-10 h-10 rounded-full bg-surface-container-high border-2 border-primary flex items-center justify-center z-10 shadow-[0_0_10px_rgba(138,235,255,0.4)]">
-<span class="material-symbols-outlined text-primary text-xl">report</span>
-</div>
-<div>
-<h4 class="font-label-md text-label-md text-on-surface">Reported</h4>
-<p class="font-label-sm text-label-sm text-on-surface-variant">Oct 24, 08:15 AM</p>
-<p class="text-sm mt-1 text-on-surface-variant">By Citizen Hero @jdoe</p>
-</div>
-</div>
-<!-- Step 2 -->
-<div class="relative">
-<div class="absolute -left-[30px] top-0 w-10 h-10 rounded-full bg-surface-container-high border-2 border-primary flex items-center justify-center z-10 shadow-[0_0_10px_rgba(138,235,255,0.4)]">
-<span class="material-symbols-outlined text-primary text-xl">psychology</span>
-</div>
-<div>
-<h4 class="font-label-md text-label-md text-on-surface">AI Analyzed</h4>
-<p class="font-label-sm text-label-sm text-on-surface-variant">Oct 24, 08:17 AM</p>
-<p class="text-sm mt-1 text-on-surface-variant">Priority: High (Grade 4)</p>
-</div>
-</div>
-<!-- Step 3 -->
-<div class="relative">
-<div class="absolute -left-[30px] top-0 w-10 h-10 rounded-full bg-surface-container-high border-2 border-secondary flex items-center justify-center z-10 shadow-[0_0_10px_rgba(208,188,255,0.4)]">
-<span class="material-symbols-outlined text-secondary text-xl">engineering</span>
-</div>
-<div>
-<h4 class="font-label-md text-label-md text-on-surface">Dispatched</h4>
-<p class="font-label-sm text-label-sm text-on-surface-variant">Oct 24, 09:02 AM</p>
-<p class="text-sm mt-1 text-on-surface-variant">Crew #12 en route</p>
-</div>
-</div>
-<!-- Step 4 -->
-<div class="relative">
-<div class="absolute -left-[30px] top-0 w-10 h-10 rounded-full bg-emerald-500 border-2 border-emerald-300 flex items-center justify-center z-10 shadow-[0_0_15px_rgba(16,185,129,0.5)]">
-<span class="material-symbols-outlined text-white text-xl" style="font-variation-settings: 'FILL' 1;">check_circle</span>
-</div>
-<div>
-<h4 class="font-label-md text-label-md text-on-surface">Resolved</h4>
-<p class="font-label-sm text-label-sm text-on-surface-variant">Oct 24, 02:30 PM</p>
-<p class="text-sm mt-1 text-emerald-400 font-bold">Work Completed</p>
-</div>
-</div>
-</div>
-</div>
-<!-- Community Verification -->
-<div class="glass-panel p-8 rounded-xl border border-white/10 text-center">
-<h3 class="font-headline-sm text-headline-sm mb-2">Community Verdict</h3>
-<p class="font-body-md text-on-surface-variant mb-6">Does this look fixed to you?</p>
-<div class="flex justify-center gap-6 mb-8">
-<button class="group flex flex-col items-center gap-2">
-<div class="w-16 h-16 rounded-full bg-white/5 border border-white/10 flex items-center justify-center group-hover:bg-primary/20 group-hover:border-primary transition-all">
-<span class="material-symbols-outlined text-3xl group-hover:scale-125 transition-transform">thumb_up</span>
-</div>
-<span class="font-label-md text-on-surface">Yes (142)</span>
-</button>
-<button class="group flex flex-col items-center gap-2">
-<div class="w-16 h-16 rounded-full bg-white/5 border border-white/10 flex items-center justify-center group-hover:bg-error/20 group-hover:border-error transition-all">
-<span class="material-symbols-outlined text-3xl group-hover:scale-125 transition-transform">thumb_down</span>
-</div>
-<span class="font-label-md text-on-surface">No (3)</span>
-</button>
-</div>
-<div class="space-y-4">
-<div class="flex -space-x-3 justify-center mb-2">
-<div class="w-8 h-8 rounded-full border-2 border-surface-container overflow-hidden"><img alt="avatar" class="w-full h-full" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBUBCgfQvyOX2Esacup769ouxUWSb36qwJICY62juYWgIJhowPxRyuvpKP-EQd8L8KvTQR9GP7ve08hDksU5pgBKRyg4GK_nkd7eaF0G7TEJDdNzC6PFTLZimNxdIHa60aORiQ0cxkm9DVpYWuQv_ZEbSfnplG2GThFcbdHK9DxrHOQutCY_dCBy7AD06L3mCFM9rsAXKC73-UAYLFGcoP9LaY5O0RZZMc4kkQgofHcpibXXX2Q_wrJAyvHEVM9FXIHP3g8TPli53Y"></div>
-<div class="w-8 h-8 rounded-full border-2 border-surface-container overflow-hidden"><img alt="avatar" class="w-full h-full" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDkuq3_WI8MarTJMUB3CaWZX5E8vj_pIsi9wOC0I56dK3ffc-i8lBrhr3VBRB-3wJY93pjIVU7sm1QtQeFd_6T76yrTPd9t8BX4AaIgUbUCHxYfGKfIsh9C7gUeeU68xVpbVANxOgZOwVNJBsrOHDGzFZpeYDX6vQZ0i3qZpOYb54jvyJa8KLyFkdf1rYu76SDgVaegu5VZ1A60e9ZVIqWtYuf3JqFidI9nx-5lihskcoA_wX0ZWIwQE2RxhXgNbGi8w4q5aLreO6o"></div>
-<div class="w-8 h-8 rounded-full border-2 border-surface-container overflow-hidden"><img alt="avatar" class="w-full h-full" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDEmRPm7hoOsQ8UcuWjtEacZUkDFh3FXDBhwBK9IAhdUuKJJR_woB9EJciZchrX4u3N7gfqE-OHqhFVsBP97HppOyh7c1nkwryfsVXqglFsuQWMVoW2XKsMIlm_0PVbeBw1Zg5tW2ZcWdzk8M-h-DHKS5ukC5Nqvu2YmTMXn2-TYgSjatUwRBM1eI-CJ8DLdw5T0HMP6TqbVcEAzP8mhmbLsHEK4DGXsrT9TPkKU1Qo11RsFHg2jZANwkeofdJxPewU7NSWvBEfldg"></div>
-<div class="w-8 h-8 rounded-full border-2 border-surface-container bg-surface-variant flex items-center justify-center text-[10px] font-bold">+139</div>
-</div>
-<p class="font-label-sm text-label-sm text-on-surface-variant italic">"Smooth as silk now! Drove over it 10 mins ago." — LocalCommuter99</p>
-</div>
-</div>
-</div>
-</div>
+    <!-- Header Section -->
+    <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
+        <div>
+            <h1 class="font-display-lg text-display-lg text-on-surface mb-2">Issue History</h1>
+            <p class="font-body-md text-body-md text-on-surface-variant max-w-2xl">View all reported issues and track their current status and severity.</p>
+        </div>
+    </div>
+    
+    <!-- Issues Grid -->
+    <div id="issues-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Loading Indicator -->
+        <div class="col-span-full flex flex-col items-center justify-center py-20 text-on-surface-variant">
+            <span class="material-symbols-outlined animate-spin text-5xl mb-4 text-primary">sync</span>
+            <p class="font-label-md text-label-md">Loading issues...</p>
+        </div>
+    </div>
 </div>
 </main>
 <!-- Footer -->
@@ -439,46 +272,91 @@
 <span class="material-symbols-outlined text-on-primary text-3xl group-hover:rotate-12 transition-transform">add_a_photo</span>
 </button>
 <script>
-        // Comparison Slider Logic
-        const container = document.getElementById('comparison-container');
-        const beforeImage = document.getElementById('before-image');
-        const sliderHandle = document.getElementById('slider-handle');
-        const sliderThumb = document.getElementById('slider-thumb');
-
-        let isDragging = false;
-
-        const moveSlider = (e) => {
-            if (!isDragging) return;
+        document.addEventListener('DOMContentLoaded', async () => {
+            const container = document.getElementById('issues-container');
             
-            const rect = container.getBoundingClientRect();
-            let x = (e.clientX || e.touches[0].clientX) - rect.left;
-            
-            if (x < 0) x = 0;
-            if (x > rect.width) x = rect.width;
-            
-            const percentage = (x / rect.width) * 100;
-            beforeImage.style.width = percentage + '%';
-            sliderHandle.style.left = percentage + '%';
-            sliderThumb.style.left = percentage + '%';
-        };
-
-        container.addEventListener('mousedown', () => isDragging = true);
-        window.addEventListener('mouseup', () => isDragging = false);
-        window.addEventListener('mousemove', moveSlider);
-
-        container.addEventListener('touchstart', () => isDragging = true);
-        window.addEventListener('touchend', () => isDragging = false);
-        window.addEventListener('touchmove', moveSlider);
-
-        // Simple micro-interaction for vote buttons
-        document.querySelectorAll('.group.flex.flex-col.items-center').forEach(btn => {
-            btn.addEventListener('click', function() {
-                const iconContainer = this.querySelector('div');
-                iconContainer.classList.add('active-glow', 'bg-primary/30', 'border-primary');
-                setTimeout(() => {
-                    iconContainer.classList.remove('active-glow');
-                }, 1000);
-            });
+            try {
+                const response = await fetch('http://localhost:5000/api/issues');
+                const data = await response.json();
+                
+                if (data.success && data.issues) {
+                    if (data.issues.length === 0) {
+                        container.innerHTML = `
+                            <div class="col-span-full flex flex-col items-center justify-center py-20 text-on-surface-variant">
+                                <span class="material-symbols-outlined text-5xl mb-4 text-primary/50">inbox</span>
+                                <p class="font-label-md text-label-md">No issues reported yet.</p>
+                            </div>
+                        `;
+                        return;
+                    }
+                    
+                    container.innerHTML = '';
+                    
+                    data.issues.forEach(issue => {
+                        let severityClass = 'bg-primary/20 text-primary border-primary/30';
+                        if (issue.severity === 'Medium') severityClass = 'bg-secondary/20 text-secondary border-secondary/30';
+                        if (issue.severity === 'Critical') severityClass = 'bg-error/20 text-error border-error/30';
+                        
+                        let statusClass = 'bg-surface-variant/80 text-on-surface';
+                        if (issue.status === 'Resolved') statusClass = 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30';
+                        
+                        const date = new Date(issue.createdAt).toLocaleDateString('en-US', {
+                            year: 'numeric', month: 'short', day: 'numeric'
+                        });
+                        
+                        const card = document.createElement('div');
+                        card.className = 'glass-panel rounded-xl overflow-hidden border border-white/10 flex flex-col relative group hover:glow-border-primary transition-all duration-300';
+                        card.innerHTML = `
+                            <!-- Image -->
+                            <div class="h-48 w-full relative overflow-hidden bg-surface-container">
+                                <img src="http://localhost:5000/uploads/${issue.imageUrl}" alt="${issue.issueType}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                                <!-- Status Badge -->
+                                <div class="absolute top-4 right-4 px-3 py-1 rounded-full ${statusClass} backdrop-blur-md border border-white/10 font-label-sm text-label-sm flex items-center gap-1">
+                                    ${issue.status === 'Resolved' ? '<span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>' : ''}
+                                    ${issue.status}
+                                </div>
+                                <!-- Severity Badge -->
+                                <div class="absolute top-4 left-4 px-3 py-1 rounded-full ${severityClass} backdrop-blur-md border border-white/10 font-label-sm text-label-sm">
+                                    ${issue.severity}
+                                </div>
+                            </div>
+                            
+                            <!-- Content -->
+                            <div class="p-6 flex flex-col flex-grow gap-4">
+                                <div>
+                                    <h3 class="font-headline-sm text-headline-sm text-on-surface line-clamp-1">${issue.issueType}</h3>
+                                    <p class="font-label-sm text-label-sm text-on-surface-variant mt-1 flex items-center gap-1">
+                                        <span class="material-symbols-outlined text-[16px]">location_on</span> 
+                                        <span class="truncate">${issue.location}</span>
+                                    </p>
+                                </div>
+                                
+                                <p class="font-body-md text-body-md text-on-surface-variant line-clamp-3 flex-grow">
+                                    ${issue.description}
+                                </p>
+                                
+                                <div class="pt-4 border-t border-white/5 flex items-center justify-between text-on-surface-variant">
+                                    <span class="font-label-sm text-label-sm flex items-center gap-1">
+                                        <span class="material-symbols-outlined text-[16px]">calendar_today</span> 
+                                        ${date}
+                                    </span>
+                                </div>
+                            </div>
+                        `;
+                        container.appendChild(card);
+                    });
+                } else {
+                    throw new Error('Failed to load issues');
+                }
+            } catch (error) {
+                console.error('Error fetching issues:', error);
+                container.innerHTML = `
+                    <div class="col-span-full flex flex-col items-center justify-center py-20 text-error">
+                        <span class="material-symbols-outlined text-5xl mb-4">error</span>
+                        <p class="font-label-md text-label-md">Failed to load issues. Please try again later.</p>
+                    </div>
+                `;
+            }
         });
     </script>
 

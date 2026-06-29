@@ -6,6 +6,13 @@
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<!-- Leaflet CSS -->
+<link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+/>
+
+
 <style>
         .material-symbols-outlined {
             font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
@@ -176,39 +183,10 @@
 <main class="relative flex-1 h-screen overflow-hidden">
 <!-- Interactive Background Map -->
 <div class="absolute inset-0 z-0 bg-surface">
-<div class="w-full h-full opacity-60" data-alt="A highly detailed cinematic aerial view of New Delhi city streets at night, showing Connaught Place and surrounding areas in a dark futuristic aesthetic. The buildings are dark silhouettes with glowing neon cyan and violet outlines. Streetlights cast a soft ambient blue glow on the pavement, and the map topology is represented with elegant glass-like textures and faint digital grid lines." data-location="New Delhi" style="background-image: url(&quot;https://lh3.googleusercontent.com/aida/AP1WRLu_3YogLvdcF5yTqIt1YbNPu_98KiiA3yoBg7b4yV-2iOr6MWLvEIVrJWnvDwB0A40UXoKjrMqnmRc0LLtLd-En5UrcfK97dLtbRD-Bpssy8DtP-WQGjUTdEK1CQ5Bnmt5o_hK8IyY5fANn6C9kwwjZ48AoxWYVsgOTQlAx5fw2ZZl4nCK79CmpVjgO2X4OS89gT7baF4VwAYTkac4fgG7FtciEcCaI0_CzRzP8v67hNePyOL1f_0ALF4k&quot;); background-size: cover; background-position: center center;">
+<div id="map" class="w-full h-full"></div>
 </div>
-<!-- Custom Markers -->
-<div class="absolute inset-0 pointer-events-none" id="markers-container">
-<!-- Marker 1: High Severity Waste -->
-<button class="pointer-events-auto absolute left-[45%] top-[35%] group flex flex-col items-center" onclick="openPreview('marker1')" style="transform: translate(-3.90234px, -6.5625px);">
-<div class="w-12 h-12 rounded-full bg-error/20 border-2 border-error flex items-center justify-center text-error animate-pulse shadow-[0_0_15px_rgba(255,180,171,0.5)]">
-<span class="material-symbols-outlined text-3xl">delete</span>
-</div>
-<div class="mt-2 bg-surface-container-highest/90 backdrop-blur px-3 py-1 rounded-full text-xs font-label-md border border-white/10 opacity-0 group-hover:opacity-100 transition-opacity">
-                        Hazardous Leak
-                    </div>
-</button>
-<!-- Marker 2: Moderate Infrastructure -->
-<button class="pointer-events-auto absolute left-[62%] top-[55%] group flex flex-col items-center" onclick="openPreview('marker2')" style="transform: translate(-3.90234px, -6.5625px);">
-<div class="w-10 h-10 rounded-full bg-primary/20 border-2 border-primary flex items-center justify-center text-primary map-marker-pulse">
-<span class="material-symbols-outlined text-2xl">construction</span>
-</div>
-<div class="mt-2 bg-surface-container-highest/90 backdrop-blur px-3 py-1 rounded-full text-xs font-label-md border border-white/10 opacity-0 group-hover:opacity-100 transition-opacity">
-                        Pothole Alert
-                    </div>
-</button>
-<!-- Marker 3: Low Lighting -->
-<button class="pointer-events-auto absolute left-[30%] top-[70%] group flex flex-col items-center" onclick="openPreview('marker3')" style="transform: translate(-3.90234px, -6.5625px);">
-<div class="w-10 h-10 rounded-full bg-secondary/20 border-2 border-secondary flex items-center justify-center text-secondary">
-<span class="material-symbols-outlined text-2xl">lightbulb</span>
-</div>
-<div class="mt-2 bg-surface-container-highest/90 backdrop-blur px-3 py-1 rounded-full text-xs font-label-md border border-white/10 opacity-0 group-hover:opacity-100 transition-opacity">
-                        Outage
-                    </div>
-</button>
-</div>
-</div>
+
+
 <!-- Filter Bar -->
 <header class="absolute top-8 left-8 right-8 z-20 flex flex-wrap gap-4 items-center">
 <div class="glass-panel px-6 py-3 rounded-full flex items-center gap-6 shadow-2xl">
@@ -334,43 +312,106 @@
 <span class="material-symbols-outlined text-3xl group-hover:rotate-12 transition-transform">add_a_photo</span>
 </button>
 </main>
+
+
 <script>
-        function openPreview(markerId) {
-            const modal = document.getElementById('preview-modal');
-            modal.classList.remove('hidden');
-            modal.classList.add('flex');
-            
-            // Interaction logic could be expanded here to change content based on markerId
-        }
+function openPreview(markerId) {
+    const modal = document.getElementById("preview-modal");
+    modal.classList.remove("hidden");
+    modal.classList.add("flex");
+}
 
-        function closePreview() {
-            const modal = document.getElementById('preview-modal');
-            modal.classList.add('hidden');
-            modal.classList.remove('flex');
-        }
+function closePreview() {
+    const modal = document.getElementById("preview-modal");
+    modal.classList.add("hidden");
+    modal.classList.remove("flex");
+}
 
-        // Close modal on escape key
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') closePreview();
-        });
+document.addEventListener("keydown",(e)=>{
+    if(e.key==="Escape") closePreview();
+});
 
-        // Background atmosphere micro-interactions
-        document.addEventListener('mousemove', (e) => {
-            const markers = document.querySelectorAll('#markers-container button');
-            const x = (e.clientX / window.innerWidth - 0.5) * 15;
-            const y = (e.clientY / window.innerHeight - 0.5) * 15;
-            
-            markers.forEach(marker => {
-                marker.style.transform = `translate(${x}px, ${y}px)`;
-            });
-        });
-    </script>
+// -------------------------
+// Leaflet Map
+// -------------------------
+
+const map = L.map("map").setView([28.6139,77.2090],11);
+
+L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",{
+    attribution:"© OpenStreetMap contributors"
+}).addTo(map);
+
+const bounds=[];
+
+fetch("http://localhost:5000/api/issues")
+.then(res => res.json())
+.then(data => {
+
+    const issues = data.issues || [];
+
+    issues.forEach(issue => {
+
+        if(!issue.lat || !issue.lng) return;
+
+        let color="green";
+
+        if(issue.severity==="Critical")
+            color="red";
+        else if(issue.severity==="Medium")
+            color="orange";
+
+        const marker=L.circleMarker(
+            [issue.lat,issue.lng],
+            {
+                radius:10,
+                color:color,
+                fillColor:color,
+                fillOpacity:0.9
+            }
+        ).addTo(map);
+
+        marker.bindPopup(`
+            <div style="width:220px">
+
+            ${
+                issue.imageUrl
+                ?
+                `<img src="${issue.imageUrl}" style="width:100%;border-radius:8px;margin-bottom:8px;">`
+                :
+                ""
+            }
+
+            <h3 style="font-weight:bold;">
+                ${issue.issueType}
+            </h3>
+
+            <p><b>Severity:</b> ${issue.severity}</p>
+
+            <p><b>Status:</b> ${issue.status}</p>
+
+            <p>${issue.address || issue.location}</p>
+
+            </div>
+        `);
+
+        bounds.push([issue.lat,issue.lng]);
+
+    });
+
+    if(bounds.length>0){
+        map.fitBounds(bounds);
+    }
+
+})
+.catch(err=>{
+    console.log(err);
+});
+</script>
 
 
 
 
 
-
-
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
 </body></html>
