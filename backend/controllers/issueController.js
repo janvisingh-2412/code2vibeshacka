@@ -21,9 +21,9 @@ exports.createIssue = async (req, res) => {
             description: req.body.description,
             severity: req.body.severity,
             location: req.body.location,
-            lat: req.body.lat ? parseFloat(req.body.lat) : null,
-            lng: req.body.lng ? parseFloat(req.body.lng) : null,
-            address: req.body.address || "",
+            lat: req.body.lat && req.body.lat !== "null" ? parseFloat(req.body.lat) : null,
+            lng: req.body.lng && req.body.lng !== "null" ? parseFloat(req.body.lng) : null,
+            address: req.body.address && req.body.address !== "null" ? req.body.address : "",
             imageUrl: req.file.filename,
             status: req.body.status || "Pending"
         });

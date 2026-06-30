@@ -11,13 +11,12 @@ exports.chatWithAI = async (req, res) => {
     const { message } = req.body;
 
     const model = genAI.getGenerativeModel({
-      model: "gemini-1.5-pro"
+      model: "gemini-2.5-flash"
     });
 
     const result = await model.generateContent(message);
 
-    const response =
-      await result.response.text();
+    const response = result.response.text();
 
     res.json({
       success: true,

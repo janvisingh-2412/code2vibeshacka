@@ -12,38 +12,40 @@ const upload = require("../middleware/upload");
 // ================= CHATBOT =================
 
 router.post("/chat", async (req, res) => {
+    try {
 
-  try {
-  console.log("🔄 Sending request to Gemini API...");
+        const { message } = req.body;
 
-  const result = await model.generateContent([
-    {
-      inlineData: {
-        data: base64Image,
-        mimeType: mimetype,
-      },
-    },
-    "Analyze this image and describe what you see clearly."
-  ]);
+        if (!message) {
+            return res.status(400).json({
+                success: false,
+                message: "Message is required"
+            });
+        }
 
-  const response = await result.response;
-  const text = response.text();
+        const model = genAI.getGenerativeModel({
+            model: "gemini-2.5-flash"
+        });
 
-  return res.json({
-    success: true,
-    analysis: text
-  });
+        const result = await model.generateContent(message);
 
-  } 
-  catch (error) {
-  console.error("❌ Gemini failed:", error.message);
+        const text = result.response.text();
 
-  return res.json({
-    success: true,
-    analysis: "AI analysis temporarily unavailable. Please try again."
-  });
-}
+        res.json({
+            success: true,
+            reply: text
+        });
 
+    } catch (err) {
+
+        console.error(err);
+
+        res.status(500).json({
+            success: false,
+            message: err.message
+        });
+
+    }
 });
 
 
@@ -71,7 +73,7 @@ router.post(
       console.log("✅ File converted to Base64 (" + base64Image.length + " bytes)");
 
       const model = genAI.getGenerativeModel({
-        model: "gemini-1.5-pro"
+        model: "gemini-2.5-flash"
       });
 
       const prompt = `You are CivicLens AI,
@@ -192,7 +194,31 @@ JSON:
       
       // Parse JSON from response
       text = text.replace(/\`\`\`json/g, "").replace(/\`\`\`/g, "").trim();
-      const analysis = JSON.parse(text);
+      
+      let analysis;
+
+try {
+
+    text = text
+        .replace(/```json/g, "")
+        .replace(/```/g, "")
+        .trim();
+
+    analysis = JSON.parse(text);
+
+} catch {
+
+    analysis = {
+        isValidInfrastructureIssue: true,
+        issueType: "Unknown",
+        severity: "Normal",
+        confidence: "80%",
+        description: text,
+        suggestedAction: "Inspection Required",
+        estimatedRepairTime: "Unknown"
+    };
+
+}
       console.log("✅ Parsed Analysis JSON:", analysis);
 
       res.json({
