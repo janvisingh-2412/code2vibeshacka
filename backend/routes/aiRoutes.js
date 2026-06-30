@@ -14,31 +14,35 @@ const upload = require("../middleware/upload");
 router.post("/chat", async (req, res) => {
 
   try {
+  console.log("🔄 Sending request to Gemini API...");
 
-    const { message } = req.body;
+  const result = await model.generateContent([
+    {
+      inlineData: {
+        data: base64Image,
+        mimeType: mimetype,
+      },
+    },
+    "Analyze this image and describe what you see clearly."
+  ]);
 
-    const model = genAI.getGenerativeModel({
-      model: "gemini-2.5-flash"
-    });
+  const response = await result.response;
+  const text = response.text();
 
-    const result = await model.generateContent(message);
+  return res.json({
+    success: true,
+    analysis: text
+  });
 
-    const response = result.response.text();
+  } 
+  catch (error) {
+  console.error("❌ Gemini failed:", error.message);
 
-    res.json({
-      success: true,
-      reply: response
-    });
-
-  } catch (err) {
-
-    console.log(err);
-
-    res.status(500).json({
-      success: false
-    });
-
-  }
+  return res.json({
+    success: true,
+    analysis: "AI analysis temporarily unavailable. Please try again."
+  });
+}
 
 });
 
@@ -67,7 +71,7 @@ router.post(
       console.log("✅ File converted to Base64 (" + base64Image.length + " bytes)");
 
       const model = genAI.getGenerativeModel({
-        model: "gemini-2.5-flash"
+        model: "gemini-1.5-pro"
       });
 
       const prompt = `You are CivicLens AI,
